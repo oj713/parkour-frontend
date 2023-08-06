@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const templatepost = {}
+
 const postsSlice = createSlice({
     name: 'posts',
     initialState: [],
