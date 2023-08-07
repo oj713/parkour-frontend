@@ -1,13 +1,167 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+    --brown1: #F5C89D;
+    --brown2: #E0AD7C;
+    --brown3: #B8885B;
+    --brown4: #8E6C43;
+
+    --green1: #428938;
+    --green2: #12410B;
+
+    --orange1: #FE9635;
+    --orange2: #EE6F28;
+    --red: #DD341D;
+
+    --round: 10px;
+    --font-size: 15px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+    background-color: var(--brown3);
+    font-size: var(--font-size);
+}
+
+/* h1 is for proper headers */
+/* h2 is undefined, just in case we need it */
+/* h3 is for usernames */
+h3 {
+    display:inline;
+    font-size: 1.1em;
+}
+
+h1, h2, h3 {
+    font-family: 'Dela Gothic One';
+}
+
+.green2 {
+    color: var(--green2);
+}
+
+.white {
+    color: white;
+}
+
+.green1-bg {
+    background-color: var(--green1);
+}
+
+.green1 {
+    color: var(--green1);
+}
+
+.red {
+    color: var(--red);
+}
+
+.brown-4 {
+    color: var(--brown4);
+}
+
+.round {border-radius: var(--round)}
+
+/* styling for icons, apply as needed */
+
+/* bumps elements slightly up, most useful for icons */
+.up-2 {
+    position: relative;
+    bottom: .1em;
+}
+
+.roundIconFrame {
+    display:inline-block;
+    height: 1.6em;
+    width: 1.6em;
+    padding: .2em;
+    margin: .2em;
+    border-radius: 50%;
+    position: relative;
+    top: .2em;
+}
+
+/* styling for buttons */
+.btn {
+    border: 0px;
+    margin: 0em .5em;
+}
+
+.btn .icon {
+    font-size: 1.5em;
+    margin: 0em .1em 0em 0em;
+}
+
+.parkour-btn {
+    color: white;
+    display: inline-block;
+    font-weight: bold;
+    font-size: .9em;
+    border-radius: 50rem;
+    padding: .3em .7em;
+}
+
+.orange-btn, .orange-btn:visited {
+    background-color: var(--orange1);
+}
+
+.orange-btn:active, .orange-btn:hover {
+    color:white;
+    background-color: var(--orange2);
+}
+
+.green-btn, .green-btn:visited {
+    background-color: var(--green1);
+}
+
+.green-btn:active, .green-btn:hover {
+    color:white;
+    background-color: var(--green2);
+}
+
+/* Use for big panes -- e.g. Profile, Navigation, Search */
+.mainPane {
+    background-color:var(--brown2);
+    margin: 1vw;
+    padding: 1vw;
+    border: 3px solid var(--brown1);
+    border-radius: calc(2*var(--round));
+    max-width: 800px;
+}
+
+/* Use for smaller panes -- e.g. Posts, Comments */
+.subPane {
+    background-color: var(--brown1);
+    border:none;
+    margin: 10px;
+    padding: .5em;
+    border-radius: var(--round);
+    color: var(--green2);
+}
+
+/* since we added padding to parkour posts we don't want special corner radii */
+li.list-group-item.subPane {
+    border-radius: var(--round);
+}
+
+.whitespace-nowrap {
+    white-space: nowrap;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.flex-wrap {
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+/* use to figure out where divs end */
+.border {
+    border: 1px solid;
 }

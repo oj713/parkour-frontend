@@ -16,13 +16,15 @@ function App() {
   return (
     <Provider store={store}>
       <HashRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/details" element={<Details />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
+        <div className = "container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile/*" element={<Profile />} />
+            <Route path="/details" element={<Details />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </div>
       </HashRouter>
     </Provider>
   );
