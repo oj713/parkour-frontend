@@ -2,6 +2,7 @@ import React from "react";
 import temppostslist from './posts-list-temp.json';
 import ParkourPost from "./ParkourPost";
 
+
 const PostsList = () => {
     const posts = temppostslist;
     return (

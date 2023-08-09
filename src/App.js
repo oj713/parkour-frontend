@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router';
 import postsReducer from './reducers/posts-reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import Navigation from './navigation';
 import Home from './Home';
 import Profile from './Profile';
 import Details from './Details';
@@ -14,18 +15,25 @@ const store = configureStore({
 
 function App() {
   return (
-    <Provider store={store}>
-      <HashRouter>
-        <div className = "container">
+      <Provider store={store}>
+          <HashRouter>
+              <div className="row">
+              <div className="col-2">
+                  <Navigation />
+              </div>
+        <div className = "container col-9">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/profile/*" element={<Profile />} />
             <Route path="/details" element={<Details />} />
             <Route path="/results" element={<Results />} />
             <Route path="/login" element={<Login />} />
           </Routes>
-        </div>
-      </HashRouter>
+                  </div>
+                  </div>
+              </HashRouter>
+              
     </Provider>
   );
 }
