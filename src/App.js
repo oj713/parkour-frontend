@@ -1,6 +1,7 @@
 import { HashRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import postsReducer from './reducers/posts-reducer';
+import authReducer from './reducers/auth-reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Navigation from './navigation';
@@ -9,8 +10,9 @@ import Profile from './Profile';
 import Details from './Details';
 import Results from './Results';
 import Login from './Login';
+import Register from './Register';
 const store = configureStore({
-  reducer: { posts: postsReducer }
+  reducer: { posts: postsReducer, auth: authReducer }
 });
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
             <Route path="/details" element={<Details />} />
             <Route path="/results" element={<Results />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
                   </div>
                   </div>
