@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBars } from 'react-icons/fa';
-import ParkPosts from "./homePosts";
+import PostsList from "./postsList";
 import RightSide from "./home-right-side";
 import { AiOutlineSearch } from "react-icons/ai";
 
@@ -19,7 +19,7 @@ function Profile() {
                     <AiOutlineSearch className="fs-3 col-1 position-absolute"/>
                     </div>
                     </div>
-                <ParkPosts />
+                <PostsList showParksHeaders = {true} />
                 </div>
             <div class="mainPane col-3">
                     <RightSide />

@@ -32,6 +32,15 @@ h1, h2, h3 {
     font-family: 'Dela Gothic One';
 }
 
+/* color classes */
+.green1 {
+    color: var(--green1);
+}
+
+.green1-bg {
+    background-color: var(--green1);
+}
+
 .green2 {
     color: var(--green2);
 }
@@ -40,20 +49,16 @@ h1, h2, h3 {
     color: white;
 }
 
-.green1-bg {
-    background-color: var(--green1);
-}
-
-.green1 {
-    color: var(--green1);
-}
-
 .red {
     color: var(--red);
 }
 
 .brown-4 {
     color: var(--brown4);
+}
+
+.orange1-bg {
+    background-color: var(--orange1);
 }
 
 .round {border-radius: var(--round)}
@@ -129,10 +134,11 @@ h1, h2, h3 {
 .subPane {
     background-color: var(--brown1);
     border:none;
-    margin: 10px;
+    margin: .5em;
     padding: .5em;
     border-radius: var(--round);
     color: var(--green2);
+    overflow: hidden;
 }
 
 /* since we added padding to parkour posts we don't want special corner radii */
@@ -140,28 +146,7 @@ li.list-group-item.subPane {
     border-radius: var(--round);
 }
 
-.whitespace-nowrap {
-    white-space: nowrap;
-}
-
-.align-center {
-    align-items: center;
-}
-
-.text-align-right {
-    text-align: right;
-}
-
-.flex-wrap {
-    display:flex;
-    flex-wrap: wrap;
-}
-
-.flex-1 {
-    flex: 1;
-}
-
-/* use to figure out where divs end */
+/* use while developing to figure out where divs end */
 .border {
     border: 1px solid;
 }

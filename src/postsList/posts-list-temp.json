@@ -1,27 +1,75 @@
 [{
-    "_id": 123,
-    "userName": "Name",
-    "handle": "@hiker",
-    "time": "2h",
-    "location": "High Ridge Trail",
-    "profileimage": "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX3360859.jpg",
-    "liked": false,
-    "likedByPark": true,
-    "comments": 37,
-    "likes": 23344,
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas feugiat massa id pellentesque. Nulla semper neque id urna hendrerit, sit amet luctus eros vehicula.",
-    "attachment": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFya3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+    "user": {
+        "_id": "123",
+        "userName": "Name",
+        "handle": "hiker",
+        "profileimage": "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX3360859.jpg",
+        "role": {"type": "hiker"}
+    },
+    "park": {
+        "_id": "456",
+        "name": "Yosemite",
+        "handle": "yosemite",
+        "profileimage": "https://cdn.aarp.net/content/dam/aarp/travel/destinations/2020/09/1140-yosemite-hero.imgcache.rev.web.1044.600.jpg"
+    },
+    "content": {
+        "date": "2023-08-14T12:00:00.000Z",
+        "location": "High Ridge Trail",
+        "likedByPark": true,
+        "comments": 37,
+        "likes": 23344,
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas feugiat massa id pellentesque. Nulla semper neque id urna hendrerit, sit amet luctus eros vehicula.",
+        "attachment": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFya3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+    },
+    "liked": true
 },
-{   "_id": 234,
-    "userName": "Name 2",
-    "handle": "@anotherhiker",
-    "time": "4h",
-    "location": "Higher Ridge Trail",
-    "profileimage": "https://cdn.outsideonline.com/wp-content/uploads/2022/10/PCTHiker.jpg",
-    "liked": true,
-    "likedByPark": false,
-    "comments": 37,
-    "likes": 335,
-    "content": "Lorem ipsum dolor sit amet.",
-    "attachment": null
-}]
+{   "user": {
+        "_id": "234",
+        "userName": "Ranger",
+        "handle": "yosemiteRanger",
+        "profileimage": "https://cdn.outsideonline.com/wp-content/uploads/2022/10/PCTHiker.jpg",
+        "role": {"type": "ranger",
+                "station": "456"}
+    },
+    "park": {
+        "_id": "456",
+        "name": "Yosemite",
+        "handle": "yosemite",
+        "profileimage": "https://cdn.aarp.net/content/dam/aarp/travel/destinations/2020/09/1140-yosemite-hero.imgcache.rev.web.1044.600.jpg"
+    },
+    "content": {
+        "date": "2023-07-31T00:00:00.000Z",
+        "location": null,
+        "likedByPark": false,
+        "comments": 37837281,
+        "likes": 335213311,
+        "text": "Lorem ipsum dolor sit amet.",
+        "attachment": null
+    }, 
+    "liked": false
+},
+{   "user": {
+    "_id": "456",
+    "userName": "Yosemite",
+    "handle": "yosemite",
+    "profileimage": "https://cdn.aarp.net/content/dam/aarp/travel/destinations/2020/09/1140-yosemite-hero.imgcache.rev.web.1044.600.jpg",
+    "role": {"type": "park"}
+    },
+    "park": {
+        "_id": "456",
+        "name": "Yosemite",
+        "handle": "yosemite",
+        "profileimage": "https://cdn.aarp.net/content/dam/aarp/travel/destinations/2020/09/1140-yosemite-hero.imgcache.rev.web.1044.600.jpg"
+    },
+    "content": {
+        "date": "2021-03-01T00:00:00.000Z",
+        "location": "Higher Ridge Trail",
+        "likedByPark": false,
+        "comments": 76,
+        "likes": 989,
+        "text": "Lorem ipsum dolor sit amet. Sed egestas feugiat massa id pellentesque.",
+        "attachment": null
+    }, 
+    "liked": false
+}
+]

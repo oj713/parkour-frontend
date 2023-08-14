@@ -6,7 +6,7 @@ function Profile() {
     <div>
       <div class = "mainPane">
         <h2>Profile Header</h2>
-        <PostsList />
+        <PostsList showParkHeaders = {false}/>
       </div>
     </div>
   )

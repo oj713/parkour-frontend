@@ -3,11 +3,11 @@ import temppostslist from './posts-list-temp.json';
 import ParkourPost from "./ParkourPost";
 
 
-const PostsList = () => {
-    const posts = temppostslist;
+const PostsList = ({posts = temppostslist, showParkHeaders = true}) => {
     return (
         <ul class = "list-group">
-            {posts.map(post => <ParkourPost post={post} />)}
+            {posts.map(post => 
+            <ParkourPost post={post} showParkHeaders = {showParkHeaders}/>)}
         </ul>
     )
 }
