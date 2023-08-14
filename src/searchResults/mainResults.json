@@ -1,0 +1,14 @@
+[
+    {
+        "id": "001",
+        "title": "Result Title",
+        "description": "Description of this search result",
+        "attachment": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFya3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+    },
+    {
+        "id": "002",
+        "title": "Significantly Longer Result Title",
+        "description": "Description of the second search result is significantly longer to test how this text wraps and if it looks good when it's lengthy. Is this long enough to demonstrate?'",
+        "attachment": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFya3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+    }
+]

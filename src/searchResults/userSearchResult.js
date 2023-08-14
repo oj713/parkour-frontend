@@ -6,7 +6,7 @@ import { IoFootstepsSharp } from "react-icons/io5";
 import { ReactComponent as ParkourLogo } from "../assets/Logo/parkour-logo.svg";
 import { ReactComponent as ParkourLogoOutline } from "../assets/Logo/parkour-logo-outline.svg";
 
-const ParkPost = (
+const SearchResult = (
     { post = {
         "_id": 123,
         "location": "High Ridge Trail",
@@ -23,15 +23,20 @@ const ParkPost = (
                 <div className="flex-1 up-2">
 
                 </div>
-                <div>
-                    
-                    <LocationTag location={post.location} parkhandle="yosemite" />
-                </div>
+
             </div>
-            <div className="p-2">
-                {post.attachment &&
-                    <img className="round mt-2" src={post.attachment} width="100%" />}
-                {post.content}
+            <div className="flex-wrap whitespace-nowrap">
+                <div className="pe-2">
+                    <img className="rounded-circle" height={48} width={48} src={post.profileimage} />
+                </div>
+                <div className="flex-1 up-2">
+                    <div>
+                        <h3>{post.userName}</h3>
+                        <RangerIcon park="Yosemite"
+                            handle="yosemite" isCurrent={true} />
+                    </div>
+                    <div className="up-2">{post.handle} </div>
+                </div>
 
             </div>
 
@@ -39,4 +44,4 @@ const ParkPost = (
     )
 }
 
-export default ParkPost;
+export default SearchResult;

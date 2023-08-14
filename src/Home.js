@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBars } from 'react-icons/fa';
 import ParkPosts from "./homePosts";
+import RightSide from "./home-right-side";
 import { AiOutlineSearch } from "react-icons/ai";
 
 function Profile() {
@@ -21,7 +22,7 @@ function Profile() {
                 <ParkPosts />
                 </div>
             <div class="mainPane col-3">
-                    <ParkPosts />
+                    <RightSide />
             </div>
             </div>
 

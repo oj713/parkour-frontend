@@ -1,0 +1,14 @@
+[
+    {
+        "_id": 123,
+        "userName": "Name",
+        "handle": "@hiker",
+        "profileimage": "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX3360859.jpg"
+    },
+    {
+        "_id": 234,
+        "userName": "Name 2",
+        "handle": "@anotherhiker",
+        "profileimage": "https://cdn.outsideonline.com/wp-content/uploads/2022/10/PCTHiker.jpg"
+}
+]

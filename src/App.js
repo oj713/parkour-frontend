@@ -9,6 +9,7 @@ import Profile from './Profile';
 import Details from './Details';
 import Results from './Results';
 import Login from './Login';
+import Search from './searchResults';
 const store = configureStore({
   reducer: { posts: postsReducer }
 });
@@ -29,6 +30,7 @@ function App() {
             <Route path="/details" element={<Details />} />
             <Route path="/results" element={<Results />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
                   </div>
                   </div>
