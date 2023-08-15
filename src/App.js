@@ -6,7 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Navigation from './navigation';
 import Home from './Home';
-import Profile from './Profile';
+import Profile from './profile';
 import Details from './Details';
 import Results from './Results';
 import Login from './Login';

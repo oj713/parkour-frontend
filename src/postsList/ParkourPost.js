@@ -76,6 +76,10 @@ const gradientBackground = (image) => {
     }
 }
 
+const handleDelete = (id) => {
+    window.confirm("Are you sure you want to delete this post?")
+}
+
 return (
     <li className = "list-group-item subPane p-0">
     {showParkHeader &&
@@ -86,7 +90,7 @@ return (
     <div style = {isPark ? gradientBackground(post.user.profileimage) : {"padding-bottom":"0"}}>
         {canDelete &&
         <div className = "float-end">
-            <button className = {`btn m-0 p-0 ${isPark ? "white" : "red"}`}>
+            <button className = {`btn m-0 p-0 ${isPark ? "white" : "red"}`} onClick = {() => handleDelete(post._id)}>
                 <RxCross2 className = "up-2 m-0"/>
             </button>
         </div>

@@ -63,7 +63,7 @@ h1, h2, h3 {
 
 .round {border-radius: var(--round)}
 
-/* styling for icons, apply as needed */
+/* styling for icons and buttons, apply as needed */
 
 /* bumps elements slightly up, most useful for icons */
 .up-2 {
@@ -118,6 +118,19 @@ h1, h2, h3 {
 .green-btn:active, .green-btn:hover {
     color:white;
     background-color: var(--green2);
+}
+
+/* for navigation-tabs.js, used for navigation tabs. Could easily be moved into its own file 
+if it interferes with other parts of the site, might have application elsewhere though */
+
+.nav-link {
+    color:var(--brown4);
+    font-size: 1.1em;
+}
+
+.nav-pills .nav-link.active, .nav-link:hover {
+    color:var(--green2);
+    background-color: var(--brown1);
 }
 
 /* Use for big panes -- e.g. Profile, Navigation, Search */
