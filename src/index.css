@@ -123,6 +123,14 @@ h1, h2, h3 {
 /* for navigation-tabs.js, used for navigation tabs. Could easily be moved into its own file 
 if it interferes with other parts of the site, might have application elsewhere though */
 
+.nav-pills {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+.nav-pills::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
 .nav-link {
     color:var(--brown4);
     font-size: 1.1em;
