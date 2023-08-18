@@ -3,6 +3,7 @@ import PostsList from '../postsList'
 import NavTabs from '../assets/navigation-tabs'
 import {Route, Routes} from 'react-router-dom'
 import temppostslist from '../postsList/posts-list-temp.json';
+import CreatePostComponent from './create-post.js';
 
 const profileUser = {
     "_id": "456",
@@ -39,6 +40,7 @@ const ProfileBottomHalf = () => {
     return (
       <div>
         <NavTabs tabs = {subtabs}/>
+        <CreatePostComponent/>
 
         <Routes>
           <Route path="/" element={

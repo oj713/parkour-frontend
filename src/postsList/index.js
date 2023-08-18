@@ -1,5 +1,5 @@
 import React from "react";
-import temppostslist from './posts-list-temp.json';
+import temppostslist from './posts-list-temp.json' 
 import ParkourPost from "./ParkourPost";
 
 

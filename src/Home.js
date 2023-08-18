@@ -6,7 +6,7 @@ import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBa
 import PostsList from "./postsList";
 import RightSide from "./home-right-side";
 import { AiOutlineSearch } from "react-icons/ai";
-import { findUserByUsernameThunk } from "./services/user-thunks";
+import { findUserByUsernameThunk } from "./services/users-thunks";
 import { useDispatch } from "react-redux";
 
 

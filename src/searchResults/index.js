@@ -5,7 +5,7 @@ import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBa
 import { AiOutlineSearch } from "react-icons/ai";
 import MainResults from "./mainSearch";
 import UserResults from "./userSearch"
-import { findUserByUsernameThunk } from "../services/user-thunks";
+import { findUserByUsernameThunk } from "../services/users-thunks";
 
 function Search() {
     const { pathname, search } = useLocation();

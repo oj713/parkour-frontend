@@ -1,9 +1,11 @@
 import React from 'react';
 
-const createPostComponent = () => {
+const CreatePostComponent = () => {
     return (
-    <h1> Make a new post</h1>
+        <div className = "subPane">
+            <h3> Create Post Component </h3>
+        </div>
     )
 }
 
-export default createPostComponent;
+export default CreatePostComponent;
