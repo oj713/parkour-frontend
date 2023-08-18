@@ -1,12 +1,44 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBars } from 'react-icons/fa';
 import { AiOutlineSearch } from "react-icons/ai";
 import MainResults from "./mainSearch";
 import UserResults from "./userSearch"
+import { findUserByUsernameThunk } from "../services/user-thunks";
 
 function Search() {
+    const { pathname, search } = useLocation();
+    const navigate = useNavigate();
+    const [ignore, parkour, active] = pathname.split("/");
+
+    const queryParams = new URLSearchParams(search);
+    const queryValue = queryParams.get("query");
+
+    let [searchInput, setSearchInput] = useState('');
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // Fetch data based on the queryValue when the component mounts
+        if (queryValue) {
+            const search = {
+                user: queryValue
+            }
+            dispatch(findUserByUsernameThunk(search));
+        }
+    }, [queryValue, dispatch]);
+
+
+    const searchEnterHandler = () => {
+        const search = {
+            user: searchInput
+        }
+        dispatch(findUserByUsernameThunk(search));
+        setSearchInput("");
+        navigate(`/search?query=${searchInput}`);
+        window.history.pushState(null, "", `/search?query=${searchInput}`);
+
+    }
     return (
         <div>
             <div class="row">
@@ -14,9 +46,20 @@ function Search() {
 
                     <div className="col-11 position-relative">
                         <div className="row">
-                            <input placeholder="Search Parkour"
-                                className="form-control rounded-pill ps-5 subPane" />
-                            <AiOutlineSearch className="fs-3 col-1 position-absolute" />
+                            <div className="position-relative">
+                                <AiOutlineSearch className="fs-3 position-absolute top-50 start-1 translate-middle-y" />
+                                <input
+                                    placeholder="Search Parkour"
+                                    className="form-control rounded-pill ps-5 subPane"
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            searchEnterHandler();
+                                        }
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div className="row">
                         <div class="dropdown col-3">

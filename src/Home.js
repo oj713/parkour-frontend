@@ -1,24 +1,57 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+//import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBars } from 'react-icons/fa';
 import PostsList from "./postsList";
 import RightSide from "./home-right-side";
 import { AiOutlineSearch } from "react-icons/ai";
+import { findUserByUsernameThunk } from "./services/user-thunks";
+import { useDispatch } from "react-redux";
 
-function Profile() {
+
+function Home() {
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const [ignore, parkour, active] = pathname.split("/");
+
+    let [searchInput, setSearchInput] = useState('');
+    //const dispatch = useDispatch();
+    const searchEnterHandler = () => {
+        const search = {
+            user: searchInput
+        }
+        //dispatch(findUserByUsernameThunk(search));
+        setSearchInput("");
+        navigate(`/search?query=${searchInput}`);
+    }
     return (
         <div>
-            <div class="row">
-            <div class="mainPane col-8">
-                
-                <div className="col-11 position-relative">
-                    <div className="row">
-                    <input placeholder="Search Parkour"
-                        className="form-control rounded-pill ps-5 subPane" />
-                    <AiOutlineSearch className="fs-3 col-1 position-absolute"/>
+            <div className="row">
+                <div className="mainPane col-8">
+                    <div className="col-11">
+                        <div className="row">
+                            <div className="position-relative">
+                                <AiOutlineSearch className="fs-3 position-absolute top-50 start-1 translate-middle-y" />
+                                <input
+                                    placeholder="Search Parkour"
+                                    className="form-control rounded-pill ps-5 subPane"
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            searchEnterHandler();
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </div>
-                    </div>
+
+
+
+
+
                 <PostsList showParksHeaders = {true} />
                 </div>
             <div class="mainPane col-3">
@@ -30,4 +63,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default Home
