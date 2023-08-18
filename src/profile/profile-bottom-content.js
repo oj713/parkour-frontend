@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PostsList from '../postsList'
 import NavTabs from '../assets/navigation-tabs'
 import {Route, Routes} from 'react-router-dom'
-import temppostslist from '../postsList/posts-list-temp.json';
 import CreatePostComponent from './create-post.js';
+import {findPosts} from '../services/posts-service'
 
 const profileUser = {
     "_id": "456",
@@ -31,11 +31,9 @@ const ProfileBottomHalf = () => {
       ...roleTabs, 
       {"name": "Following", "link": "following"}, {"name": "Followers", "link": "followers"}]
 
-    /* probably best to move all the filtering stuff to the database query side of things */
-    const posts = temppostslist  
-    const getPosts = () => {
-      return posts.filter(post => post.user._id === profileUser._id)
-    }
+    //// profileUser.role.type === "park" ? 
+    //   <PostsList posts = {posts.filter(post => post.park._id === profileUser._id)} showParkHeaders = {false}/> :
+    //   <PostsList posts = {getPosts()} showParkHeaders = {true}/>} />
 
     return (
       <div>
@@ -44,11 +42,9 @@ const ProfileBottomHalf = () => {
 
         <Routes>
           <Route path="/" element={
-            profileUser.role.type === "park" ? 
-              <PostsList posts = {posts.filter(post => post.park._id === profileUser._id)} showParkHeaders = {false}/> :
-              <PostsList posts = {getPosts()} showParkHeaders = {true}/>} />
+            <PostsList showParkHeaders = {false}/> } />
           <Route path="/posts" element={
-            <PostsList posts = {getPosts()} showParkHeaders = {false}/>
+            <PostsList showParkHeaders = {false}/>
           } />
           <Route path="/likes" element={<h1>Likes</h1>} />
           <Route path="/rangers" element={<h1>Rangers</h1>} />

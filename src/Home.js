@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 //import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import RightSide from "./home-right-side";
 import { AiOutlineSearch } from "react-icons/ai";
 import { findUserByUsernameThunk } from "./services/users-thunks";
 import { useDispatch } from "react-redux";
+import {findPosts} from "./services/posts-service";
 
 
 function Home() {
@@ -16,7 +17,7 @@ function Home() {
     const [ignore, parkour, active] = pathname.split("/");
 
     let [searchInput, setSearchInput] = useState('');
-    //const dispatch = useDispatch();
+
     const searchEnterHandler = () => {
         const search = {
             user: searchInput
@@ -25,6 +26,7 @@ function Home() {
         setSearchInput("");
         navigate(`/search?query=${searchInput}`);
     }
+
     return (
         <div>
             <div className="row">

@@ -11,3 +11,13 @@ export const findPostsByParkId = async parkId => {
   const response = await axios.get(`${POSTS_API}?parkId=${parkId}`);
   return response.data;
 }
+
+export const findPostsByUserId = async userId => {
+  const response = await axios.get(`${POSTS_API}?userId=${userId}`);
+  return response.data;
+}
+
+export const findPosts = async () => {
+  const response = await axios.get(POSTS_API);
+  return response.data;
+}

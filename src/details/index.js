@@ -74,7 +74,7 @@ function Details() {
           <div className='row'>
             <div className='col-8'>
               <ParkDetails park={parkApi} />
-              <PostsList posts={parkPosts} />
+              <PostsList posts={parkPosts} parkInfo = {parkDb}/>
             </div>
             <div className='col-3'>
               <div className='mainPane'>
