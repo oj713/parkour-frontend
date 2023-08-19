@@ -22,3 +22,8 @@ export const findUsersByDisplayName = async displayName => {
     return users;
 }
 
+export const findUserHeaderById = async id => {
+    const response = await api.get(`${USERS_URL}/header/${id}`);
+    const userHeader = response.data;
+    return userHeader;
+}

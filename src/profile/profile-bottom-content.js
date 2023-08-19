@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PostsList from '../postsList'
 import NavTabs from '../assets/navigation-tabs'
 import { Route, Routes } from 'react-router-dom'
-import temppostslist from '../postsList/posts-list-temp.json';
 import CreatePostComponent from './create-post.js';
+import {findPosts} from '../services/posts-service'
 import LocationTag from '../assets/location-tag';
 import ProfileHead from './profile-header';
 
@@ -33,6 +33,9 @@ const ProfileBottomHalf = () => {
     ...roleTabs,
     { "name": "Following", "link": "following" }, { "name": "Followers", "link": "followers" }]
 
+    //// profileUser.role.type === "park" ? 
+    //   <PostsList posts = {posts.filter(post => post.park._id === profileUser._id)} showParkHeaders = {false}/> :
+    //   <PostsList posts = {getPosts()} showParkHeaders = {true}/>} />
   /* probably best to move all the filtering stuff to the database query side of things */
   const posts = temppostslist
   const getPosts = () => {
@@ -45,22 +48,20 @@ const ProfileBottomHalf = () => {
       <NavTabs tabs={subtabs} />
       <CreatePostComponent />
 
-      <Routes>
-        <Route path="/" element={
-          profileUser.role.type === "park" ?
-            <PostsList posts={posts.filter(post => post.park._id === profileUser._id)} showParkHeaders={false} /> :
-            <PostsList posts={getPosts()} showParkHeaders={true} />} />
-        <Route path="/posts" element={
-          <PostsList posts={getPosts()} showParkHeaders={false} />
-        } />
-        <Route path="/likes" element={<h1>Likes</h1>} />
-        <Route path="/rangers" element={<h1>Rangers</h1>} />
-        <Route path="/park" element={<h1>Park</h1>} />
-        <Route path="/following" element={<h1>Following</h1>} />
-        <Route path="/followers" element={<h1>Followers</h1>} />
-      </Routes>
-    </div>
-  )
+        <Routes>
+          <Route path="/" element={
+            <PostsList showParkHeaders = {false}/> } />
+          <Route path="/posts" element={
+            <PostsList showParkHeaders = {false}/>
+          } />
+          <Route path="/likes" element={<h1>Likes</h1>} />
+          <Route path="/rangers" element={<h1>Rangers</h1>} />
+          <Route path="/park" element={<h1>Park</h1>} />
+          <Route path="/following" element={<h1>Following</h1>} />
+          <Route path="/followers" element={<h1>Followers</h1>} />
+        </Routes>
+      </div>
+    )
 }
 
 export default ProfileBottomHalf;
