@@ -23,19 +23,6 @@ const currentUser = {
     "following": []
 }
 
-// // replace 
-// const user = { // get this from userId
-//     "_id": "2",
-//     "username": "hiker",
-//     "password": "123",
-//     "displayName": "Hiker Name",
-//     "profileImage": "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX3360859.jpg",
-//     "profileBio": "Just a normal hiker.",
-//     "role": "hiker",
-//     "followers": [],
-//     "following": []
-// }
-
 // adapted from https://www.slingacademy.com/article/javascript-how-to-convert-date-time-to-time-ago/
 const timeAgo = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);

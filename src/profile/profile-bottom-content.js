@@ -3,22 +3,13 @@ import PostsList from '../postsList'
 import NavTabs from '../assets/navigation-tabs'
 import { Route, Routes } from 'react-router-dom'
 import CreatePostComponent from './create-post.js';
-import {findPosts} from '../services/posts-service'
+import {findPostsByUserId, findPosts} from '../services/posts-service'
 import LocationTag from '../assets/location-tag';
-import ProfileHead from './profile-header';
 
-const profileUser = {
-  "_id": "456",
-  "userName": "Yosemite",
-  "handle": "yosemite",
-  "profileimage": "https://cdn.aarp.net/content/dam/aarp/travel/destinations/2020/09/1140-yosemite-hero.imgcache.rev.web.1044.600.jpg",
-  "role": { "type": "park" }
-}
-
-const ProfileBottomHalf = () => {
+const ProfileBottomHalf = (user) => {
   /* These are pretty arbitrary feel free to edit */
   let roleTabs = []
-  switch (profileUser.role.type) {
+  switch (user.role) {
     case "park":
       roleTabs = [{ "name": "Board", "link": "" }, { "name": "Posts", "link": "posts" }, { "name": "Rangers", "link": "rangers" }]
       break
@@ -33,27 +24,20 @@ const ProfileBottomHalf = () => {
     ...roleTabs,
     { "name": "Following", "link": "following" }, { "name": "Followers", "link": "followers" }]
 
-    //// profileUser.role.type === "park" ? 
-    //   <PostsList posts = {posts.filter(post => post.park._id === profileUser._id)} showParkHeaders = {false}/> :
-    //   <PostsList posts = {getPosts()} showParkHeaders = {true}/>} />
-  /* probably best to move all the filtering stuff to the database query side of things */
-  const posts = temppostslist
-  const getPosts = () => {
-    return posts.filter(post => post.user._id === profileUser._id)
-  }
-
+  console.log(user)
+  
   return (
     <div>
-      <ProfileHead />
       <NavTabs tabs={subtabs} />
       <CreatePostComponent />
 
         <Routes>
           <Route path="/" element={
             <PostsList showParkHeaders = {false}/> } />
-          <Route path="/posts" element={
-            <PostsList showParkHeaders = {false}/>
-          } />
+          <Route path="/:username/posts" element={
+            <PostsList //postFunction = {async () => {findPostsByUserId(user._id)}}
+              user = {user}
+              showParkHeaders = {true}/>} />
           <Route path="/likes" element={<h1>Likes</h1>} />
           <Route path="/rangers" element={<h1>Rangers</h1>} />
           <Route path="/park" element={<h1>Park</h1>} />

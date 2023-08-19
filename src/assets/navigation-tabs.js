@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const NavTabs = (
     {tabs = [
-        {name: "Board", link: ""},
+        {name: "Board", link: null},
         {name: "Rangers 35", link: "rangers"},
         {name: "Following 123", link: "following"},
         {name: "Followers 234", link: "followers"}
@@ -16,7 +16,6 @@ const NavTabs = (
     }
     const {pathname} = useLocation()
     let [ignore, profile, active] = pathname.split("/")
-    if (!active) {active = ""}
     return (
         <div>
         <ul className="nav d-flex flex-nowrap overflow-auto nav-pills white">
