@@ -3,7 +3,7 @@ import PostsList from '../postsList'
 import NavTabs from '../assets/navigation-tabs'
 import { Route, Routes } from 'react-router-dom'
 import CreatePostComponent from './create-post.js';
-import {findPostsByUserId, findPosts} from '../services/posts-service'
+import {findPostsByUserId, findPostsByParkId} from '../services/posts-service'
 import LocationTag from '../assets/location-tag';
 
 const ProfileBottomHalf = ({user}) => {
@@ -33,14 +33,17 @@ const ProfileBottomHalf = ({user}) => {
 
         <Routes>
           <Route path="/" element={
-            <PostsList showParkHeaders = {false}/> } />
-          <Route path="/:username/posts" element={
-            <PostsList //postFunction = {async () => {findPostsByUserId(user._id)}}
-              user = {user}
-              showParkHeaders = {true}/>} />
-          <Route path="/likes" element={<h1>Likes</h1>} />
-          <Route path="/rangers" element={<h1>Rangers</h1>} />
+            user.role === "park" ? 
+            <PostsList postFunction = {async () => {return await findPostsByParkId(user._id)}}
+            parkInfo = {user} showParkHeaders = {false}/> :
+            <PostsList postFunction = {async () => {return await findPostsByUserId(user._id)}}
+            userInfo = {user} showParkHeaders = {true}/> 
+          } />
+          <Route path="/posts" element={
+            <PostsList postFunction = {async () => {return await findPostsByUserId(user._id)}}
+            userInfo = {user} showParkHeaders = {true}/> } />
           <Route path="/park" element={<h1>Park</h1>} />
+          <Route path="/rangers" element={<h1>Rangers</h1>} />
           <Route path="/following" element={<h1>Following</h1>} />
           <Route path="/followers" element={<h1>Followers</h1>} />
         </Routes>

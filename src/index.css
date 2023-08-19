@@ -32,6 +32,11 @@ h1, h2, h3 {
     font-family: 'Dela Gothic One';
 }
 
+/* no underlines for links */
+a {
+    text-decoration: none;
+}
+
 /* color classes */
 .green1 {
     color: var(--green1);

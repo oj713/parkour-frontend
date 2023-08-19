@@ -18,9 +18,12 @@ const PostsList = ({postFunction = findPosts,
     let [loading, setLoading] = useState(true);
     let [error, setError] = useState(null);
 
+    const handlePostDelete = id => {
+        setPosts(posts.filter(post => post._id !== id))
+    }
+
     useEffect(() => {
         postFunction().then(response => {
-        //postFunction().then(response => {
             setPosts(response); 
             setLoading(false);
         })
@@ -28,13 +31,15 @@ const PostsList = ({postFunction = findPosts,
             setError(error);
             setLoading(false);
         })
-    }, [])
+    }, [userInfo, parkInfo, postFunction])
 
     return (
         loading ? <h3>Loading...</h3> : error ? <h3>Error: {error}</h3> :
         <ul className = "list-group">
             {posts.map(post => 
-            <ParkourPost key = {post._id} post={post} parkInfo = {parkInfo} userInfo = {userInfo} showParkHeaders = {showParkHeaders}/>)}
+            <ParkourPost key = {post._id} postInfo={post} parkInfo = {parkInfo} 
+                userInfo = {userInfo} showParkHeaders = {showParkHeaders}
+                onDelete = {handlePostDelete}/>)}
         </ul>
     )
 }

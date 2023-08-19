@@ -30,11 +30,12 @@ function Profile({username = null}) {
 
   return (
     loading ? <h3>Loading...</h3> : error ? 
-    <div className = "subPane mt-4"> Error: {error} <a href="home">Back to Home</a> </div> : 
+    <div className = "subPane mt-4"> Error: {error} <a href="#/home">Back to Home</a> </div> : 
     <div>
       <div class = "mainPane">
         <ProfileHead />
-        <p> Current profile: {user.username}</p>
+        {/* delete this <p> later */ }
+        <p> Current profile: {user.username}</p> 
         <ProfileBottomHalf user = {user}/>
       </div>
     </div>

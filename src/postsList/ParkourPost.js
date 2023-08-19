@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {useSelector } from "react-redux";
 import "./index.css";
 import { RxCross2 } from "react-icons/rx";
 import RangerIcon from "../assets/ranger-icon";
@@ -8,20 +9,7 @@ import LocationTag from "../assets/location-tag";
 import {ReactComponent as ParkourLogo} from "../assets/Logo/parkour-logo.svg";
 import {ReactComponent as ParkourLogoOutline} from "../assets/Logo/parkour-logo-outline.svg";
 import { findUserHeaderById } from "../services/users-services";
-
-
-// replace later
-const currentUser = {
-    "_id": "1",
-    "username": "yosemite",
-    "password": "123",
-    "displayName": "Yosemite",
-    "profileImage": "https://cdn.aarp.net/content/dam/aarp/travel/destinations/2020/09/1140-yosemite-hero.imgcache.rev.web.1044.600.jpg",
-    "profileBio": "California park with valleys, waterfalls, sequoias, hiking trails & more.",
-    "role": "park",
-    "followers": [],
-    "following": []
-}
+import {updatePost, deletePost} from "../services/posts-service";
 
 // adapted from https://www.slingacademy.com/article/javascript-how-to-convert-date-time-to-time-ago/
 const timeAgo = (date) => {
@@ -58,8 +46,12 @@ const timeAgo = (date) => {
 const formatter = Intl.NumberFormat('en', {notation: "compact"})
 
 const ParkourPost = (
-    {post, parkInfo, userInfo, showParkHeaders}
+    {postInfo, parkInfo, userInfo, showParkHeaders, onDelete}
 ) => {
+let [post, setPost] = useState(postInfo)
+let {currentUser} = useSelector(state => state.auth)
+const likedByUser = currentUser && post.likes.includes(currentUser._id)
+//const likedByPark = post.likes.includes(park._id) consider replacing backend?
 
 // gradient background styling for parks headers
 const gradientBackground = (image) => {
@@ -71,13 +63,27 @@ const gradientBackground = (image) => {
 
 // delete post handler
 const handleDelete = (id) => {
-    window.confirm("Are you sure you want to delete this post?")
+    if (window.confirm("Are you sure you want to delete this post?")) {
+        deletePost(id)
+        onDelete(id)
+    }
 }
 
-// VARIABLES AND RETREIVING INFORMATION --------------------------
+const handleLikeToggle = (post) => {
+    if (!currentUser) {
+        window.alert("Please log in to like posts.")
+        return
+    }
 
-const likedByUser = post.likes.includes(currentUser._id)
-//const likedByPark = post.likes.includes(park._id) consider replacing backend?
+    const updatedPost = {...post, 
+        likes: likedByUser ? post.likes.filter(id => id !== currentUser._id) : [...post.likes, currentUser._id],
+        likedByPark: currentUser._id === park._id ? !post.likedByPark : post.likedByPark}
+
+    updatePost(updatedPost)
+    setPost(updatedPost)
+}
+
+// VARIABLES AND RETRIEVING INFORMATION --------------------------
 
 // base information
 const [isLoading, setIsLoading] = useState(true)
@@ -126,11 +132,13 @@ useEffect(() => {
         // if current user wrote the post
         // if current user is a ranger and the post is in their park but NOT a park post
         // if current user is a park and the post is in their park
-        setCanDelete(currentUser._id === user._id ||
+        setCanDelete(currentUser && (
+            currentUser._id === user._id ||
             (currentUser.role === "ranger" && !isPark &&
             currentUser.rangerStation === park._id) ||
-            (currentUser.role === "park" && 
+            (currentUser.role === "park" &&
             currentUser._id === park._id))
+        )
 
         setIsLoading(false)
     }
@@ -141,7 +149,7 @@ isLoading ? <></> : error ? <p> Error: {error} </p> :
 <li className = "list-group-item subPane p-0">
     {showParkHeaders && !isPark &&
     <div style = {gradientBackground(park.profileImage)}>
-        <h3 className = "white ms-1 me-1">{park.displayName} National Park</h3>
+        <a href = {`#/profile/${park.username}`}><h3 className = "white ms-1 me-1">{park.displayName} National Park</h3></a>
     </div>
     }
     <div style = {isPark ? gradientBackground(user.profileImage) : {"paddingBottom":"0"}}>
@@ -158,19 +166,23 @@ isLoading ? <></> : error ? <p> Error: {error} </p> :
                 <div className = "pe-2 mb-2">
                     <img className="rounded-circle object-fit-cover" height={48} width = {48} src={user.profileImage}/>
                 </div>
-                <div className = "up-2">
-                    <div>
-                        <h3>{user.displayName}</h3> 
-                        {isRanger && <RangerIcon/>}
-                    </div> 
-                    <div className = "up-2">@{user.username} • {timeAgo(post.datePosted)}</div>
-                </div>
+                <a href = {`#/profile/${user.username}`}>
+                    <div className = "up-2 green2">
+                        <div>
+                            <h3>{user.displayName}</h3> 
+                            {isRanger && <RangerIcon/>}
+                        </div> 
+                        <div className = "up-2">@{user.username} • {timeAgo(post.datePosted)}</div>
+                    </div>
+                </a>
             </div>
             }
             {isPark &&
             <div className = "white flex-grow-1 mb-2">
-                <h3 className = "ms-2 me-1">{user.displayName}</h3><ParkIcon/>
-                • {timeAgo(post.datePosted)}
+                <a href = {`#/profile/${user.username}`} className = "white">
+                    <h3 className = "ms-2 me-1">{user.displayName}</h3><ParkIcon/>
+                    • {timeAgo(post.datePosted)}
+                </a>
             </div>
             }
             {post.location && 
@@ -193,7 +205,7 @@ isLoading ? <></> : error ? <p> Error: {error} </p> :
                         <IoFootstepsSharp className = "icon up-2"/>
                         Comments {formatter.format(post.content.comments)}
                     </a> */}
-                    <button className = "btn brown-4 p-0 me-0">
+                    <button className = "btn brown-4 p-0 me-0" onClick = {() => handleLikeToggle(post)}> 
                         {likedByUser ? 
                         <ParkourLogo className = "icon green2"/> : 
                         <ParkourLogoOutline className = "icon"/>}
