@@ -39,8 +39,7 @@ const Navigation = () => {
                     key={link}
                     to={`/${link}`}
                     className={`subPane list-group-item text-capitalize ${active === link ? "active" : ""
-                        }`}
-                >
+                        }`}>
                     <span className="icon float-start me-2">{getIcon(link)}</span>
                     <span className="text d-lg-none d-xl-block d-none ms-1">
                         {link}

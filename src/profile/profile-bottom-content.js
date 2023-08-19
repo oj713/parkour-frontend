@@ -6,7 +6,7 @@ import CreatePostComponent from './create-post.js';
 import {findPostsByUserId, findPosts} from '../services/posts-service'
 import LocationTag from '../assets/location-tag';
 
-const ProfileBottomHalf = (user) => {
+const ProfileBottomHalf = ({user}) => {
   /* These are pretty arbitrary feel free to edit */
   let roleTabs = []
   switch (user.role) {
@@ -24,7 +24,7 @@ const ProfileBottomHalf = (user) => {
     ...roleTabs,
     { "name": "Following", "link": "following" }, { "name": "Followers", "link": "followers" }]
 
-  console.log(user)
+  console.log(user.role)
   
   return (
     <div>

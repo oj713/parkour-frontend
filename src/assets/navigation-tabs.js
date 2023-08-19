@@ -15,7 +15,8 @@ const NavTabs = (
         "opacity" : "100"
     }
     const {pathname} = useLocation()
-    let [ignore, profile, active] = pathname.split("/")
+    let active = pathname.split("/").pop()
+    if (!["posts", "rangers", "park", "following", "followers"].includes(active)) {active = ""}
     return (
         <div>
         <ul className="nav d-flex flex-nowrap overflow-auto nav-pills white">

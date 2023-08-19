@@ -4,11 +4,8 @@ import ProfileBottomHalf from './profile-bottom-content';
 import {useSelector} from 'react-redux'
 import {useLocation} from 'react-router-dom'
 import { findUserByUsername } from '../services/users-services';
-import { FaDivide } from 'react-icons/fa';
 
-function Profile() {
-  const {pathname} = useLocation()
-  const [ignore, profile, username] = pathname.split('/')
+function Profile({username = null}) {
   let currentUser = useSelector(state => state.auth.currentUser)
 
   let [user, setUser] = useState()
@@ -17,6 +14,7 @@ function Profile() {
 
   useEffect(() => {
     if (!username) {
+      if (!currentUser) {setError("No user logged in.")} else {setUser(currentUser)}
       setUser(currentUser)
       setLoading(false)
       return
@@ -25,19 +23,19 @@ function Profile() {
       setUser(response)
       setLoading(false)
     }).catch (e => {
-      setError(e)
+      setError(`User @${username} not found`)
       setLoading(false)
     })
    }, [username])
 
   return (
     loading ? <h3>Loading...</h3> : error ? 
-    <div className = "subPane"> Error: User @{username} was not found. <a href="home">Back to Home</a> </div> : 
+    <div className = "subPane mt-4"> Error: {error} <a href="home">Back to Home</a> </div> : 
     <div>
       <div class = "mainPane">
         <ProfileHead />
         <p> Current profile: {user.username}</p>
-        <ProfileBottomHalf userInfo = {user}/>
+        <ProfileBottomHalf user = {user}/>
       </div>
     </div>
   )

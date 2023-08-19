@@ -118,7 +118,6 @@ useEffect(() => {
 
 useEffect(() => {
     if (park && user) {
-        console.log(park, "user", user)
         setIsPark(user.role === "park")
 
         setIsRanger(user.role === "ranger" && 
