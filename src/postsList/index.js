@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import ParkourPost from "./ParkourPost";
-import { findPosts } from "../services/posts-service";
+import { findPosts, findPostsByUserId } from "../services/posts-service";
 
 /* Generates a list of posts
     postFunction: function to find posts. Function must be derived from 
@@ -20,6 +20,7 @@ const PostsList = ({postFunction = findPosts,
 
     useEffect(() => {
         postFunction().then(response => {
+        //postFunction().then(response => {
             setPosts(response); 
             setLoading(false);
         })

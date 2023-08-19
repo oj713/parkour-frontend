@@ -6,7 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Navigation from './navigation';
 import Home from './Home';
-import Profile from './profile';
+import ProfileRouter from './profile/profile-router';
 import Details from './details';
 import Results from './Results';
 import Login from './Login';
@@ -28,7 +28,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
-              <Route path="/profile/*" element={<Profile />} />
+              <Route path="/profile/*" element={<ProfileRouter />} />
               <Route path="/details" element={<Details />} />
               <Route path="/results" element={<Results />} />
               <Route path="/login" element={<Login />} />
