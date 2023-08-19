@@ -17,7 +17,7 @@ const ProfileBottomHalf = (user) => {
       roleTabs = [{ "name": "Posts", "link": "" }, { "name": "Park", "link": "park" }]
       break;
     default:
-      roleTabs = [{ "name": "Posts", "link": "" }, { "name": "Likes", "link": "likes" }]
+      roleTabs = [{ "name": "Posts", "link": "" }]
       break;
   }
   const subtabs = [

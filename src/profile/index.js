@@ -4,6 +4,7 @@ import ProfileBottomHalf from './profile-bottom-content';
 import {useSelector} from 'react-redux'
 import {useLocation} from 'react-router-dom'
 import { findUserByUsername } from '../services/users-services';
+import { FaDivide } from 'react-icons/fa';
 
 function Profile() {
   const {pathname} = useLocation()
@@ -30,7 +31,8 @@ function Profile() {
    }, [username])
 
   return (
-    loading ? <h3>Loading...</h3> : error ? <h3> Error: {error} </h3> : 
+    loading ? <h3>Loading...</h3> : error ? 
+    <div className = "subPane"> Error: User @{username} was not found. <a href="home">Back to Home</a> </div> : 
     <div>
       <div class = "mainPane">
         <ProfileHead />
