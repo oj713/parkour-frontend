@@ -27,3 +27,9 @@ export const findUserHeaderById = async id => {
     const userHeader = response.data;
     return userHeader;
 }
+
+export const findParksHeaders = async id => {
+    const response = await api.get(`${API_BASE}/parksheaders`)
+    const parksHeaders = response.data;
+    return parksHeaders;
+}

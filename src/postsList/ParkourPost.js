@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import {useSelector } from "react-redux";
-import "./index.css";
 import { RxCross2 } from "react-icons/rx";
 import RangerIcon from "../assets/ranger-icon";
 import ParkIcon from "../assets/park-icon";
@@ -146,7 +145,7 @@ useEffect(() => {
 
 return (
 isLoading ? <></> : error ? <p> Error: {error} </p> :
-<li className = "list-group-item subPane p-0">
+<li className = "list-group-item subPane p-0 addPadding">
     {showParkHeaders && !isPark &&
     <div style = {gradientBackground(park.profileImage)}>
         <a href = {`#/profile/${park.username}`}><h3 className = "white ms-1 me-1">{park.displayName} National Park</h3></a>

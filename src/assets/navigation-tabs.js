@@ -11,7 +11,7 @@ const NavTabs = (
 ) => {
     const hrStyle = {
         "border":"2px solid",
-        "border-radius" : "2px",
+        "borderRadius" : "2px",
         "opacity" : "100"
     }
     const {pathname} = useLocation()
@@ -21,7 +21,7 @@ const NavTabs = (
         <div>
         <ul className="nav d-flex flex-nowrap overflow-auto nav-pills white">
             {tabs.map(tab => 
-                <Link className={`${active === tab.link ? "active" : ""} btn parkour-btn rounded-pill nav-link`} to={tab.link}>
+                <Link key = {tab.link} className={`${active === tab.link ? "active" : ""} btn parkour-btn rounded-pill nav-link`} to={tab.link}>
                     {tab.name}
                 </Link>
             )}

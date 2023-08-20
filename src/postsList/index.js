@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import ParkourPost from "./ParkourPost";
 import { findPosts, findPostsByUserId } from "../services/posts-service";
+import CreatePostComponent from './create-post.js';
 
 /* Generates a list of posts
     postFunction: function to find posts. Function must be derived from 
@@ -12,6 +13,7 @@ import { findPosts, findPostsByUserId } from "../services/posts-service";
 */
 
 const PostsList = ({postFunction = findPosts, 
+    createPost = {render: false, parkInfo: null},
     parkInfo = null, userInfo = null, showParkHeaders = true}) => {
 
     let [posts, setPosts] = useState([]);
@@ -20,6 +22,10 @@ const PostsList = ({postFunction = findPosts,
 
     const handlePostDelete = id => {
         setPosts(posts.filter(post => post._id !== id))
+    }
+
+    const handlePostCreate = post => {
+        setPosts([...posts, post])
     }
 
     useEffect(() => {
@@ -35,12 +41,16 @@ const PostsList = ({postFunction = findPosts,
 
     return (
         loading ? <h3>Loading...</h3> : error ? <h3>Error: {error}</h3> :
+        <>
+        {createPost.render && <CreatePostComponent parkInfo = {createPost.parkInfo}
+            onCreate = {handlePostCreate}/> }
         <ul className = "list-group">
-            {posts.map(post => 
+            {posts.slice(0).reverse().map(post => 
             <ParkourPost key = {post._id} postInfo={post} parkInfo = {parkInfo} 
                 userInfo = {userInfo} showParkHeaders = {showParkHeaders}
                 onDelete = {handlePostDelete}/>)}
         </ul>
+        </>
     )
 }
 

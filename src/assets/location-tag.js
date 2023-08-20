@@ -5,7 +5,7 @@ const LocationTag = (
     {location, parkhandle}
 ) => {
     return (
-    <a href = "" className = "parkour-btn orange-btn btn">
+    <a href = {null} className = "parkour-btn orange-btn btn">
         <MdLocationPin className = "icon up-2"/>
         {location}
     </a>

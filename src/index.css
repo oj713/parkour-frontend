@@ -176,3 +176,7 @@ li.list-group-item.subPane {
 .border {
     border: 1px solid;
 }
+
+.addPadding > div {
+    padding: .5em;
+}

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import ProfileHead from './profile-header';
 import ProfileBottomHalf from './profile-bottom-content';
 import {useSelector} from 'react-redux'
-import {useLocation} from 'react-router-dom'
 import { findUserByUsername } from '../services/users-services';
 
 function Profile({username = null}) {
@@ -32,7 +31,7 @@ function Profile({username = null}) {
     loading ? <h3>Loading...</h3> : error ? 
     <div className = "subPane mt-4"> Error: {error} <a href="#/home">Back to Home</a> </div> : 
     <div>
-      <div class = "mainPane">
+      <div className = "mainPane">
         <ProfileHead />
         {/* delete this <p> later */ }
         <p> Current profile: {user.username}</p> 
