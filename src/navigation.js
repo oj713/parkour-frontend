@@ -7,7 +7,11 @@ const Navigation = () => {
 
     const { pathname } = useLocation();
     const [ignore, parkour, active] = pathname.split("/");
-    const links = ["home", "explore", "notifications", "messages", "bookmarks", "profile"];
+
+    const {currentUser} = useSelector((state) => state.auth);
+    const finalLink = currentUser ? "profile" : "login"
+
+    const links = ["home", "explore", "notifications", "messages", "bookmarks", finalLink];
     const getIcon = (link) => {
         switch (link) {
             case "home":
@@ -21,11 +25,12 @@ const Navigation = () => {
             case "bookmarks":
                 return <FaBookmark />;
             case "profile":
+            case "login":
                 return <FaUser />;
             default:
                 return null;
         }
-    };
+    }
 
     return (
         <div className="list-group mainPane">
@@ -34,15 +39,13 @@ const Navigation = () => {
                     key={link}
                     to={`/${link}`}
                     className={`subPane list-group-item text-capitalize ${active === link ? "active" : ""
-                        }`}
-                >
+                        }`}>
                     <span className="icon float-start me-2">{getIcon(link)}</span>
                     <span className="text d-lg-none d-xl-block d-none ms-1">
                         {link}
                     </span>
                 </Link>
             ))}
-
         </div>
     );
 };

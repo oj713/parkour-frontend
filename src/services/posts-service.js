@@ -11,3 +11,23 @@ export const findPostsByParkId = async parkId => {
   const response = await axios.get(`${POSTS_API}?parkId=${parkId}`);
   return response.data;
 }
+
+export const findPostsByUserId = async userId => {
+  const response = await axios.get(`${POSTS_API}?userId=${userId}`);
+  return response.data;
+}
+
+export const findPosts = async () => {
+  const response = await axios.get(POSTS_API);
+  return response.data;
+}
+
+export const updatePost = async post => {
+  const response = await axios.put(`${POSTS_API}/${post._id}`, post);
+  return response.data;
+}
+
+export const deletePost = async postId => {
+  const response = await axios.delete(`${POSTS_API}/${postId}`);
+  return response.data;
+}

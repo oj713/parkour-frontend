@@ -9,7 +9,7 @@ function Login() {
     const dispatch = useDispatch();
     const handleLogin = async () => {
         try {
-            await dispatch(loginThunk({ username, password }));
+            await dispatch(loginThunk({ username, password }))
             navigate("/profile");
         } catch (e) {
             alert(e);
@@ -20,15 +20,15 @@ function Login() {
             <h1>Login Screen</h1>
             <div className="mt-2">
                 <label>Username</label>
-                <input className="form-control" type="text" value={username}
+                <input className="form-control" type="text" value={username} placeholder = "yosemite"
                     onChange={(event) => setUsername(event.target.value)} />
             </div>
             <div className="mt-2">
                 <label>Password</label>
-                <input className="form-control" type="password" value={password}
+                <input className="form-control" type="password" value={password} placeholder = "123"
                     onChange={(event) => setPassword(event.target.value)} />
             </div>
-            <button className="btn btn-primary mt-2"
+            <button className="btn btn-primary parkour-btn orange-btn mt-2"
                 onClick={handleLogin}>
                 Login
             </button>

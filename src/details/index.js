@@ -5,11 +5,14 @@ import { findPostsByParkId } from '../services/posts-service';
 import ParkDetails from './ParkDetails';
 import PostsList from '../postsList';
 import { findUsersByDisplayName, findUsersByRangerStation } from '../services/users-services';
+import ParkRangers from './ParkRangers';
+import ParkActivities from './ParkActivities';
+import ParkRelated from './ParkRelated';
 
 function Details() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get('id');
+  const name = queryParams.get('name');
 
   const [parkApi, setParkApi] = useState();
   const [parkDb, setParkDb] = useState();
@@ -17,14 +20,23 @@ function Details() {
   const [rangers, setRangers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
-  const NPS_API = `${process.env.REACT_APP_NPS_API_BASE}/parks?q=${id}&api_key=${process.env.REACT_APP_NPS_API_KEY}`;
+  const NPS_API = `${process.env.REACT_APP_NPS_API_BASE}/parks?q=${name}&api_key=${process.env.REACT_APP_NPS_API_KEY}`;
 
   useEffect(() => {
     axios.get(NPS_API)
       .then(response => {
         const result = response.data;
-        const park = result.data[0];
-        setParkApi(park);
+        const parks = result.data;
+        console.log(parks)
+        console.log(name);
+        const park = parks.filter(park => park.name === name)[0];
+        console.log(park);
+        if (park) {
+          console.log('here')
+          setParkApi(park);
+        } else {
+          setError({message: 'Park not found'});
+        }
         setLoading(false);
       })
       .catch(error => {
@@ -35,13 +47,13 @@ function Details() {
 
   useEffect(() => {
     if (parkApi) {
-      findUsersByDisplayName(parkApi.fullName)
-      .then(response => {
-        setParkDb(response[0]);
-      })
-      .catch(error => {
-        setError(error);
-      })
+      findUsersByDisplayName(parkApi.name)
+        .then(response => {
+          setParkDb(response[0]);
+        })
+        .catch(error => {
+          setError(error);
+        })
     }
   }, [parkApi]);
 
@@ -55,12 +67,12 @@ function Details() {
           setError(error);
         })
       findUsersByRangerStation(parkDb._id)
-      .then(response => {
-        setRangers(response);
-      })
-      .catch(error => {
-        setError(error);
-      })
+        .then(response => {
+          setRangers(response);
+        })
+        .catch(error => {
+          setError(error);
+        })
     }
   }, [parkDb])
 
@@ -72,16 +84,19 @@ function Details() {
         :
         <>
           <div className='row'>
-            <div className='col-8'>
+            <div className='col-8 overflow-auto'>
               <ParkDetails park={parkApi} />
-              <PostsList posts={parkPosts} />
+              <PostsList posts={parkPosts} parkInfo={parkDb} />
             </div>
             <div className='col-3'>
-              <div className='mainPane'>
-                <h2>Park Rangers</h2>
-                {rangers.map(ranger => 
-                  <h3>{ranger.displayName}</h3>
-                )}
+              <div className='row subPane'>
+                <ParkRangers rangers={rangers} />
+              </div>
+              <div className='row subPane'>
+                <ParkActivities activities={parkApi.activities} />
+              </div>
+              <div className='row subPane'>
+                <ParkRelated topics={parkApi.topics} />
               </div>
             </div>
           </div>
