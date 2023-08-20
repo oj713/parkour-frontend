@@ -28,7 +28,7 @@ const SearchResult = (
             <div className="p-2">
                 <div className="">
                     <div class="badge badge-primary text-wrap" style={{"width": "6rem", "color": "darkgreen"}}>
-                        <h3>{post.title}</h3>
+                        <h3>{post.title} {post.parkCode}</h3>
                     </div>
                     
                     

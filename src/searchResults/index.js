@@ -6,6 +6,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import MainResults from "./mainSearch";
 import UserResults from "./userSearch"
 import { findUserByUsernameThunk } from "../services/users-thunks";
+const apiUrl = 'https://developer.nps.gov/api/v1/'//process.env.NPS_API_KEY;
+const apiKey = 'BW8ajGbeYQYXIIDFzJgC4FdVXhY7zl0ITUTm3V8d'//process.env.NPS_API_URL;
 
 function Search() {
     const { pathname, search } = useLocation();
@@ -16,25 +18,72 @@ function Search() {
     const queryValue = queryParams.get("query");
 
     let [searchInput, setSearchInput] = useState('');
+    const [parks, setParks] = useState([]);
+
     const dispatch = useDispatch();
 
+    //useEffect(() => {
+    //    // Fetch data based on the queryValue when the component mounts
+    //    if (queryValue) {
+    //        const search = {
+    //            user: queryValue
+    //        }
+    //        dispatch(findUserByUsernameThunk(search));
+    //    }
+    //}, [queryValue, dispatch]);
     useEffect(() => {
-        // Fetch data based on the queryValue when the component mounts
-        if (queryValue) {
-            const search = {
-                user: queryValue
-            }
-            dispatch(findUserByUsernameThunk(search));
-        }
-    }, [queryValue, dispatch]);
+        const queryParams = new URLSearchParams(search);
+        const queryValue = queryParams.get("query");
+        const fetchParks = async () => {
+            const parkString = apiUrl + "parks?api_key=" + apiKey + "&q=" + queryValue;
+            console.log(parkString)
+        try {
+            const response = await fetch(
+                parkString
+            );
 
+
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            let data = await response.json();
+            //data = await response.json();
+            setParks(data.data);
+        } catch (error) {
+            console.error('Error fetching park data:', error);
+        }
+    };
+
+        fetchParks();
+    }, []);
+
+   const parkSearch = parks.sort()//.filter(post => post.name == queryValue);
 
     const searchEnterHandler = () => {
         const search = {
             user: searchInput
         }
-        dispatch(findUserByUsernameThunk(search));
-        setSearchInput("");
+        //var url = apiUrl;
+        //url += '?apikey=' + apiKey;
+        //url += '&s=' + searchInput;
+        //fetch(url)
+        //    .then(res => res.json())
+        //    .then(json => {
+        //        this.setState({})
+        //    })
+        //dispatch(findUserByUsernameThunk(search));
+        //setSearchInput("");
+        navigate(`/search?query=${searchInput}`);
+        window.history.pushState(null, "", `/search?query=${searchInput}`);
+
+    }
+
+    const userSearchHandler = () => {
+        const search = {
+            user: searchInput
+        }
         navigate(`/search?query=${searchInput}`);
         window.history.pushState(null, "", `/search?query=${searchInput}`);
 
@@ -106,13 +155,31 @@ function Search() {
                         </div>
 
                     </div>
+                    
+                    <ul>
+                        {parkSearch.map((park) => (
+                            <li key={park.id}>
+                                <h2>{park.fullName}</h2>
+                                <p>{park.url}</p>
+                                <p>{park.description}</p>
+                                
+                            </li>
+                        ))}
+                    </ul>
                    <MainResults/>
                 </div>
                 <div class="mainPane col-3">
                     <div className="col-11 position-relative">
                         <div className="row">
                             <input placeholder="Search Users"
-                                className="form-control rounded-pill ps-5 subPane" />
+                                className="form-control rounded-pill ps-5 subPane"
+                                value={searchInput}
+                                onChange={(e) => setSearchInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        userSearchHandler();
+                                    }
+                                }}                            />
                             <AiOutlineSearch className="fs-3 col-3 position-absolute" />
                         </div>
                         <div class="row">

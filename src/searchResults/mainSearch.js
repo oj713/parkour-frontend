@@ -2,16 +2,20 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import SearchResult from "./searchResult"
-import results from "./mainResults.json";
-import {findPostByParkNameThunk, findPostByStateThunk, findPostByRegionThunk, findPostByFeatureThunk} from "../services/search-thunks.js"
+import ParkourPost from "../postsList/ParkourPost"
+import results from "../postsList/posts-list-temp.json";
+import { findPostsThunk } from "../services/search-thunks.js"
+
+
+
 
 
 const MainResults = () => {
     const { pathname, search } = useLocation();
     const queryParams = new URLSearchParams(search);
     const queryValue = queryParams.get("query");
-    const posts = results;
-
+    const posts = results.filter(post => post.park.name == queryValue);
+    //const parkdata = parks.filter(post => post.parkCode == "abli");
     //const { posts, loading } = useSelector(state => state.posts)
     const dispatch = useDispatch();
     useEffect(() => {
@@ -19,11 +23,25 @@ const MainResults = () => {
             case "this":
         
         }
-        dispatch(findPostByParkNameThunk)
+        dispatch(findPostsThunk)
     }, [])
+
+
+
     return (
         <ul class="list-group">
-            {posts.map(post => <SearchResult post={post} />)}
+            {/*{posts.map((post, index) => (*/}
+            {/*    // Example: Render only posts with the category 'technology'*/}
+            {/*    {*/}
+            {/*        post.title === 'Result Title' && (*/}
+            {/*            <div key={index} className="post">*/}
+            {/*                <SearchResult post={post} />*/}
+            {/*            </div>*/}
+            {/*        )*/}
+            {/*    }*/}
+            {/*)},*/}
+            {/*{parks.map(post => <SearchResult post={post} />)}*/}
+            {posts.map(post => <ParkourPost post={post} />)}
         </ul>
     )
 }

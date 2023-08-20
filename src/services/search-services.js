@@ -1,30 +1,22 @@
 import axios from "axios";
-const API_BASE = 'Parkour Posts';
+const API_BASE = process.env.REACT_APP_API_BASE;
 const PARKS_URL = `${API_BASE}`;
+const NPS_API_KEY = process.env.NPS_API_KEY;
+const NPS_API_BASE = process.env.NPS_API_URL;
 
 const api = axios.create({ withCredentials: true });
 
-export const findPostsByParkName = async ({ park }) => {
-    const response = await api.get(`${PARKS_URL}`, { park });
-    const post = response.data;
-    return post;
+export const findPosts = async () => {
+    const response = await api.get(`${PARKS_URL}`);
+    const posts = response.data;
+    return posts;
 }
 
-export const findPostsByState = async ({ state }) => {
-    const response = await api.get(`${PARKS_URL}`, { state });
-    const post = response.data;
-    return post;
+export const findParks = async (query) => {
+    const response = await api.get(`${NPS_API_BASE}?api_key=${NPS_API_KEY}&query=${query}`);
+    const parks = response.data;
+    return parks;
 }
 
-export const findPostsByRegion = async ({ region }) => {
-    const response = await api.get(`${PARKS_URL}`, { region });
-    const post = response.data;
-    return post;
-}
 
-export const findPostsByFeature = async ({ feature }) => {
-    const response = await api.get(`${PARKS_URL}`, { feature });
-    const post = response.data;
-    return post;
-}
 
