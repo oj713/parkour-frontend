@@ -5,9 +5,17 @@ import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBa
 import { AiOutlineSearch } from "react-icons/ai";
 import MainResults from "./mainSearch";
 import UserResults from "./userSearch"
+import PostsList from "../postsList";
 import { findUserByUsernameThunk } from "../services/users-thunks";
+import states from "./states";
+import activities from "./activities";
+
+
+
+
 const apiUrl = 'https://developer.nps.gov/api/v1/'//process.env.NPS_API_KEY;
 const apiKey = 'BW8ajGbeYQYXIIDFzJgC4FdVXhY7zl0ITUTm3V8d'//process.env.NPS_API_URL;
+
 
 function Search() {
     const { pathname, search } = useLocation();
@@ -15,12 +23,55 @@ function Search() {
     const [ignore, parkour, active] = pathname.split("/");
 
     const queryParams = new URLSearchParams(search);
-    const queryValue = queryParams.get("query");
+    let queryValue = queryParams.get("query");
+
+    
+    let parkState = '';
+    let parkChoice = '';
+    let parkActivity = '';
 
     let [searchInput, setSearchInput] = useState('');
     const [parks, setParks] = useState([]);
 
     const dispatch = useDispatch();
+
+    function populateDropdown() {
+        const stateDropdown = document.getElementById('stateDropdown');
+        const activityDropdown = document.getElementById('activityDropdown');
+
+        
+
+        // Populate the dropdown with state options
+        states.forEach(state => {
+            const option = document.createElement('option');
+            option.value = state.code;
+            option.textContent = state.name;
+            stateDropdown.appendChild(option);
+            console.log(state.name);
+        });
+        activities.forEach(activity => {
+            const option = document.createElement('option');
+            option.value = activity;
+            option.textContent = activity;
+            activityDropdown.appendChild(option);
+        });
+        
+    }
+
+    function checkDropdowns() {
+        const stateDropdown = document.getElementById('stateDropdown');
+        const activityDropdown = document.getElementById('activityDropdown');
+
+        parkState = stateDropdown.value;
+        parkActivity = activityDropdown.value;
+        //parkSearch = parkSearch.filter(park => park.addresses[0].stateCode === parkState);
+
+    }
+
+
+
+    // Call the function to populate the dropdown when the window loads
+    window.onload = populateDropdown;
 
     //useEffect(() => {
     //    // Fetch data based on the queryValue when the component mounts
@@ -31,12 +82,16 @@ function Search() {
     //        dispatch(findUserByUsernameThunk(search));
     //    }
     //}, [queryValue, dispatch]);
-    useEffect(() => {
-        const queryParams = new URLSearchParams(search);
-        const queryValue = queryParams.get("query");
-        const fetchParks = async () => {
-            const parkString = apiUrl + "parks?api_key=" + apiKey + "&q=" + queryValue;
-            console.log(parkString)
+    const fetchParks = async () => {
+        const parkDropdown = document.getElementById('parkDropdown');
+        checkDropdowns();
+        let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=" + queryValue;
+        if (parkState !== '' && parkState !== 'State') {
+            parkString += "&stateCode=" + parkState;
+        }
+        if (parkActivity !== '' && parkActivity !== 'Activities') {
+            parkString += parkActivity;
+        }
         try {
             const response = await fetch(
                 parkString
@@ -48,18 +103,43 @@ function Search() {
                 throw new Error('Network response was not ok');
             }
 
-            let data = await response.json();
+            const data = await response.json();
             //data = await response.json();
             setParks(data.data);
         } catch (error) {
             console.error('Error fetching park data:', error);
         }
+        parks.forEach(park => {
+            const option = document.createElement('option');
+            option.value = park.name;
+            option.textContent = park.name;
+            
+            parkDropdown.appendChild(option);
+            
+        })
+
+        
     };
+    useEffect(() => {
+
 
         fetchParks();
+        //populateDropdown();
     }, []);
 
-   const parkSearch = parks.sort()//.filter(post => post.name == queryValue);
+    let parkSearch = parks.sort((a, b) => {
+        if (a.name === queryValue && b.name !== queryValue) {
+            return -1;
+        }
+        else if (a.name !== queryValue && b.name === queryValue) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+
+    });
+    
 
     const searchEnterHandler = () => {
         const search = {
@@ -74,21 +154,32 @@ function Search() {
         //        this.setState({})
         //    })
         //dispatch(findUserByUsernameThunk(search));
-        //setSearchInput("");
+        setSearchInput("");
         navigate(`/search?query=${searchInput}`);
         window.history.pushState(null, "", `/search?query=${searchInput}`);
-
+        queryValue = searchInput;
+        
+        fetchParks();
+        checkDropdowns();
     }
 
     const userSearchHandler = () => {
         const search = {
             user: searchInput
         }
+        setSearchInput("");
         navigate(`/search?query=${searchInput}`);
         window.history.pushState(null, "", `/search?query=${searchInput}`);
 
     }
+
+
+
+
+    // Get a reference to the select element
+
     return (
+
         <div>
             <div class="row">
                 <div class="mainPane col-8">
@@ -105,40 +196,25 @@ function Search() {
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
                                             searchEnterHandler();
+                                            
                                         }
                                     }}
                                 />
                             </div>
                         </div>
                         <div className="row">
-                        <div class="dropdown col-3">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }}>
-                                    <option selected>Region</option>
-                                    <option value="1">Northeast</option>
-                                    <option value="2">Southeast</option>
-                                    <option value="3">Midwest</option>
-                                    <option value="4">Southwest</option>
-                                    <option value="5">Mountain West</option>
-                                    <option value="6">West Coast</option>
-                                    <option value="7">Non-continental</option>
-                                </select>
-                            </div>
+
                             <div class="dropdown col-3">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }}>
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }} id="stateDropdown">
                                     <option selected>State</option>
-                                    <option value="1">Alabama</option>
-                                    <option value="2">Alaska</option>
-                                    <option value="3">Arkansas</option>
-                                    <option value="4">Scroll Full List</option>
+
                                 </select>
                             </div>
+
                             <div class="dropdown col-3">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }}>
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }} id="parkDropdown">
                                     <option selected>Park</option>
-                                    <option value="1">Acadia</option>
-                                    <option value="2">Arches</option>
-                                    <option value="3">Badlands</option>
-                                    <option value="4">Scroll Full List</option>
+
 
                                 </select>
                                 </div>
@@ -150,6 +226,13 @@ function Search() {
                                     <option value="2">Mountain</option>
                                     <option value="3">Canyon</option>
                                     <option value="4">Lake</option>
+                                </select>
+                                
+                            </div>
+                            <div class="dropdown col-3">
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }} id="activityDropdown">
+                                    <option selected>Activities</option>
+
                                 </select>
                             </div>
                         </div>
@@ -163,10 +246,11 @@ function Search() {
                                 <p>{park.url}</p>
                                 <p>{park.description}</p>
                                 
+                                
                             </li>
                         ))}
                     </ul>
-                   <MainResults/>
+                    <MainResults />
                 </div>
                 <div class="mainPane col-3">
                     <div className="col-11 position-relative">
