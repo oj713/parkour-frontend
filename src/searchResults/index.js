@@ -187,7 +187,7 @@ function Search() {
                     <div className="col-11 position-relative">
                         <div className="row">
                             <div className="position-relative">
-                                <AiOutlineSearch className="fs-3 position-absolute top-50 start-1 translate-middle-y" />
+                                <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 start-1 translate-middle-y" />
                                 <input
                                     placeholder="Search Parkour"
                                     className="form-control rounded-pill ps-5 subPane"
