@@ -1,52 +1,66 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBars } from 'react-icons/fa';
+import { FaHome, FaUser } from 'react-icons/fa';
+import { CgLogOut } from 'react-icons/cg';
+import { logout } from "./services/auth-services";
 
 const Navigation = () => {
 
     const { pathname } = useLocation();
     const [ignore, parkour, active] = pathname.split("/");
-
-    const {currentUser} = useSelector((state) => state.auth);
-    const finalLink = currentUser ? "profile" : "login"
-
-    const links = ["home", "explore", "notifications", "messages", "bookmarks", finalLink];
-    const getIcon = (link) => {
-        switch (link) {
-            case "home":
-                return <FaHome />;
-            case "explore":
-                return <FaCompass />;
-            case "notifications":
-                return <FaBell />;
-            case "messages":
-                return <FaEnvelope />;
-            case "bookmarks":
-                return <FaBookmark />;
-            case "profile":
-            case "login":
-                return <FaUser />;
-            default:
-                return null;
-        }
-    }
+    const { currentUser } = useSelector((state) => state.auth);
 
     return (
         <div className="list-group mainPane">
-            {links.map((link) => (
+            <Link
+                key='home'
+                to='/home'
+                className={`subPane list-group-item text-capitalize ${active === 'home' ? "active" : ""
+                    }`}>
+                <span className="icon float-start me-2"><FaHome /></span>
+                <span className="text d-lg-none d-xl-block d-none ms-1">
+                    Home
+                </span>
+            </Link>
+            {currentUser ? (
+                <>
+                   <Link
+                        key='profile'
+                        to='/profile'
+                        className={`subPane list-group-item text-capitalize ${active === 'profile' ? "active" : ""
+                            }`}>
+                        <span className="icon float-start me-2"><FaUser /></span>
+                        <span className="text d-lg-none d-xl-block d-none ms-1">
+                            Profile
+                        </span>
+                    </Link>
+                    <Link
+                        key='logout'
+                        to='/home'
+                        className={`subPane list-group-item text-capitalize ${active === 'profile' ? "active" : ""
+                            }`}
+                        onClick={logout}
+                            >
+                        <span className="icon float-start me-2"><CgLogOut /></span>
+                        <span className="text d-lg-none d-xl-block d-none ms-1">
+                            Logout
+                        </span>
+                    </Link>
+                </>
+            ) :
                 <Link
-                    key={link}
-                    to={`/${link}`}
-                    className={`subPane list-group-item text-capitalize ${active === link ? "active" : ""
+                    key='login'
+                    to='/login'
+                    className={`subPane list-group-item text-capitalize ${active === 'login' ? "active" : ""
                         }`}>
-                    <span className="icon float-start me-2">{getIcon(link)}</span>
+                    <span className="icon float-start me-2"><FaUser /></span>
                     <span className="text d-lg-none d-xl-block d-none ms-1">
-                        {link}
+                        Login
                     </span>
                 </Link>
-            ))}
-        </div>
+            }
+        </div >
     );
 };
 

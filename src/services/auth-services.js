@@ -1,8 +1,5 @@
 import axios from "axios";
-import { matchRoutes } from "react-router";
 const API_BASE = process.env.REACT_APP_API_BASE;
-const NPS_API_BASE = process.env.REACT_APP_NPS_API_BASE;
-const NPS_API_KEY = process.env.REACT_APP_NPS_API_KEY;
 const USERS_URL = `${API_BASE}/users`;
 
 const api = axios.create({ withCredentials: true });
@@ -14,8 +11,8 @@ export const login = async ({ username, password }) => {
 };
 
 export const logout = async () => {
-    const response = await api.post(`${USERS_URL}/logout`);
-    return response.data;
+    const status = await api.post(`${USERS_URL}/logout`);
+    return status;
 };
 
 export const profile = async () => {

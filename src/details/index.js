@@ -4,7 +4,7 @@ import axios from 'axios';
 import { findPostsByParkId } from '../services/posts-service';
 import ParkDetails from './ParkDetails';
 import PostsList from '../postsList';
-import { findUsersByDisplayName, findUsersByRangerStation } from '../services/users-services';
+import { findUsersByDisplayName, findRangersByPark } from '../services/users-services';
 import ParkRangers from './ParkRangers';
 import ParkActivities from './ParkActivities';
 import ParkRelated from './ParkRelated';
@@ -66,7 +66,7 @@ function Details() {
         .catch(error => {
           setError(error);
         })
-      findUsersByRangerStation(parkDb._id)
+      findRangersByPark(parkDb._id)
         .then(response => {
           setRangers(response);
         })
@@ -86,7 +86,7 @@ function Details() {
           <div className='row'>
             <div className='col-8 overflow-auto'>
               <ParkDetails park={parkApi} />
-              <PostsList posts={parkPosts} parkInfo={parkDb} />
+              {/* <PostsList posts={parkPosts} parkInfo={parkDb} /> */}
             </div>
             <div className='col-3'>
               <div className='row subPane'>
