@@ -2,11 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\details",
     "\\src\\postsList",
-    "\\src\\profile",
-    "\\src\\reducers",
-    "\\src\\searchResults"
+    "\\src\\searchResults",
+    "\\src\\services"
   ],
-  "SelectedNode": "\\src\\searchResults\\index.js",
+  "SelectedNode": "\\src\\searchResults\\userSearchResult.js",
   "PreviewInSolutionExplorer": false
 }

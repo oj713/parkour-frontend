@@ -12,7 +12,8 @@ import activities from "./activities";
 
 
 
-
+const addedStates = [];
+const addedActivities = [];
 const apiUrl = 'https://developer.nps.gov/api/v1/'//process.env.NPS_API_KEY;
 const apiKey = 'BW8ajGbeYQYXIIDFzJgC4FdVXhY7zl0ITUTm3V8d'//process.env.NPS_API_URL;
 
@@ -34,26 +35,33 @@ function Search() {
     const [parks, setParks] = useState([]);
 
     const dispatch = useDispatch();
+    
 
     function populateDropdown() {
         const stateDropdown = document.getElementById('stateDropdown');
         const activityDropdown = document.getElementById('activityDropdown');
-
-        
+        if (stateDropdown === null) {
+            return;
+        }
 
         // Populate the dropdown with state options
         states.forEach(state => {
-            const option = document.createElement('option');
-            option.value = state.code;
-            option.textContent = state.name;
-            stateDropdown.appendChild(option);
-            console.log(state.name);
+            if (!addedStates.includes(state.code)) {
+                const option = document.createElement('option');
+                option.value = state.code;
+                option.textContent = state.name;
+                stateDropdown.appendChild(option);
+                addedStates.push(state.code);
+            }
         });
         activities.forEach(activity => {
-            const option = document.createElement('option');
-            option.value = activity;
-            option.textContent = activity;
-            activityDropdown.appendChild(option);
+            if (!addedActivities.includes(activity)) {
+                const option = document.createElement('option');
+                option.value = activity;
+                option.textContent = activity;
+                activityDropdown.appendChild(option);
+                addedActivities.push(activity);
+            }
         });
         
     }
@@ -71,40 +79,25 @@ function Search() {
 
 
     // Call the function to populate the dropdown when the window loads
-    window.onload = populateDropdown;
+    
 
-    //useEffect(() => {
-    //    // Fetch data based on the queryValue when the component mounts
-    //    if (queryValue) {
-    //        const search = {
-    //            user: queryValue
-    //        }
-    //        dispatch(findUserByUsernameThunk(search));
-    //    }
-    //}, [queryValue, dispatch]);
     const fetchParks = async () => {
         const parkDropdown = document.getElementById('parkDropdown');
+        //populateDropdown();
         checkDropdowns();
         let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=" + queryValue;
         if (parkState !== '' && parkState !== 'State') {
             parkString += "&stateCode=" + parkState;
         }
-        if (parkActivity !== '' && parkActivity !== 'Activities') {
-            parkString += parkActivity;
-        }
+
         try {
             const response = await fetch(
                 parkString
             );
-
-
-
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
             const data = await response.json();
-            //data = await response.json();
             setParks(data.data);
         } catch (error) {
             console.error('Error fetching park data:', error);
@@ -122,12 +115,12 @@ function Search() {
     };
     useEffect(() => {
 
-
         fetchParks();
-        //populateDropdown();
+        
     }, []);
 
     let parkSearch = parks.sort((a, b) => {
+        
         if (a.name === queryValue && b.name !== queryValue) {
             return -1;
         }
@@ -137,7 +130,7 @@ function Search() {
         else {
             return 0;
         }
-
+        
     });
     
 
@@ -177,7 +170,7 @@ function Search() {
 
 
     // Get a reference to the select element
-
+    populateDropdown();
     return (
 
         <div>
@@ -242,15 +235,21 @@ function Search() {
                     <ul>
                         {parkSearch.map((park) => (
                             <li key={park.id}>
-                                <h2>{park.fullName}</h2>
-                                <p>{park.url}</p>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    {park.images[0] && (
+                                        <img className="rounded-circle" height={48} width={48} src={park.images[0].url} alt={park.fullName} />
+                                    )}
+                                    <h2>{park.fullName}</h2>
+                                </div>
+                                
+                                <p><a href={park.url}>{park.url}</a></p>
                                 <p>{park.description}</p>
                                 
                                 
                             </li>
                         ))}
                     </ul>
-                    <MainResults />
+                    {/*<MainResults />*/}
                 </div>
                 <div class="mainPane col-3">
                     <div className="col-11 position-relative">
