@@ -4,6 +4,10 @@
 
 .details-link:hover {
     background-color: var(--green) !important;
-    color: white;
+    color: white !important;
     
+}
+
+.list-group-item.result-title {
+    color: darkolivegreen; /* Your desired color */
 }

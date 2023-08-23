@@ -1,14 +1,15 @@
 const activities = [
-    "boating",
-    "biking",
-    "camping",
-    "climbing",
-    "canoeing",
-    "fishing",
-    "hiking",
-    "hunting",
-    "horseback",
-    "kayaking",
+    "Astronomy",
+    "Boating",
+    "Biking",
+    "Camping",
+    "Climbing",
+    "Canoeing",
+    "Fishing",
+    "Hiking",
+    "Hunting",
+    "Horseback Riding",
+    "Kayaking",
 
 ];
 
