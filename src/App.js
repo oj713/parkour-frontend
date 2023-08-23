@@ -8,7 +8,6 @@ import Navigation from './navigation';
 import Home from './home/Home';
 import ProfileRouter from './profile/profile-router';
 import Details from './details';
-import Results from './Results';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Search from './searchResults';
@@ -32,7 +31,6 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/profile/*" element={<ProfileRouter />} />
                 <Route path="/details" element={<Details />} />
-                <Route path="/results" element={<Results />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/search" element={<Search />} />

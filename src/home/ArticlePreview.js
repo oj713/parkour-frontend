@@ -10,7 +10,6 @@ const ArticlePreview = ({ article }) => {
         relatedParks,
         releaseDate
     } = article;
-    console.log(article)
 
     return (
         <div className="card w-100 my-3 card-bg">
