@@ -84,18 +84,18 @@ function Details() {
         :
         <>
           <div className='row'>
-            <div className='col-8 overflow-auto'>
+            <div className='col-8'>
               <ParkDetails park={parkApi} />
               {/* <PostsList posts={parkPosts} parkInfo={parkDb} /> */}
             </div>
-            <div className='col-3'>
-              <div className='row subPane'>
+            <div className='col-4 mt-2'>
+              <div className='row subPane bg-brown2 w-75 '>
                 <ParkRangers rangers={rangers} />
               </div>
-              <div className='row subPane'>
+              <div className='row subPane bg-brown2 w-75'>
                 <ParkActivities activities={parkApi.activities} />
               </div>
-              <div className='row subPane'>
+              <div className='row subPane bg-brown2 w-75'>
                 <ParkRelated topics={parkApi.topics} />
               </div>
             </div>

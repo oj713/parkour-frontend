@@ -25,7 +25,7 @@ function App() {
             <div className="col-2">
               <Navigation />
             </div>
-            <div className="container col-9">
+            <div className="container col-10">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
