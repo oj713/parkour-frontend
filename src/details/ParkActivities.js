@@ -6,9 +6,8 @@ const ParkActivities = ({ activities }) => {
 
     return (
         <div className="container">
-            <div className="row">
                 <h3>Activities</h3>
-                <ul className="list-group pe-0">
+                <ul className="list-group mt-1">
                     {activities.slice(0, maxItems).map((activity, index) => (
                         <Link key={index}
                             className="list-group-item card-bg details-link bg-brown1"
@@ -18,7 +17,6 @@ const ParkActivities = ({ activities }) => {
                         </Link>
                     ))}
                 </ul>
-            </div>
         </div>
     );
 };

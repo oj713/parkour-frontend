@@ -153,7 +153,7 @@ if it interferes with other parts of the site, might have application elsewhere 
     padding: 1vw;
     border: 3px solid var(--brown1);
     border-radius: calc(2*var(--round));
-    max-width: 800px;
+    max-width: 75%;
 }
 
 /* Use for smaller panes -- e.g. Posts, Comments */

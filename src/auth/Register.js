@@ -19,7 +19,7 @@ function Register() {
         }
     };
     return (
-        <div>
+        <div className="mainPane">
             <h1>Register Screen</h1>
             <div className="mt-2">
                 <label>Username</label>

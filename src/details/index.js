@@ -37,11 +37,9 @@ function Details() {
         } else {
           setError({message: 'Park not found'});
         }
-        setLoading(false);
       })
       .catch(error => {
         setError(error);
-        setLoading(false);
       });
   }, []);
 
@@ -69,6 +67,7 @@ function Details() {
       findRangersByPark(parkDb._id)
         .then(response => {
           setRangers(response);
+          setLoading(false);
         })
         .catch(error => {
           setError(error);
@@ -84,11 +83,11 @@ function Details() {
         :
         <>
           <div className='row'>
-            <div className='col-8'>
-              <ParkDetails park={parkApi} />
+            <div className='col-md-8'>
+              <ParkDetails park={parkApi} username={parkDb.username} />
               {/* <PostsList posts={parkPosts} parkInfo={parkDb} /> */}
             </div>
-            <div className='col-4 mt-2'>
+            <div className='d-none d-md-block col-md-4 mt-2'>
               <div className='row subPane bg-brown2 w-75 '>
                 <ParkRangers rangers={rangers} />
               </div>
