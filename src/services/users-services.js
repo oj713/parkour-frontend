@@ -5,6 +5,16 @@ const RANGERS_URL = `${API_BASE}/rangers`;
 
 const api = axios.create({ withCredentials: true });
 
+
+export const getUsers = async (params) => {
+    try {
+        const response = await axios.get(`${API_BASE}/users`, { params });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const findUserByUsername = async  username  => {
     const response = await api.get(`${USERS_URL}?username=${username}`);
     const user = response.data;
