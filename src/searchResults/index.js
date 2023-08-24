@@ -19,6 +19,7 @@ const apiKey = 'BW8ajGbeYQYXIIDFzJgC4FdVXhY7zl0ITUTm3V8d'//process.env.NPS_API_U
 
 
 function Search() {
+    
     const { pathname, search } = useLocation();
     const navigate = useNavigate();
     const [ignore, parkour, active] = pathname.split("/");
@@ -31,15 +32,32 @@ function Search() {
     let parkChoice = '';
     let parkActivity = '';
 
+
     let [searchInput, setSearchInput] = useState('');
     const [parks, setParks] = useState([]);
 
     const dispatch = useDispatch();
+
+    let parkSearch = parks.sort((a, b) => {
+
+        if (a.name === queryValue && b.name !== queryValue) {
+            return -1;
+        }
+        else if (a.name !== queryValue && b.name === queryValue) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+
+    });
     
 
-    function populateDropdown() {
+    const populateDropdown = async () => {
         const stateDropdown = document.getElementById('stateDropdown');
         const activityDropdown = document.getElementById('activityDropdown');
+        const parkDropdown = document.getElementById('parkDropdown');
+        const userPark = document.getElementById('userPark');
         if (stateDropdown === null) {
             return;
         }
@@ -63,32 +81,7 @@ function Search() {
                 addedActivities.push(activity);
             }
         });
-        
-    }
-
-    function checkDropdowns() {
-        const stateDropdown = document.getElementById('stateDropdown');
-        const activityDropdown = document.getElementById('activityDropdown');
-
-        parkState = stateDropdown.value;
-        parkActivity = activityDropdown.value;
-        //parkSearch = parkSearch.filter(park => park.addresses[0].stateCode === parkState);
-
-    }
-
-
-
-    // Call the function to populate the dropdown when the window loads
-    
-
-    const fetchParks = async () => {
-        const parkDropdown = document.getElementById('parkDropdown');
-        //populateDropdown();
-        checkDropdowns();
-        let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=" + queryValue;
-        if (parkState !== '' && parkState !== 'State') {
-            parkString += "&stateCode=" + parkState;
-        }
+        let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=park";
 
         try {
             const response = await fetch(
@@ -106,32 +99,87 @@ function Search() {
             const option = document.createElement('option');
             option.value = park.name;
             option.textContent = park.name;
-            
+
             parkDropdown.appendChild(option);
-            
+            userPark.appendChild(option);
+
         })
+        
+    }
+    populateDropdown();
+
+    function checkDropdowns() {
+        const stateDropdown = document.getElementById('stateDropdown');
+        const activityDropdown = document.getElementById('activityDropdown');
+        const parkDropdown = document.getElementById('parkDropdown');
+
+        if (stateDropdown === null) {
+            return;
+        }
+
+        parkState = stateDropdown.value;
+        parkActivity = activityDropdown.value;
+        parkChoice = parkDropdown.value;
+
+
+
+    }
+
+    
+
+    const fetchParks = async () => {
+        
+        checkDropdowns();
+        let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=" + queryValue;
+
+        try {
+            const response = await fetch(
+                parkString
+            );
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setParks(data.data);
+        } catch (error) {
+            console.error('Error fetching park data:', error);
+        }
+       
 
         
     };
     useEffect(() => {
 
         fetchParks();
+        filterParks();
+        
         
     }, []);
 
-    let parkSearch = parks.sort((a, b) => {
-        
-        if (a.name === queryValue && b.name !== queryValue) {
-            return -1;
+    let parkSort = parkSearch;
+    
+
+    const filterParks = () => {
+        checkDropdowns();
+        const activityDropdown = document.getElementById('activityDropdown');
+        if (activityDropdown === null) {
+            return;
         }
-        else if (a.name !== queryValue && b.name === queryValue) {
-            return 1;
+        if (parkActivity !== '' && parkActivity !== 'Activities') {
+
+            parkSort = parkSearch.filter(park => park.activities.some(activity => activity.name === parkActivity));
+
         }
-        else {
-            return 0;
+
+        if (parkChoice !== '' && parkChoice !== 'Park') {
+            parkSort = parkSort.filter(park => park.name === parkChoice);
         }
-        
-    });
+        if (parkState !== '' && parkState !== 'State') {
+
+            parkSort = parkSort.filter(park => park.addresses.some(address => address.stateCode === parkState));
+
+        }
+    }
     
 
     const searchEnterHandler = () => {
@@ -153,7 +201,8 @@ function Search() {
         queryValue = searchInput;
         
         fetchParks();
-        checkDropdowns();
+        filterParks();
+        
     }
 
     const userSearchHandler = () => {
@@ -170,7 +219,7 @@ function Search() {
 
 
     // Get a reference to the select element
-    populateDropdown();
+    filterParks();
     return (
 
         <div>
@@ -197,33 +246,24 @@ function Search() {
                         </div>
                         <div className="row">
 
-                            <div class="dropdown col-3">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }} id="stateDropdown">
+                            <div class="dropdown col-4">
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="stateDropdown">
                                     <option selected>State</option>
 
                                 </select>
                             </div>
 
-                            <div class="dropdown col-3">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }} id="parkDropdown">
+                            <div class="dropdown col-4">
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="parkDropdown">
                                     <option selected>Park</option>
 
 
                                 </select>
                                 </div>
       
-                            <div class="dropdown col-3">
-                                <select class="form-select btn btn-success" style={{"background-color":"darkgreen"}}>
-                                    <option selected>Feature</option>
-                                    <option value="1">Coastline</option>
-                                    <option value="2">Mountain</option>
-                                    <option value="3">Canyon</option>
-                                    <option value="4">Lake</option>
-                                </select>
-                                
-                            </div>
-                            <div class="dropdown col-3">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }} id="activityDropdown">
+
+                            <div class="dropdown col-4">
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="activityDropdown">
                                     <option selected>Activities</option>
 
                                 </select>
@@ -233,13 +273,15 @@ function Search() {
                     </div>
                     
                     <ul>
-                        {parkSearch.map((park) => (
+                        {parkSort.map((park) => (
                             <li key={park.id}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                     {park.images[0] && (
                                         <img className="rounded-circle" height={48} width={48} src={park.images[0].url} alt={park.fullName} />
                                     )}
-                                    <h2>{park.fullName}</h2>
+
+
+                                    <h2><a href={`/#/details?name=${encodeURIComponent(park.name)}`} className="list-group-item details-link result-title " >{park.fullName}</a></h2>
                                 </div>
                                 
                                 <p><a href={park.url}>{park.url}</a></p>
@@ -267,19 +309,16 @@ function Search() {
                         </div>
                         <div class="row">
                         <div class="dropdown col-6">
-                            <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }}>
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="userRoles">
                                 <option selected>Role</option>
-                                <option value="1">Visitor</option>
+                                <option value="1">Hiker</option>
                                 <option value="2">Ranger</option>
                             </select>
                         </div>
 
                         <div class="dropdown col-6">
-                            <select class="form-select btn btn-success" style={{ "background-color": "darkgreen" }}>
+                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="userPark">
                                 <option selected>Park</option>
-                                <option value="1">Acadia</option>
-                                <option value="2">Arches</option>
-                                <option value="3">Badlands</option>
                             </select>
                             </div>
                             </div>

@@ -12,14 +12,14 @@ function Register() {
     const handleRegister = async () => {
         try {
             const newUser = { username, password, displayName, role };
-            dispatch(registerThunk(newUser));
+            await dispatch(registerThunk(newUser));
             navigate("/profile");
         } catch (e) {
             alert(e);
         }
     };
     return (
-        <div>
+        <div className="mainPane">
             <h1>Register Screen</h1>
             <div className="mt-2">
                 <label>Username</label>

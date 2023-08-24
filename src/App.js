@@ -5,7 +5,7 @@ import authReducer from './reducers/auth-reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Navigation from './navigation';
-import Home from './home/Home';
+import Home from './home';
 import ProfileRouter from './profile/profile-router';
 import Details from './details';
 import Login from './auth/Login';
@@ -21,20 +21,22 @@ function App() {
     <Provider store={store}>
       <HashRouter>
         <AuthContext>
-          <div className="row">
-            <div className="col-2">
-              <Navigation />
-            </div>
-            <div className="container col-9">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/profile/*" element={<ProfileRouter />} />
-                <Route path="/details" element={<Details />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/search" element={<Search />} />
-              </Routes>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-2">
+                <Navigation />
+              </div>
+              <div className="col-10">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/profile/*" element={<ProfileRouter />} />
+                  <Route path="/details" element={<Details />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/search" element={<Search />} />
+                </Routes>
+              </div>
             </div>
           </div>
         </AuthContext>

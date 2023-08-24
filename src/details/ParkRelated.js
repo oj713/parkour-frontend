@@ -1,30 +1,23 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const ParkTopics = ({ topics }) => {
     const maxItems = 10;
-    const navigate = useNavigate();
 
-    const handleClick = topicName => {
-        // navigate('/')
-
-    }
 
     return (
         <div className="container">
-            <div className="row">
-                <h3>Related</h3>
-                <ul className="list-group">
-                    {topics.slice(0, maxItems).map((topic, index) => (
-                        <li key={index} 
-                            className="list-group-item card-bg"
-                            onClick={() => handleClick(topic.name)}
-                            >
-                                {topic.name}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <h3>Related</h3>
+            <ul className="list-group mt-1">
+                {topics.slice(0, maxItems).map((topic, index) => (
+                    <Link key={index}
+                        className="list-group-item card-bg details-link bg-brown1"
+                        to={`/search?query=${topic.name}`}
+                    >
+                        {topic.name}
+                    </Link>
+                ))}
+            </ul>
         </div>
     );
 };
