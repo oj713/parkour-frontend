@@ -6,11 +6,10 @@
     "\\src\\home",
     "\\src\\home-right-side",
     "\\src\\postsList",
-    "\\src\\profile",
     "\\src\\reducers",
     "\\src\\searchResults",
     "\\src\\services"
   ],
-  "SelectedNode": "\\.env",
+  "SelectedNode": "\\src\\searchResults\\userSearch.js",
   "PreviewInSolutionExplorer": false
 }

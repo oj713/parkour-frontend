@@ -20,6 +20,7 @@ const UserResults = () => {
     const [filtRang, setFiltRang] = useState([]);
     const [loading, setLoading] = useState(true);
 
+
     useEffect(() => {
 
 
@@ -94,13 +95,18 @@ const UserResults = () => {
     return (
         <div>
             <ul className = "list-group">
-                {filtered.map(post => <SearchResult
-                    key={post._id}
-                    post={post} />)}
+                {filtered.map(post => (
+                    <a key={post._id} href={`/profile/${post.username}`} className="profile-link">
+                        <SearchResult post={post} />
+                    </a>
+                ))}
+                
                 {filtRang.length > 0 && <h3>Ranger Matches</h3>}
-                {filtRang.map(post => <SearchResult
-                    key={post._id}
-                    post={post} />)}
+                {filtRang.map(post => (
+                    <a key={post._id} href={`/profile/${post.username}`} className="profile-link">
+                        <SearchResult post={post} />
+                    </a>
+                ))}
 
             </ul>
         </div>

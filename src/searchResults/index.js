@@ -90,7 +90,6 @@ function Search() {
     function checkDropdowns() {
         const stateDropdown = document.getElementById('stateDropdown');
         const activityDropdown = document.getElementById('activityDropdown');
-        const parkDropdown = document.getElementById('parkDropdown');
 
         if (stateDropdown === null) {
             return;
@@ -214,23 +213,15 @@ function Search() {
                         </div>
                         <div className="row">
 
-                            <div class="dropdown col-4">
+                            <div class="dropdown col-6">
                                 <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="stateDropdown">
                                     <option selected>State</option>
 
                                 </select>
                             </div>
-
-                            <div class="dropdown col-4">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="parkDropdown">
-                                    <option selected>Park</option>
-
-
-                                </select>
-                                </div>
       
 
-                            <div class="dropdown col-4">
+                            <div class="dropdown col-6">
                                 <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="activityDropdown">
                                     <option selected>Activities</option>
 
