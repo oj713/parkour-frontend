@@ -2,7 +2,7 @@ import axios from 'axios';
 const API_BASE = process.env.REACT_APP_API_BASE;
 const POSTS_API = `${API_BASE}/posts`
 
-const createPost = async post => {
+export const createPost = async post => {
     const response = await axios.post(POSTS_API, post);
     return response.data;
 }

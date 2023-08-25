@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import ProfileHead from './profile-header';
 import ProfileBottomHalf from './profile-bottom-content';
 import {useSelector} from 'react-redux'
-import {useLocation} from 'react-router-dom'
 import { findUserByUsername } from '../services/users-services';
 
 function Profile({username = null}) {

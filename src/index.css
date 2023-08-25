@@ -192,3 +192,7 @@ li.list-group-item.subPane {
 .bg-brown4 {
     background-color: var(--brown4);
 }
+
+.addPadding > div {
+    padding: .5em;
+}
