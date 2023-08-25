@@ -111,7 +111,7 @@ const [isRanger, setIsRanger] = useState()
 const [canDelete, setCanDelete] = useState()
 
 useEffect(() => {
-    console.log("LikedPosts: ", currentUser.likedPosts)
+    console.log("LikedPosts: ", currentUser ? currentUser.likedPosts : "no current user")
 }, [currentUser])
 
 useEffect(() => {
