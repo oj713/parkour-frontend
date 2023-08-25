@@ -8,7 +8,7 @@ const api = axios.create({ withCredentials: true });
 
 export const getUsers = async (params) => {
     try {
-        const response = await axios.get(`${API_BASE}/users`, { params });
+        const response = await axios.get(`${USERS_URL}`, { params });
         return response.data;
     } catch (error) {
         throw error;

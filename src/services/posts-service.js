@@ -7,6 +7,14 @@ export const createPost = async post => {
     return response.data;
 }
 
+export const findPostsByFollowing = async following => {
+  const allPosts = await Promise.all(
+      following.map(user => findPostsByUserId(user.item))
+  );
+
+  return allPosts.flat();
+}
+
 export const findPostsByParkId = async parkId => {
   const response = await axios.get(`${POSTS_API}?parkId=${parkId}`);
   return response.data;

@@ -1,35 +1,28 @@
 import React from "react";
-import { RxCross2 } from "react-icons/rx";
-import RangerIcon from "../assets/ranger-icon";
-import LocationTag from "../assets/location-tag";
-import { IoFootstepsSharp } from "react-icons/io5";
-import { ReactComponent as ParkourLogo } from "../assets/Logo/parkour-logo.svg";
-import { ReactComponent as ParkourLogoOutline } from "../assets/Logo/parkour-logo-outline.svg";
+import { Link } from "react-router-dom";
 
-const FollowUser = (
-    { post = {
-        "_id": 123,
-        "userName": "Name",
-        "handle": "@hiker",
-        "profileimage": "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX3360859.jpg"} }
-) => {
+const FollowUser = ({ user }) => {
 
     return (
         <li className="list-group-item subPane">
             <div className="flex-wrap whitespace-nowrap">
                 <div className="pe-2">
                     
-                    <img className="rounded-circle" height={48} width={48} src={post.profileimage} />
+                    <img className="rounded-circle" height={48} width={48} src={user.profileImage} />
                 </div>
                 <div className="flex-1 up-2">
                     <div>
                         
-                        <h3>{post.userName}</h3>
+                    <Link style={{ textDecoration: 'none', color: 'inherit' }}
+                        to={`/profile/${user.username}`}
+                    >
+                        <h3>{user.displayName}</h3>
+                    </Link>
 
                     </div>
                     <div className="up-2">
                         
-                        {post.handle}</div>
+                        @{user.username}</div>
                 </div>
                 <div>
                     

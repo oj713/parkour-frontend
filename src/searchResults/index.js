@@ -33,7 +33,7 @@ function Search() {
     let parkActivity = '';
 
 
-    let [searchInput, setSearchInput] = useState('');
+    let [searchInput, setSearchInput] = useState(queryValue ? queryValue : '');
 
     const [parks, setParks] = useState([]);
 

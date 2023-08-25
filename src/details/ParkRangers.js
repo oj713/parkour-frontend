@@ -9,7 +9,7 @@ const ParkRangers = ({ rangers }) => {
                 {rangers.map((ranger, index) =>
                     <Link key={index}
                         className="list-group-item card-bg details-link bg-brown1"
-                        to={`/${ranger.username}`}
+                        to={`/profile/${ranger.username}`}
                     >
                         {ranger.displayName}
                     </Link>

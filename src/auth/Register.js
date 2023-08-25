@@ -39,19 +39,19 @@ function Register() {
             <div className="mt-2">
                 <label>Role</label>
                 <div className="form-check">
-                    <input class="form-check-input" type="radio" name="role" id="hiker" value="hiker" checked={role === "hiker"} onChange={event => setRole(event.target.value)}/>
+                    <input class="form-check-input" type="radio" name="role" id="hiker" value="hikers" checked={role === "hikers"} onChange={event => setRole(event.target.value)}/>
                         <label class="form-check-label" for="hiker">
                             Hiker
                         </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="role" id="ranger" value="ranger" checked={role === "ranger"} onChange={event => setRole(event.target.value)} />
+                    <input class="form-check-input" type="radio" name="role" id="ranger" value="rangers" checked={role === "rangers"} onChange={event => setRole(event.target.value)} />
                         <label class="form-check-label" for="ranger">
                             Ranger
                         </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="role" id="park" value="park" checked={role === "park"} onChange={event => setRole(event.target.value)} />
+                    <input class="form-check-input" type="radio" name="role" id="park" value="parks" checked={role === "parks"} onChange={event => setRole(event.target.value)} />
                         <label class="form-check-label" for="park">
                             Park
                         </label>
