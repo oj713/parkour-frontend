@@ -188,8 +188,7 @@ function Search() {
     // Get a reference to the select element
     filterParks();
     return (
-
-        <div>
+        <>
             <div class="row">
                 <div class="mainPane col-8">
 
@@ -252,7 +251,7 @@ function Search() {
                     </ul>
                     {/*<MainResults />*/}
                 </div>
-                <div class="mainPane col-3">
+                <div class="mainPane col-3 d-none d-lg-block">
                     <div className="col-11 position-relative">
                         <h2>Users</h2>
                     </div>
@@ -260,8 +259,16 @@ function Search() {
                    
                 </div>
             </div>
+            <div class="row d-lg-none">
+                <div class="mainPane col-8">
+                    <div className="col-11 position-relative">
+                        <h2>Users</h2>
+                    </div>
+                    <UserResults />
+            </div>
 
         </div>
+        </>
     )
 }
 

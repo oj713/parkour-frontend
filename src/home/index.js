@@ -24,7 +24,6 @@ function Home() {
     }
 
     return (
-        <div className="container-fluid">
             <div className="row">
                 <div className="mainPane col-xl-10">
                     <div className="col-11">
@@ -53,8 +52,6 @@ function Home() {
                     <RightSide />
                 </div>
             </div>
-        </div>
-
     )
 }
 
