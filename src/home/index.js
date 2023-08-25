@@ -11,7 +11,7 @@ function Home() {
     const navigate = useNavigate();
     const [ignore, parkour, active] = pathname.split("/");
 
-    
+
     let [searchInput, setSearchInput] = useState('');
 
     const searchEnterHandler = () => {
@@ -24,9 +24,9 @@ function Home() {
     }
 
     return (
-        <div>
+        <div className="container-fluid">
             <div className="row">
-                <div className="mainPane col-8">
+                <div className="mainPane col-xl-10">
                     <div className="col-11">
                         <div className="row">
                             <div className="position-relative">
@@ -49,12 +49,12 @@ function Home() {
                         <Feed />
                     </div>
                 </div>
-                <div class="mainPane col-3">
+                <div className="d-none d-xl-block col-xl-2">
                     <RightSide />
                 </div>
             </div>
-
         </div>
+
     )
 }
 

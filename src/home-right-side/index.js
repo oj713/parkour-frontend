@@ -10,14 +10,15 @@ const RightSide = () => {
 
     const { currentUser } = useSelector(state => state.auth);
     return (
+        
         <ul class="list-group">
             {currentUser &&
-                <li>
+                <li className="list-group-item">
                     <h4>Who to follow </h4>
                     {followlist.map(post => <FollowUser post={post} />)}
                 </li>
             }
-            <li>
+            <li className="list-group-item bg-brown2 my-4">
                 <h4>Fun Facts </h4>
                 {factlist.map(post => <FunFacts post={post} />)}
             </li>

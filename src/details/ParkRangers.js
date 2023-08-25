@@ -1,12 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ParkRangers = ({ rangers }) => {
     return (
         <div className='container'>
             <h2>Park Rangers</h2>
-            {rangers.map(ranger =>
-                <h3>{ranger.displayName}</h3>
-            )}
+            <ul className='list-group'>
+                {rangers.map((ranger, index) =>
+                    <Link key={index}
+                        className="list-group-item card-bg details-link bg-brown1"
+                        to={`/${ranger.username}`}
+                    >
+                        {ranger.displayName}
+                    </Link>
+                )}
+            </ul>
         </div>
     )
 }
