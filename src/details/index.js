@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { findPostsByParkId } from '../services/posts-service';
@@ -21,6 +22,9 @@ function Details() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const NPS_API = `${process.env.REACT_APP_NPS_API_BASE}/parks?q=${name}&api_key=${process.env.REACT_APP_NPS_API_KEY}`;
+
+  let currentUser = useSelector(state => state.auth.currentUser)
+  let [canPostToBoard, setCanPostToBoard] = useState(false)
 
   useEffect(() => {
     axios.get(NPS_API)
@@ -72,6 +76,9 @@ function Details() {
         .catch(error => {
           setError(error);
         })
+      setCanPostToBoard(currentUser && 
+      (currentUser.role === "hikers" || 
+      (currentUser.role === "rangers" && currentUser.parkId === parkDb._id)))
     }
   }, [parkDb])
 
@@ -85,7 +92,9 @@ function Details() {
           <div className='row'>
             <div className='col-md-8'>
               <ParkDetails park={parkApi} username={parkDb.username} />
-              {/* <PostsList posts={parkPosts} parkInfo={parkDb} /> */}
+              <PostsList postFunction = {async () => {return await findPostsByParkId(parkDb._id)}}
+                createPost = {{render: canPostToBoard, parkInfo: parkDb}}
+                parkInfo={parkDb} />
             </div>
             <div className='d-none d-md-block col-md-4 mt-2'>
               <div className='row subPane bg-brown2 w-75 '>
