@@ -1,0 +1,28 @@
+.locationPin .icon {
+    font-size: 1.5em;
+}
+
+.locationPin input {
+    display:inline-block;
+    border: none;
+    font-weight: bold;
+    color: white;
+    width: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.locationPin input::placeholder {
+    color: white;
+    
+}
+
+.locationPin input:focus {
+    outline: none;
+}
+
+.selectPark {
+    width:"auto"; 
+    outline: none;
+}

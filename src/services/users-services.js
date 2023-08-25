@@ -33,8 +33,20 @@ export const findUsersByDisplayName = async displayName => {
     return users;
 }
 
-export const findUserHeaderById = async id => {
-    const response = await api.get(`${USERS_URL}/header/${id}`);
-    const userHeader = response.data;
-    return userHeader;
+export const findParksHeaders = async id => {
+    const response = await api.get(`${API_BASE}/parksheaders`)
+    const parksHeaders = response.data;
+    return parksHeaders;
+}
+
+export const findParkById = async id => {
+    const response = await api.get(`${API_BASE}/parks/${id}`)
+    const park = response.data;
+    return park;
+}
+
+export const findUserById = async id => {
+    const response = await api.get(`${API_BASE}/users/${id}`)
+    const user = response.data;
+    return user;
 }
