@@ -42,7 +42,7 @@ const ProfileHead = ({user}) => {
             </div>
             <div className = "p-3 d-flex">
                 <div className = "green2 flex-grow-1">{user.profileBio}</div>
-                <button className="parkour-btn green-btn btn">
+                <button className="parkour-btn green-btn btn text-nowrap">
                     Follow +
                 </button>
             </div>
