@@ -6,6 +6,7 @@ import NavTabs from '../assets/navigation-tabs'
 import { Route, Routes } from 'react-router-dom'
 import {findPostsByUserId, findPostsByParkId} from '../services/posts-service'
 import { findParkById } from '../services/users-services';
+import { fetchUsers } from '../services/users-services';
 
 const ProfileBottomHalf = ({user}) => {
   let {currentUser} = useSelector(state => state.auth)
@@ -50,7 +51,7 @@ const ProfileBottomHalf = ({user}) => {
                     {_id: currentUser.parkId} : null}}
                 userInfo = {user} showParkHeaders = {true}/> 
           } />
-          <Route path="/rangers" element={<h1>Rangers</h1>} />
+              <Route path="/rangers" element={<h1>Rangers</h1>} />
           <Route path="/following" element={<h1>Following</h1>} />
           <Route path="/followers" element={<h1>Followers</h1>} />
         </Routes>

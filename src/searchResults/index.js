@@ -82,29 +82,7 @@ function Search() {
                 addedActivities.push(activity);
             }
         });
-        //let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=park";
 
-        //try {
-        //    const response = await fetch(
-        //        parkString
-        //    );
-        //    if (!response.ok) {
-        //        throw new Error('Network response was not ok');
-        //    }
-        //    const data = await response.json();
-        //    setParks(data.data);
-        //} catch (error) {
-        //    console.error('Error fetching park data:', error);
-        //}
-        //parks.forEach(park => {
-        //    const option = document.createElement('option');
-        //    option.value = park.name;
-        //    option.textContent = park.name;
-
-        //    parkDropdown.appendChild(option);
-        //    userPark.appendChild(option);
-
-        //})
         
     }
     populateDropdown();
@@ -120,8 +98,6 @@ function Search() {
 
         parkState = stateDropdown.value;
         parkActivity = activityDropdown.value;
-        parkChoice = parkDropdown.value;
-
 
 
     }
@@ -187,18 +163,9 @@ function Search() {
         const search = {
             user: searchInput
         }
-        //var url = apiUrl;
-        //url += '?apikey=' + apiKey;
-        //url += '&s=' + searchInput;
-        //fetch(url)
-        //    .then(res => res.json())
-        //    .then(json => {
-        //        this.setState({})
-        //    })
-        //dispatch(findUserByUsernameThunk(search));
+
         setSearchInput("");
         navigate(`/search?query=${searchInput}`);
-        window.history.pushState(null, "", `/search?query=${searchInput}`);
         queryValue = searchInput;
         
         fetchParks();
