@@ -1,34 +1,37 @@
 import React from 'react';
+import {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import PostsList from '../postsList'
 import NavTabs from '../assets/navigation-tabs'
 import { Route, Routes } from 'react-router-dom'
 import {findPostsByUserId, findPostsByParkId} from '../services/posts-service'
+import { findParkById } from '../services/users-services';
 
 const ProfileBottomHalf = ({user}) => {
   let {currentUser} = useSelector(state => state.auth)
 
-  /* These are pretty arbitrary feel free to edit */
   let roleTabs = []
   switch (user.role) {
-    case "park":
-      roleTabs = [{ "name": "Board", "link": "" }, { "name": "Posts", "link": "posts" }, { "name": "Rangers", "link": "rangers" }]
+    case "parks":
+      roleTabs = [{ "name": "Board", "link": "" }, { "name": "Rangers", "link": "rangers" }]
       break
-    case "ranger":
-      roleTabs = [{ "name": "Posts", "link": "" }, { "name": "Park", "link": "park" }]
+    case "rangers":
+      roleTabs = [{ "name": "Posts", "link": "" }]
       break;
     default:
-      roleTabs = [{ "name": "Posts", "link": "" }]
+      roleTabs = [{ "name": "Posts", "link": "" }, {"name": "Likes", "link": "likes"}, { "name": "Following", "link": "following" }]
       break;
   }
   const subtabs = [
     ...roleTabs,
-    { "name": "Following", "link": "following" }, { "name": "Followers", "link": "followers" }]
-  
-  // can post to board if user is logged in, they are posting to a park. Parks can't post outside their own board. 
-  const canPostToBoard = currentUser && user.role === "park" && 
-  (currentUser.role !== "park" || currentUser._id === user._id)
+    { "name": "Followers", "link": "followers" }]
+    
+  // is hiker OR is ranger's park
+  const canPostToBoard = currentUser && 
+    (currentUser.role === "hikers" || 
+    (currentUser.role === "rangers" && currentUser.parkId === user._id))
 
+  // if own profile. parks don't have a posts tab
   const canPostToPosts = currentUser && currentUser._id === user._id
 
   return (
@@ -36,20 +39,17 @@ const ProfileBottomHalf = ({user}) => {
       <NavTabs tabs={subtabs} />
         <Routes>
           <Route path="/" element={
-            user.role === "park" ? 
+            user.role === "parks" ? 
             <PostsList postFunction = {async () => {return await findPostsByParkId(user._id)}}
               createPost = {{render: canPostToBoard, parkInfo: user}}
-              parkInfo = {user} showParkHeaders = {false}/> :
+              parkInfo = {user} showParkHeaders = {false}/> 
+              :
             <PostsList postFunction = {async () => {return await findPostsByUserId(user._id)}}
-              createPost = {{render: canPostToPosts, parkInfo: null}}
-              userInfo = {user} showParkHeaders = {true}/> 
+              createPost = {{render: canPostToPosts, 
+                parkInfo: currentUser && currentUser.role === "rangers" ?
+                    {_id: currentUser.parkId} : null}}
+                userInfo = {user} showParkHeaders = {true}/> 
           } />
-          <Route path="/posts" element={
-            <PostsList postFunction = {async () => {return await findPostsByUserId(user._id)}}
-              createPost = {{render: canPostToPosts, parkInfo: user}}
-              userInfo = {user} showParkHeaders = {true}/> 
-          }/>
-          <Route path="/park" element={<h1>Park</h1>} />
           <Route path="/rangers" element={<h1>Rangers</h1>} />
           <Route path="/following" element={<h1>Following</h1>} />
           <Route path="/followers" element={<h1>Followers</h1>} />

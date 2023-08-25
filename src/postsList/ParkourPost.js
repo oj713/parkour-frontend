@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {useDispatch} from "react-redux";
 import {useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import RangerIcon from "../assets/ranger-icon";
@@ -7,8 +8,9 @@ import LocationTag from "../assets/location-tag";
 //import {IoFootstepsSharp} from "react-icons/io5";
 import {ReactComponent as ParkourLogo} from "../assets/Logo/parkour-logo.svg";
 import {ReactComponent as ParkourLogoOutline} from "../assets/Logo/parkour-logo-outline.svg";
-import { findUserHeaderById } from "../services/users-services";
+import { findParkById, findUserById } from "../services/users-services";
 import {updatePost, deletePost} from "../services/posts-service";
+import {updateUserThunk} from "../services/auth-thunks";
 
 // adapted from https://www.slingacademy.com/article/javascript-how-to-convert-date-time-to-time-ago/
 const timeAgo = (date) => {
@@ -48,9 +50,10 @@ const ParkourPost = (
     {postInfo, parkInfo, userInfo, showParkHeaders, onDelete}
 ) => {
 let [post, setPost] = useState(postInfo)
-let {currentUser} = useSelector(state => state.auth)
-const likedByUser = currentUser && post.likes.includes(currentUser._id)
-//const likedByPark = post.likes.includes(park._id) consider replacing backend?
+let currentUser = useSelector(state => state.auth.currentUser)
+let likedByUser = (currentUser && currentUser.role !== "parks" && 
+    currentUser.likedPosts.includes(post._id))
+const dispatch = useDispatch()
 
 // gradient background styling for parks headers
 const gradientBackground = (image) => {
@@ -72,14 +75,26 @@ const handleLikeToggle = (post) => {
     if (!currentUser) {
         window.alert("Please log in to like posts.")
         return
+    } else if (currentUser.role === "parks") {
+        return
     }
 
+    // updating the post 
     const updatedPost = {...post, 
-        likes: likedByUser ? post.likes.filter(id => id !== currentUser._id) : [...post.likes, currentUser._id],
-        likedByPark: currentUser._id === park._id ? !post.likedByPark : post.likedByPark}
+        likes: post.likes + (likedByUser ? -1 : 1),
+        numRangerLikes: post.numRangerLikes +
+        (currentUser.role === "rangers" ? (likedByUser ? -1 : 1) : 0)}
 
     updatePost(updatedPost)
     setPost(updatedPost)
+
+    // updating likedPosts in currentUser
+    const updatedUser = {...currentUser,
+        likedPosts: likedByUser ? currentUser.likedPosts.filter(like => like !== post._id) :
+        [...currentUser.likedPosts, post._id]}
+    
+    // updating the store
+    dispatch(updateUserThunk(updatedUser))
 }
 
 // VARIABLES AND RETRIEVING INFORMATION --------------------------
@@ -91,13 +106,17 @@ const [park, setPark] = useState(parkInfo)
 const [user, setUser ] = useState(userInfo)
 
 // derived information
-const [isPark, setIsPark] = useState()
+//const [isPark, setIsPark] = useState()
 const [isRanger, setIsRanger] = useState()
 const [canDelete, setCanDelete] = useState()
 
 useEffect(() => {
+    console.log("LikedPosts: ", currentUser.likedPosts)
+}, [currentUser])
+
+useEffect(() => {
     if (!park) {
-        findUserHeaderById(post.parkId)
+        findParkById(post.parkId)
         .then ( response => {
             setPark(response)
         })
@@ -110,7 +129,7 @@ useEffect(() => {
 
 useEffect(() => {
     if (!user) {
-        findUserHeaderById(post.userId)
+        findUserById(post.userId.item)
         .then ( response => {
             setUser(response)
         })
@@ -123,19 +142,19 @@ useEffect(() => {
 
 useEffect(() => {
     if (park && user) {
-        setIsPark(user.role === "park")
+        //setIsPark(user.role === "park")
 
-        setIsRanger(user.role === "ranger" && 
-            user.rangerStation === park._id)
+        setIsRanger(user.role === "rangers" && 
+            user.parkId === park._id)
 
         // if current user wrote the post
-        // if current user is a ranger and the post is in their park but NOT a park post
+        // if current user is a ranger and the post is in their park
         // if current user is a park and the post is in their park
         setCanDelete(currentUser && (
             currentUser._id === user._id ||
-            (currentUser.role === "ranger" && !isPark &&
-            currentUser.rangerStation === park._id) ||
-            (currentUser.role === "park" &&
+            (currentUser.role === "rangers" && //!isPark &&
+            currentUser.parkId === park._id) ||
+            (currentUser.role === "parks" &&
             currentUser._id === park._id))
         )
 
@@ -146,21 +165,21 @@ useEffect(() => {
 return (
 isLoading ? <></> : error ? <p> Error: {error} </p> :
 <li className = "list-group-item subPane p-0 addPadding">
-    {showParkHeaders && !isPark &&
+    {showParkHeaders && //!isPark &&
     <div style = {gradientBackground(park.profileImage)}>
         <a href = {`#/profile/${park.username}`}><h3 className = "white ms-1 me-1">{park.displayName} National Park</h3></a>
     </div>
     }
-    <div style = {isPark ? gradientBackground(user.profileImage) : {"paddingBottom":"0"}}>
+    <div style = {false ? gradientBackground(user.profileImage) : {"paddingBottom":"0"}}>
         {canDelete &&
         <div className = "float-end">
-            <button className = {`btn m-0 p-0 ${isPark ? "white" : "red"}`} onClick = {() => handleDelete(post._id)}>
+            <button className = {`btn m-0 p-0 ${false ? "white" : "red"}`} onClick = {() => handleDelete(post._id)}>
                 <RxCross2 className = "up-2 m-0"/>
             </button>
         </div>
         }
         <div className = "d-flex flex-wrap text-nowrap">
-            {user.role !== "park" &&
+            {true && //user.role !== "parks" &&
             <div className = "d-flex align-items-center flex-grow-1">
                 <div className = "pe-2 mb-2">
                     <img className="rounded-circle object-fit-cover" height={48} width = {48} src={user.profileImage}/>
@@ -176,14 +195,14 @@ isLoading ? <></> : error ? <p> Error: {error} </p> :
                 </a>
             </div>
             }
-            {isPark &&
+            {/* {isPark &&
             <div className = "white flex-grow-1 mb-2">
                 <a href = {`#/profile/${user.username}`} className = "white">
                     <h3 className = "ms-2 me-1">{user.displayName}</h3><ParkIcon/>
                     • {timeAgo(post.datePosted)}
                 </a>
             </div>
-            }
+            } */}
             {post.location && 
             <div>
                 <LocationTag location = {post.location} parkhandle = {park.username}/>
@@ -198,7 +217,7 @@ isLoading ? <></> : error ? <p> Error: {error} </p> :
                     <img className = "round mt-2" src = {post.attachment} width = "100%"/>}   
             </div>
             <div className = "d-flex flex-wrap align-items-center ps-2 pe-2 pt-0">
-                {post.likedByPark && <div><i><ParkourLogo style = {{"height":"1.5em"}}/>Liked by Park</i></div>}
+                {(post.numRangerLikes > 0) && <div><i><ParkourLogo style = {{"height":"1.5em"}}/>Liked by Ranger</i></div>}
                 <div className = "text-end flex-grow-1 text-nowrap brown-4">
                     {/* <a href = "/post/123/" className = "btn brown-4 ps-4 me-0">
                         <IoFootstepsSharp className = "icon up-2"/>
@@ -208,7 +227,7 @@ isLoading ? <></> : error ? <p> Error: {error} </p> :
                         {likedByUser ? 
                         <ParkourLogo className = "icon green2"/> : 
                         <ParkourLogoOutline className = "icon"/>}
-                        Likes {formatter.format(post.likes.length)}
+                        Likes {formatter.format(post.likes)}
                     </button>
                 </div>
             </div>

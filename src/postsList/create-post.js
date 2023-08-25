@@ -40,7 +40,7 @@ const CreatePostComponent = ({parkInfo, onCreate}) => {
                 attachment: attachment,
                 location: location,
                 parkId: park._id,
-                userId: currentUser._id
+                userId: {role: currentUser.role, item: currentUser._id}
             }
             createPost(newPost).then(response => {
                 onCreate(response)
