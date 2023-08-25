@@ -22,19 +22,7 @@ const UserResults = () => {
 
     useEffect(() => {
 
-        const fetchRangersForPark = async () => {
-            try {
-                console.log(parkId)
-                await doFilters();
-                const fetchedRangers = await dispatch(findRangersByParkThunk(parkId));
-                setRangers(fetchedRangers.payload);
-                console.log(rangers[0].parkId)
-                setFiltRang(rangers.filter(rang => rang.parkId === parkId))
-               // console.log(filtRang[0].parkId)
-            } catch (error) {
-                console.error('Error fetching rangers:', error);
-            }
-        };
+
         
         const getUsersData = async () => {
             try {
@@ -53,18 +41,45 @@ const UserResults = () => {
         const doFilters = async () => {
             await getUsersData();
             setFiltered(users.filter(user => user.username === queryValue || user.displayName === queryValue));
+            
+        };
+
+        const fetchRangersForPark = async () => {
+            try {
+                await doFilters();
+                const fetchedRangers = await dispatch(findRangersByParkThunk(parkId));
+                setRangers(fetchedRangers.payload);
+            } catch (error) {
+                console.error('Error fetching rangers:', error);
+            }
+        };
+
+        const realParkId = async () => {
+            await getUsersData();
             const parkUser = users.find(user => user.username === queryValue || user.displayName === queryValue);
             if (parkUser) {
                 setParkId(parkUser._id);
             }
-        };
+            console.log(parkId)
+        }
 
-        doFilters().then(() => {
-            if (parkId) {
-                fetchRangersForPark();
+        const filterRangers = async () => {
+            await fetchRangersForPark();
+            
+            setFiltRang(rangers.filter(rang => rang.parkId === parkId))
+        }
+
+        doFilters()
+        realParkId()
+
+        if (parkId) {
+                console.log(parkId)
+            fetchRangersForPark();
+            console.log(parkId)
+                filterRangers();
             }
-        });
-    }, [queryValue]);
+        
+    }, [queryValue], parkId);
 
     
 
