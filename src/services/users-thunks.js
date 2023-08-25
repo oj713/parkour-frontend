@@ -3,13 +3,14 @@ import * as userService from "./users-services";
 
 
 
-export const fetchUsers = createAsyncThunk(
-    'users/fetchUsers',
-    async (params) => {
+export const fetchUsers = async (params) => {
+    try {
         const users = await userService.getUsers(params);
         return users;
+    } catch (error) {
+        throw error;
     }
-);
+};
 
 export const findUserByUsernameThunk = createAsyncThunk(
     "users/findUserByUsername",

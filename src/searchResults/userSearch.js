@@ -3,80 +3,90 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import results from "./userResults.json"
 import SearchResult from "./userSearchResult"
-import { findUsersByDisplayname, findUserByUsername, findRangersByPark } from '../services/users-services';
+import { fetchUsers } from '../services/users-thunks';
 import axios from 'axios';
 
 const UserResults = () => {
     const { pathname, search } = useLocation();
+    const dispatch = useDispatch();
     const queryParams = new URLSearchParams(search);
     const queryValue = queryParams.get("query");
     const apiUrl = 'https://developer.nps.gov/api/v1/'
-   // const users = results.filter(user => user.userName == queryValue);
+    //const users = results.filter(user => user.userName == queryValue);
     let usersRole = '';
     let usersPark = '';
     
 
     const [users, setUsers] = useState([]);
-    let filtered = users;
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    //const [error, setError] = useState(null);
 
-    const fetchUsers = async (params) => {
-        try {
-            setLoading(true);
-            setError(null);
-            const response = await axios.get(`${apiUrl}/users`, { params });
-            setUsers(response.data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
+    //const fetchUsers = async () => {
+    //    console.log(queryValue)
+    //    try {
+            
+    //        dispatch(registerThunk(newUser));
+    //        navigate("/profile");
+    //    } catch (e) {
+    //        alert(e);
+    //    }
+    //};
     useEffect(() => {
-        fetchUsers();
+        const getUsersData = async () => {
+            try {
+                const fetchedUsers = await fetchUsers();
+                setUsers(fetchedUsers);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                setLoading(false);
+            }
+        };
+
+        getUsersData();
     }, []);
 
-
-
-    function checkDropdowns() {
-        const userRoles = document.getElementById('userRoles');
-        const userPark = document.getElementById('userPark');
-
-        if (userRoles === null) {
-            return;
-        }
-
-        usersRole = userRoles.value;
-        usersPark = userPark.value;
+    if (loading) {
+        return <div>Loading...</div>;
     }
 
-    function filterResults() {
-        checkDropdowns();
-        const userRoles = document.getElementById('userRoles');
-        if (userRoles === null) {
-            return
-        }
-        if (usersRole !== '' && usersRole !== 'Role') {
-            filtered = filtered.filter(user => user.role.type === usersRole)
-        }
-        if (usersPark !== '' && usersPark !== 'Park') {
-            filtered = filtered.filter(user => user.rangerStation.type.name === usersPark)
-        }
-    }
+
+
+    //function checkDropdowns() {
+    //    const userRoles = document.getElementById('userRoles');
+    //    const userPark = document.getElementById('userPark');
+
+    //    if (userRoles === null) {
+    //        return;
+    //    }
+
+    //    usersRole = userRoles.value;
+    //    usersPark = userPark.value;
+    //}
+
+    //function filterResults() {
+    //    checkDropdowns();
+    //    const userRoles = document.getElementById('userRoles');
+    //    if (userRoles === null) {
+    //        return
+    //    }
+    //    if (usersRole !== '' && usersRole !== 'Role') {
+    //        filtered = filtered.filter(user => user.role.type === usersRole)
+    //    }
+    //    if (usersPark !== '' && usersPark !== 'Park') {
+    //        filtered = filtered.filter(user => user.rangerStation.type.name === usersPark)
+    //    }
+    //}
+
+    let filtered = users.filter(user => user.username === queryValue || user.displayName === queryValue );
 
     return (
-        <ul class="list-group">
-            {users.map(user => (
-                <div key={user._id}>
-                    <p>Username: {user.username}</p>
-                    <p>Display Name: {user.displayName}</p>
-                    {/* Display other user properties */}
-                </div>
-            ))}
-        </ul>
-    )
+        <div>
+            <ul>
+                {filtered.map(post => <SearchResult post={post} />)}
+            </ul>
+        </div>
+    );
 }
 
 export default UserResults;

@@ -81,29 +81,29 @@ function Search() {
                 addedActivities.push(activity);
             }
         });
-        let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=park";
+        //let parkString = apiUrl + "parks?api_key=" + apiKey + "&limit=500&q=park";
 
-        try {
-            const response = await fetch(
-                parkString
-            );
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setParks(data.data);
-        } catch (error) {
-            console.error('Error fetching park data:', error);
-        }
-        parks.forEach(park => {
-            const option = document.createElement('option');
-            option.value = park.name;
-            option.textContent = park.name;
+        //try {
+        //    const response = await fetch(
+        //        parkString
+        //    );
+        //    if (!response.ok) {
+        //        throw new Error('Network response was not ok');
+        //    }
+        //    const data = await response.json();
+        //    setParks(data.data);
+        //} catch (error) {
+        //    console.error('Error fetching park data:', error);
+        //}
+        //parks.forEach(park => {
+        //    const option = document.createElement('option');
+        //    option.value = park.name;
+        //    option.textContent = park.name;
 
-            parkDropdown.appendChild(option);
-            userPark.appendChild(option);
+        //    parkDropdown.appendChild(option);
+        //    userPark.appendChild(option);
 
-        })
+        //})
         
     }
     populateDropdown();
@@ -210,8 +210,8 @@ function Search() {
             user: searchInput
         }
         setSearchInput("");
-        navigate(`/search?query=${searchInput}`);
-        window.history.pushState(null, "", `/search?query=${searchInput}`);
+        navigate(`/search?query=${search}`);
+        window.history.pushState(null, "", `/search?query=${search}`);
 
     }
 

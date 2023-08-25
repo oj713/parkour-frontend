@@ -27,15 +27,13 @@ const SearchResult = (
             </div>
             <div className="flex-wrap whitespace-nowrap">
                 <div className="pe-2">
-                    <img className="rounded-circle" height={48} width={48} src={post.profileimage} />
+                    <img className="rounded-circle" height={48} width={48} src={post.profileImage} />
                 </div>
                 <div className="flex-1 up-2">
                     <div>
-                        <h3>{post.userName}</h3>
-                        <RangerIcon park="Yosemite"
-                            handle="yosemite" isCurrent={true} />
+                        <h3>{post.displayName}</h3>
                     </div>
-                    <div className="up-2">{post.handle} </div>
+                    <div className="up-2">{post.username} </div>
                 </div>
 
             </div>

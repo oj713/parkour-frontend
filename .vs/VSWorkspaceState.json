@@ -2,11 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\details",
+    "\\src\\auth",
+    "\\src\\home",
+    "\\src\\home-right-side",
     "\\src\\postsList",
+    "\\src\\profile",
+    "\\src\\reducers",
     "\\src\\searchResults",
     "\\src\\services"
   ],
-  "SelectedNode": "\\src\\details\\index.js",
+  "SelectedNode": "\\.env",
   "PreviewInSolutionExplorer": false
 }
