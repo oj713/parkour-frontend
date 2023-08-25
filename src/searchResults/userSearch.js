@@ -1,89 +1,91 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import results from "./userResults.json"
 import SearchResult from "./userSearchResult"
-import { fetchUsers } from '../services/users-thunks';
-import axios from 'axios';
+import { fetchUsers, findRangersByParkThunk } from '../services/users-thunks';
+
+
 
 const UserResults = () => {
     const { pathname, search } = useLocation();
     const dispatch = useDispatch();
     const queryParams = new URLSearchParams(search);
     const queryValue = queryParams.get("query");
-    const apiUrl = 'https://developer.nps.gov/api/v1/'
-    //const users = results.filter(user => user.userName == queryValue);
-    let usersRole = '';
-    let usersPark = '';
     
 
     const [users, setUsers] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [parkId, setParkId] = useState([]);
+    const [rangers, setRangers] = useState([]);
+    const [filtRang, setFiltRang] = useState([]);
     const [loading, setLoading] = useState(true);
-    //const [error, setError] = useState(null);
 
-    //const fetchUsers = async () => {
-    //    console.log(queryValue)
-    //    try {
-            
-    //        dispatch(registerThunk(newUser));
-    //        navigate("/profile");
-    //    } catch (e) {
-    //        alert(e);
-    //    }
-    //};
     useEffect(() => {
+
+        const fetchRangersForPark = async () => {
+            try {
+                console.log(parkId)
+                await doFilters();
+                const fetchedRangers = await dispatch(findRangersByParkThunk(parkId));
+                setRangers(fetchedRangers.payload);
+                console.log(rangers[0].parkId)
+                setFiltRang(rangers.filter(rang => rang.parkId === parkId))
+               // console.log(filtRang[0].parkId)
+            } catch (error) {
+                console.error('Error fetching rangers:', error);
+            }
+        };
+        
         const getUsersData = async () => {
             try {
                 const fetchedUsers = await fetchUsers();
                 setUsers(fetchedUsers);
                 setLoading(false);
+
             } catch (error) {
                 console.error('Error fetching users:', error);
                 setLoading(false);
             }
+            
+        };
+        getUsersData();
+
+        const doFilters = async () => {
+            await getUsersData();
+            setFiltered(users.filter(user => user.username === queryValue || user.displayName === queryValue));
+            const parkUser = users.find(user => user.username === queryValue || user.displayName === queryValue);
+            if (parkUser) {
+                setParkId(parkUser._id);
+            }
         };
 
-        getUsersData();
-    }, []);
+        doFilters().then(() => {
+            if (parkId) {
+                fetchRangersForPark();
+            }
+        });
+    }, [queryValue]);
+
+    
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-
-
-    //function checkDropdowns() {
-    //    const userRoles = document.getElementById('userRoles');
-    //    const userPark = document.getElementById('userPark');
-
-    //    if (userRoles === null) {
-    //        return;
-    //    }
-
-    //    usersRole = userRoles.value;
-    //    usersPark = userPark.value;
-    //}
-
-    //function filterResults() {
-    //    checkDropdowns();
-    //    const userRoles = document.getElementById('userRoles');
-    //    if (userRoles === null) {
-    //        return
-    //    }
-    //    if (usersRole !== '' && usersRole !== 'Role') {
-    //        filtered = filtered.filter(user => user.role.type === usersRole)
-    //    }
-    //    if (usersPark !== '' && usersPark !== 'Park') {
-    //        filtered = filtered.filter(user => user.rangerStation.type.name === usersPark)
-    //    }
-    //}
-
-    let filtered = users.filter(user => user.username === queryValue || user.displayName === queryValue );
-
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    
     return (
         <div>
             <ul>
-                {filtered.map(post => <SearchResult post={post} />)}
+                {filtered.map(post => <SearchResult
+                    key={post._id}
+                    post={post} />)}
+                {filtRang.map(post => <SearchResult
+                    key={post._id}
+                    post={post} />)}
+
             </ul>
         </div>
     );

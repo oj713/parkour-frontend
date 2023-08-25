@@ -34,6 +34,7 @@ function Search() {
 
 
     let [searchInput, setSearchInput] = useState('');
+
     const [parks, setParks] = useState([]);
 
     const dispatch = useDispatch();
@@ -295,33 +296,7 @@ function Search() {
                 </div>
                 <div class="mainPane col-3">
                     <div className="col-11 position-relative">
-                        <div className="row">
-                            <input placeholder="Search Users"
-                                className="form-control rounded-pill ps-5 subPane"
-                                value={searchInput}
-                                onChange={(e) => setSearchInput(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        userSearchHandler();
-                                    }
-                                }}                            />
-                            <AiOutlineSearch className="fs-3 col-3 position-absolute" />
-                        </div>
-                        <div class="row">
-                        <div class="dropdown col-6">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="userRoles">
-                                <option selected>Role</option>
-                                <option value="1">Hiker</option>
-                                <option value="2">Ranger</option>
-                            </select>
-                        </div>
-
-                        <div class="dropdown col-6">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="userPark">
-                                <option selected>Park</option>
-                            </select>
-                            </div>
-                            </div>
+                        <h2>Users</h2>
                     </div>
                     <UserResults/>
                    

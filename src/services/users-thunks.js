@@ -24,5 +24,5 @@ export const findUsersByDisplayNameThunk = createAsyncThunk(
 
 export const findRangersByParkThunk = createAsyncThunk(
     "users/findRangersByPark",
-    async () => await userService.findRangersByPark()
+    async (parkId) => await userService.findRangersByPark(parkId)
 );
