@@ -36,7 +36,7 @@ function Profile({username = null}) {
         <ProfileHead />
         {/* delete this <p> later */ }
         <p> Current profile: {user.username}</p> 
-        <ProfileBottomHalf user = {user}/>
+        {/* <ProfileBottomHalf user = {user}/> */}
       </div>
     </div>
   )
