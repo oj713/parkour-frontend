@@ -31,3 +31,14 @@ export const deletePost = async postId => {
   const response = await axios.delete(`${POSTS_API}/${postId}`);
   return response.data;
 }
+
+export const findPostById = async postId => {
+  const response = await axios.get(`${POSTS_API}/${postId}`);
+  return response.data;
+}
+
+export const findPostsByIds = async postIds => {
+  const postPromises = postIds.map(postId => findPostById(postId));
+  const posts = await Promise.all(postPromises);
+  return posts;
+}

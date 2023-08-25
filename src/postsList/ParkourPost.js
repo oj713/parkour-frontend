@@ -83,7 +83,8 @@ const handleLikeToggle = (post) => {
     const updatedPost = {...post, 
         likes: post.likes + (likedByUser ? -1 : 1),
         numRangerLikes: post.numRangerLikes +
-        (currentUser.role === "rangers" ? (likedByUser ? -1 : 1) : 0)}
+        ((currentUser.role === "rangers" && currentUser.parkId === park._id)
+        ? (likedByUser ? -1 : 1) : 0)}
 
     updatePost(updatedPost)
     setPost(updatedPost)

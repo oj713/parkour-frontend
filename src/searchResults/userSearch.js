@@ -93,10 +93,11 @@ const UserResults = () => {
     
     return (
         <div>
-            <ul>
+            <ul className = "list-group">
                 {filtered.map(post => <SearchResult
                     key={post._id}
                     post={post} />)}
+                {filtRang.length > 0 && <h3>Ranger Matches</h3>}
                 {filtRang.map(post => <SearchResult
                     key={post._id}
                     post={post} />)}

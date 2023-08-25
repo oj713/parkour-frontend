@@ -6,7 +6,7 @@ const ProfileRouter = () => {
     const {pathname} = useLocation()
     let [ignore, profile, username] = pathname.split('/')
     // if profile-bottom-content changes so must this
-    if (["posts", "rangers", "park", "following", "followers"].includes(username)) {username = null}
+    if (["posts", "rangers", "likes", "following", "followers"].includes(username)) {username = null}
 
     return (
         <Routes>

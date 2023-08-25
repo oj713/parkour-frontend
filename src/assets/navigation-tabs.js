@@ -16,12 +16,12 @@ const NavTabs = (
     }
     const {pathname} = useLocation()
     let active = pathname.split("/").pop()
-    if (!["posts", "rangers", "park", "following", "followers"].includes(active)) {active = ""}
+    if (!["likes", "rangers", "following", "followers"].includes(active)) {active = ""}
     return (
         <div>
         <ul className="nav d-flex flex-nowrap overflow-auto nav-pills white">
             {tabs.map(tab => 
-                <Link className={`${active === tab.name ? "active" : ""} btn parkour-btn rounded-pill nav-link`} to={tab.link}>
+                <Link className={`${active === tab.link ? "active" : ""} btn parkour-btn rounded-pill nav-link`} to={tab.link}>
                     {tab.name}
                 </Link>
             )}

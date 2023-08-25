@@ -22,7 +22,7 @@ export const findUserByUsername = async  username  => {
 }
 
 export const findRangersByPark = async parkId => {
-    const response = await api.get(`${RANGERS_URL}?rangerStation=${parkId}`);
+    const response = await api.get(`${RANGERS_URL}?parkId=${parkId}`);
     const users = response.data;
     return users;
 }
@@ -49,4 +49,11 @@ export const findUserById = async id => {
     const response = await api.get(`${API_BASE}/users/${id}`)
     const user = response.data;
     return user;
+}
+
+export const findUsersByIds = async userIds => {
+    const userPromises = userIds.map(userId => findUserById(userId));
+    const users = await Promise.all(userPromises);
+    console.log("USERS", users)
+    return users;
 }
