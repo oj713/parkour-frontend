@@ -202,7 +202,7 @@ function Search() {
     filterParks();
     return (
         <>
-            <div className = "position-fixed bottom-0 start-0 m-4 parkour-btn popup-icon red-bg  rounded-circle" 
+            <div className = "position-fixed bottom-0 start-0 m-4 parkour-btn popup-icon red-bg rounded-circle" 
             onClick = {togglePopup}>
                 <h2>?</h2>
             </div>
@@ -215,65 +215,73 @@ function Search() {
                 The search functionality for Parkour was implemented by a teammate and is currently imperfect. The teammate implemented search so that it reads in all users and parks and filters the results in the frontend. This is an obviously flawed approach that lacks scalability. There are additional issues with poor filtering and incorrect result persistence. To be fixed!
                 <br/>
             </div>
-            <div class="mainPane">
-                <div className="position-relative pe-3">
-                    <div className="position-relative">
-                        <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 start-1 translate-middle-y" />
-                        <input
-                            placeholder="Search Parkour"
-                            className="form-control rounded-pill ps-5 subPane"
-                            value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    searchEnterHandler();
-                                            
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="row my-2">
-
-                        <div class="dropdown col-6">
-                            <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="stateDropdown">
-                                <option selected>State</option>
-
-                            </select>
+            <div className = "row">
+                <div className = "col">
+                    <div class="mainPane">
+                        <div className="position-relative pe-3">
+                            <div className="position-relative">
+                                <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 start-1 translate-middle-y" />
+                                <input
+                                    placeholder="Search Parkour"
+                                    className="form-control rounded-pill ps-5 subPane"
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            searchEnterHandler();
+                                                    
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div className="row my-2">
+        
+                                <div class="dropdown col-6">
+                                    <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="stateDropdown">
+                                        <option selected>State</option>
+        
+                                    </select>
+                                </div>
+              
+        
+                                <div class="dropdown col-6">
+                                    <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="activityDropdown">
+                                        <option selected>Activities</option>
+        
+                                    </select>
+                                </div>
+                            </div>
+        
                         </div>
-      
-
-                        <div class="dropdown col-6">
-                            <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="activityDropdown">
-                                <option selected>Activities</option>
-
-                            </select>
-                        </div>
+                            
+                        <ul className = "list-group">
+                            {parkSort.length == 0 && 
+                            <div className = "brown-4 m-2">
+                                Sorry, no park results found. Please try a different search term!
+                            </div>}
+                            {parkSort.map((park) => (
+                                <li className = "list-group-item subPane p-0 addPadding" key={park.id}>
+                                    <div style = {park.images[0] && gradientBackground(park.images[0].url)}>
+                                        <h2><a href={`/#/details?name=${encodeURIComponent(park.name)}`} className="details-link result-title white ms-1 me-1" >{park.fullName}</a></h2>
+                                    </div>
+                                        
+                                    <div>
+                                        <p><a className = "green1" href={park.url}>{park.url}</a></p>
+                                        <p>{park.description}</p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                        {/*<MainResults />*/}
                     </div>
-
+                    <div className = "d-block d-lg-none">
+                        <UserResults/>
+                    </div>
                 </div>
-                    
-                <ul className = "list-group">
-                    {parkSort.length == 0 && 
-                    <div className = "brown-4 m-2">
-                        Sorry, no park results found. Please try a different search term!
-                    </div>}
-                    {parkSort.map((park) => (
-                        <li className = "list-group-item subPane p-0 addPadding" key={park.id}>
-                            <div style = {park.images[0] && gradientBackground(park.images[0].url)}>
-                                <h2><a href={`/#/details?name=${encodeURIComponent(park.name)}`} className="details-link result-title white ms-1 me-1" >{park.fullName}</a></h2>
-                            </div>
-                                
-                            <div>
-                                <p><a className = "green1" href={park.url}>{park.url}</a></p>
-                                <p>{park.description}</p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-                {/*<MainResults />*/}
-            </div>
-            <div className = "d-block d-lg-none">
-                <UserResults/>
+                <div className = "d-none d-lg-block col-3 m-0 p-0">
+                    <UserResults/>
+                </div>
+                <div className = "d-none d-sm-block col-1 d-lg-none"></div>
             </div>
         </>
     )

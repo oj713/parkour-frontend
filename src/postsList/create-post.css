@@ -13,6 +13,18 @@
     overflow: hidden;
 }
 
+textarea.createInput, input.createInput {
+    border: 3px var(--brown4) solid;
+    border-radius: var(--bs-border-radius);
+    box-shadow:none;
+}
+
+textarea.createInput:focus, input.createInput:focus {
+    box-shadow:none;
+    outline: none;
+    border-color: var(--orange2);
+}
+
 .locationPin input::placeholder {
     color: white;
     

@@ -31,7 +31,7 @@ function App() {
             <div className="row m-2">
               <Navigation/>
               <div className = "d-none d-sm-block col-1 col-lg-2"></div>
-              <div className="col-12 col-sm-10 col-lg-7">
+              <div className="col">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/home" element={<Navigate to="/" />} />
@@ -40,12 +40,6 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/search" element={<Search />} />
-                </Routes>
-              </div>
-              <div className = "d-none d-lg-block col-lg-3 ps-0">
-                <Routes>
-                  <Route path = "/" element = {<RightSide/>}/>
-                  <Route path = "/search" element = {<UserResults/>}/>
                 </Routes>
               </div>
             </div>

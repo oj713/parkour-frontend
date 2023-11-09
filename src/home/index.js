@@ -46,6 +46,10 @@ function Home() {
                         <Feed />
                     </div>
                 </div>
+                <div className = "d-none d-lg-block col-3">
+                    <RightSide/>
+                </div>
+                <div className = "d-none d-sm-block col-1 d-lg-none"></div>
             </div>
     )
 }

@@ -17,7 +17,7 @@ const ParkDetails = ({ park, username }) => {
                             <h2>{park.fullName}</h2>
                         </div>
                         <div className='col-lg-3 col-md-5 col-sm-6 mb-2'>
-                            <Link to={`/profile/${username}`} className='btn btn-block green-btn d-md-block d-lg-inline-block'>Profile</Link>
+                            <Link to={`/profile/${username}`} className='btn parkour-btn green-btn d-md-block d-lg-inline-block'>Profile</Link>
                         </div>
                         <div className='col-12'>
                             <img className="img-fluid" src={park.images[0].url} alt={park.images[0].altText} />

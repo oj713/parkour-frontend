@@ -9,15 +9,16 @@ const ProfileHead = ({user}) => {
     let currentUser = useSelector(state => state.auth.currentUser)
     const [isEditing, setIsEditing] = useState(false);
 
-    const handleEditClick = () => {
+    const toggleEditing = () => {
         // Set the state to indicate that the user is editing
-        setIsEditing(true);
+        setIsEditing(!isEditing);
     };
 
     const gradientBackground = (image) => {
         return {
         "background": `linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .6)),
-        url('${image}') no-repeat center / cover`, "height": "15vh"
+        url('${image}') no-repeat center / cover`, "height": "15vh",
+        "height":"12em"
         }
     }
 
@@ -27,12 +28,14 @@ const ProfileHead = ({user}) => {
         <div className = "p-0">
             <div style = {gradientBackground(isPark ? user.profileImage : user.backgroundImage)}
             className = "display-block position-relative">
-                {user === currentUser && <button
-                    onClick={handleEditClick} // Handle the edit button click
-                    className="parkour-btn orange-btn btn m-3"
-                >
-                    <BiSolidEdit /> Edit Profile
-                </button>}
+                {user === currentUser && !isEditing && 
+                <div className = "text-end">
+                    <button
+                        onClick={toggleEditing} // Handle the edit button click
+                        className="parkour-btn orange-btn btn m-3">
+                        <BiSolidEdit /> Edit Profile
+                    </button>
+                </div>}
                 <div className = "position-absolute ps-3" style ={ {"bottom":"0"}}>
                     <h2 className="text-white">
                         {user.displayName}{/* Yosemite <ParkIcon /> */}
@@ -42,11 +45,12 @@ const ProfileHead = ({user}) => {
             </div>
             <div className = "p-3 d-flex">
                 <div className = "green2 flex-grow-1">{user.profileBio}</div>
-                <button className="parkour-btn green-btn btn text-nowrap">
+                <button className="parkour-btn green-btn btn text-nowrap"
+                    onClick={() => {window.alert("Sorry, this button doesn't work yet. Check back later!")}}>
                     Follow +
                 </button>
             </div>
-            {isEditing && <EditProfileScreen />}
+            {isEditing && <EditProfileScreen finishEditing = {toggleEditing} />}
         </div>
     );
 };

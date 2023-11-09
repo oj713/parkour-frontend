@@ -30,9 +30,7 @@ const CreatePostComponent = ({parkInfo, onCreate}) => {
     let [text, setText] = useState("")
     let [attachment, setAttachment] = useState("")
     let [location, setLocation] = useState("")
-
-    const borderStyle = {"border": "3px var(--brown3) solid", "borderRadius": "var(--bs-border-radius"}
-
+    
     const createPostHandler = () => {
         if (text && park) {
             const newPost = {
@@ -114,16 +112,15 @@ const CreatePostComponent = ({parkInfo, onCreate}) => {
                 </div>
             </div>
             <div>
-                <textarea value = {text} placeholder={parkInfo ? `Post to ${parkInfo.displayName}...` : "Post something..."} className = "form-control bg-transparent green2"
-                    style = {borderStyle}
+                <textarea value = {text} placeholder={parkInfo ? `Post to ${parkInfo.displayName}...` : "Post something..."} className = "createInput form-control bg-transparent green2"
                     onChange = {(event) => setText(event.target.value)}>
                 </textarea>
             </div>
             <div className = "d-flex flex-wrap text-nowrap">
                 <div className = "flex-grow-1">
                     <label htmlFor="attachment" className="green2 me-2">Attachment:</label>
-                    <input id="attachment" type = "text" value = {attachment} placeholder = "Paste an image URL..." className = "bg-transparent green2"
-                        style = {borderStyle} onChange = {(event) => setAttachment(event.target.value)} />
+                    <input id="attachment" type = "text" value = {attachment} placeholder = "Paste an image URL..." 
+                    className = "bg-transparent green2 createInput" onChange = {(event) => setAttachment(event.target.value)} />
                 </div>
                 <div>
                     <button className = "btn parkour-btn green-btn"

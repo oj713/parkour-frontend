@@ -231,3 +231,24 @@ li.list-group-item.subPane {
 .navBar .active {
     background-color: var(--orange1);
 }
+
+input.form-control, input.form-control:focus {
+    background-color: var(--brown1);
+    border: 3px solid var(--brown3);
+    box-shadow:none;
+}
+
+input.form-control:focus {
+    border: 3px solid var(--orange2);
+}
+
+input.form-check-input {
+    background-color: var(--brown1);
+    border: 2px solid var(--brown3);
+}
+
+input.form-check-input:checked {
+    background-color: var(--green1);
+    outline: var(--green1);
+    border: var(--green1);
+}
