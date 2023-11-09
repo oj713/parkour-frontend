@@ -4,6 +4,7 @@ import FollowUser from "./followUser";
 import FunFacts from "./funFact.js";
 import { useSelector } from "react-redux";
 import { getUsers } from "../services/users-services";
+import SearchResult from "../searchResults/userSearchResult.js";
 
 
 const RightSide = () => {
@@ -22,19 +23,18 @@ const RightSide = () => {
         }
     }, [])
     return (
-        
-        <ul class="list-group">
+        <div className = "m-0 p-0">
             {currentUser && currentUser.role === 'hikers' &&
-                <li className="list-group-item bg-brown2 mt-4">
-                    <h4>Who to follow </h4>
-                    {followSuggestions.map(user => <FollowUser user={user} />)}
-                </li>
+                <div className="mainPane">
+                    <h4 className = "brown-4">Who to follow </h4>
+                    {followSuggestions.map(user => <SearchResult post={user} />)}
+                </div>
             }
-            <li className="list-group-item bg-brown2 mt-4">
-                <h4>Fun Facts </h4>
+            <div className="mainPane">
+                <h4 className = "brown-4">Fun Facts </h4>
                 {factlist.map(post => <FunFacts post={post} />)}
-            </li>
-        </ul>
+            </div>
+        </div>
     )
 }
 

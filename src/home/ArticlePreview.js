@@ -12,10 +12,9 @@ const ArticlePreview = ({ article }) => {
     } = article;
 
     return (
-        <div className="card w-100 my-3 card-bg">
-            <img className="card-img-top border-0 " src={image.url} alt={image.altText} />
+        <div className="card w-100 mb-3 card-bg">
             <div className="card-body">
-                <h4 className="card-title">{title}</h4>
+                <h2 className="card-title green2">{title}</h2>
                 <div className="card-text">
                     {abstract}
                 </div>
@@ -26,13 +25,14 @@ const ArticlePreview = ({ article }) => {
                 </div>
                 {relatedParks.length > 0 && (
                     <div className="card-text">
-                        Related Park: <a href={relatedParks[0].url} target="_blank" rel="noopener noreferrer">{relatedParks[0].name}</a>
+                        Related Park: <a className ="green1" href={relatedParks[0].url} target="_blank" rel="noopener noreferrer">{relatedParks[0].name}</a>
                     </div>
                 )}
-                <a href={url} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                <a href={url} className="btn parkour-btn green-btn mt-2 m-0" target="_blank" rel="noopener noreferrer">
                     Read More
                 </a>
             </div>
+            <img className="card-img-bottom border-0 " src={image.url} alt={image.altText} />
         </div>
     );
 };

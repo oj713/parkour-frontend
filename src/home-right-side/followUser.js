@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const FollowUser = ({ user }) => {
 
     return (
-        <li className="list-group-item subPane">
+        <div className="subPane mx-0">
             <div className="flex-wrap whitespace-nowrap">
                 <div className="pe-2">
                     
@@ -28,8 +28,7 @@ const FollowUser = ({ user }) => {
                     
                 </div>
             </div>
-
-        </li>
+        </div>
     )
 }
 

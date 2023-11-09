@@ -93,15 +93,18 @@ const UserResults = () => {
     }
     
     return (
-        <div>
+        <div className = "mainPane">
+            <h2 className = "green2">Users</h2>
             <ul className = "list-group">
+                {filtRang.length == 0 && filtered.length == 0 &&
+                <p className = "brown-4"> No users found. </p>}
                 {filtered.map(post => (
                     <a key={post._id} href={`/profile/${post.username}`} className="profile-link">
                         <SearchResult post={post} />
                     </a>
                 ))}
                 
-                {filtRang.length > 0 && <h3>Ranger Matches</h3>}
+                {filtRang.length > 0 && <h3 className = "brown-4">Ranger Matches</h3>}
                 {filtRang.map(post => (
                     <a key={post._id} href={`/profile/${post.username}`} className="profile-link">
                         <SearchResult post={post} />

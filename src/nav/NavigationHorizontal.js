@@ -5,80 +5,69 @@ import { useNavigate } from "react-router-dom";
 import { FaHome, FaUser, FaRegClipboard } from 'react-icons/fa';
 import { CgLogOut } from 'react-icons/cg';
 import { logoutThunk } from "../services/auth-thunks";
+import {ReactComponent as ParkourLogo} from "../assets/Logo/parkour-logo.svg";
 
 const NavigationHorizontal = () => {
 
     const { pathname } = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [ignore, parkour, active] = pathname.split("/");
+    const [parkour, active, extra] = pathname.split("/");
     const { currentUser } = useSelector((state) => state.auth);
 
     const logoutHandler = async () => {
         try {
             await dispatch(logoutThunk());
-            navigate("/home");
+            navigate("/");
         } catch (e) {
             alert(e);
         }
     }
 
-    return (
-        <div className="list-group d-flex flex-row justify-content-between m-3 p-3 bg-brown2">
+    function linkItem(loc, toLoc, Icon, cond) {
+        return (
             <Link
-                key='home'
-                to='/home'
-                className={`list-group-item d-flex align-items-center bg-brown1 ${active === 'home' ? "active" : ""}`}>
-                <FaHome className="me-2" />
-                <span>
-                    Home
-                </span>
+                key={loc.toLowerCase()}
+                to={`/${toLoc.toLowerCase()}`}
+                className = {`white p-3 align-items-center ${cond ? "active" : ""}`}>
+                {Icon}
+                <span> <b>{loc}</b> </span>
             </Link>
+        )
+    }
+
+    const treeIcon = {
+        "position": "relative",
+        "top": ".1em",
+        "font-size":"1.5em"
+    }
+
+    return (
+        <>
+        <div className="position-fixed navBar z-3 d-flex flex-row bg-brown2 p-0">
+            <Link
+                key = "home"
+                to = "/"
+                className = {`green2 p-3 pt-2 pb-0 d-flex align-items-center 
+                ${active == "home" || active == "" ? "active" : ""}`}>
+                <ParkourLogo style = {treeIcon} className = "h5"/>
+                <h3 style={{"font-size":"1.3em"}}>Parkour</h3>
+            </Link>
+            <div className = "flex-grow-1 display-block"></div>
             {currentUser ? (
                 <>
-                    <Link
-                        key='profile'
-                        to='/profile'
-                        className={`list-group-item d-flex align-items-center bg-brown1 ${active === 'profile' ? "active" : ""}`}>
-                        <FaUser className="me-2" />
-                        <span>
-                            Profile
-                        </span>
-                    </Link>
-                    <Link
-                        key='logout'
-                        to='/home'
-                        className={`list-group-item d-flex align-items-center bg-brown1 ${active === 'profile' ? "active" : ""}`}
-                        onClick={logoutHandler}>
-                        <CgLogOut className="me-2" />
-                        <span>
-                            Logout
-                        </span>
-                    </Link>
+                    {linkItem("Profile", "profile", <FaUser className = "me-2"/>, active == "profile" && extra == null)}
+                    {linkItem("Logout", "/", <CgLogOut className = "me-2"/>, active == "logout")}
                 </>
             ) :
                 <>
-                    <Link
-                        key='login'
-                        to='/login'
-                        className={`list-group-item d-flex align-items-center bg-brown1 ${active === 'login' ? "active" : ""}`}>
-                        <FaUser className="me-2" />
-                        <span>
-                            Login
-                        </span>
-                    </Link>
-                    <Link
-                        key='register'
-                        to='/register'
-                        className={`list-group-item d-flex align-items-center bg-brown1 ${active === 'login' ? "active" : ""}`}>
-                        <FaRegClipboard className="me-2" />
-                        <span>
-                            Register
-                        </span>
-                    </Link>
+                    {linkItem("Login", "login", <FaUser className = "me-2"/>, active == "login")}
+                    {linkItem("Register", "register", <FaRegClipboard className = "me-2"/>, active == "register")}
                 </>
             }
         </div>
+        <div className = "m-3 mb-5 display-block"></div>
+        </>
     );
 };
 

@@ -20,7 +20,7 @@ function Login() {
             <h1>Login</h1>
             <div className="mt-2">
                 <label>Username</label>
-                <input className="form-control" type="text" value={username} placeholder = "yosemite"
+                <input className="form-control" type="text" value={username} placeholder = "hikerAlice"
                     onChange={(event) => setUsername(event.target.value)} />
             </div>
             <div className="mt-2">

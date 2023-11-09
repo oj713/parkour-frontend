@@ -1,4 +1,4 @@
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Navigate } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import postsReducer from './reducers/posts-reducer';
 import authReducer from './reducers/auth-reducer';
@@ -13,6 +13,8 @@ import Register from './auth/Register';
 import Search from './searchResults';
 import AuthContext from './auth/AuthContext';
 import NavigationHorizontal from './nav/NavigationHorizontal';
+import RightSide from './home-right-side';
+import UserResults from './searchResults/userSearch.js';
 const store = configureStore({
   reducer: { posts: postsReducer, auth: authReducer }
 });
@@ -22,25 +24,28 @@ function App() {
     <Provider store={store}>
       <HashRouter>
         <AuthContext>
-          <div className="container-fluid">
-            <div className="row">
-            <div className="d-md-none">
-                <NavigationHorizontal />
-                </div>
+          <div className="container-fluid m-0 p-0">
+            <div className="d-lg-none row m-0 p-0">
+              <NavigationHorizontal />
             </div>
-            <div className="row">
-              <div className="d-none d-md-block col-2">
-                <Navigation />
-              </div>
-              <div className="col-md-10 col-12 ms-5 ms-md-0">
+            <div className="row m-2">
+              <Navigation/>
+              <div className = "d-none d-sm-block col-1 col-lg-2"></div>
+              <div className="col-12 col-sm-10 col-lg-7">
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/home" element={<Home />} />
+                  <Route path="/home" element={<Navigate to="/" />} />
                   <Route path="/profile/*" element={<ProfileRouter />} />
                   <Route path="/details" element={<Details />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/search" element={<Search />} />
+                </Routes>
+              </div>
+              <div className = "d-none d-lg-block col-lg-3 ps-0">
+                <Routes>
+                  <Route path = "/" element = {<RightSide/>}/>
+                  <Route path = "/search" element = {<UserResults/>}/>
                 </Routes>
               </div>
             </div>

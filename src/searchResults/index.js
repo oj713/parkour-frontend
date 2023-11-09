@@ -183,91 +183,98 @@ function Search() {
     }
 
 
+    // gradient background styling for parks headers
+    // TODO : coalesce this function to central location
+    const gradientBackground = (image) => {
+        return {
+        "background": `linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .7)),
+        url('${image}') no-repeat center / cover`
+        }
+    }
 
+    const [showPopup, setShowPopup] = useState(false);
+
+    function togglePopup() {
+        setShowPopup(!showPopup);
+    }
 
     // Get a reference to the select element
     filterParks();
     return (
         <>
-            <div class="row">
-                <div class="mainPane col-8">
-
-                    <div className="col-11 position-relative">
-                        <div className="row">
-                            <div className="position-relative">
-                                <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 start-1 translate-middle-y" />
-                                <input
-                                    placeholder="Search Parkour"
-                                    className="form-control rounded-pill ps-5 subPane"
-                                    value={searchInput}
-                                    onChange={(e) => setSearchInput(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            searchEnterHandler();
+            <div className = "position-fixed bottom-0 start-0 m-4 parkour-btn popup-icon red-bg  rounded-circle" 
+            onClick = {togglePopup}>
+                <h2>?</h2>
+            </div>
+            <div className = {`${showPopup ? "show" : ""} position-fixed bottom-0 start-0 m-4 red-bg white popup p-2`} onClick = {togglePopup}>
+                <b>Recommended search term: "Yosemite"</b>
+                <br/>
+                <br/>
+                <h3>Search Disclaimer:</h3> 
+                <br/>
+                The search functionality for Parkour was implemented by a teammate and is currently imperfect. The teammate implemented search so that it reads in all users and parks and filters the results in the frontend. This is an obviously flawed approach that lacks scalability. There are additional issues with poor filtering and incorrect result persistence. To be fixed!
+                <br/>
+            </div>
+            <div class="mainPane">
+                <div className="position-relative pe-3">
+                    <div className="position-relative">
+                        <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 start-1 translate-middle-y" />
+                        <input
+                            placeholder="Search Parkour"
+                            className="form-control rounded-pill ps-5 subPane"
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    searchEnterHandler();
                                             
-                                        }
-                                    }}
-                                />
-                            </div>
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="row my-2">
+
+                        <div class="dropdown col-6">
+                            <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="stateDropdown">
+                                <option selected>State</option>
+
+                            </select>
                         </div>
-                        <div className="row">
-
-                            <div class="dropdown col-6">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="stateDropdown">
-                                    <option selected>State</option>
-
-                                </select>
-                            </div>
       
 
-                            <div class="dropdown col-6">
-                                <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="activityDropdown">
-                                    <option selected>Activities</option>
+                        <div class="dropdown col-6">
+                            <select class="form-select btn btn-success" style={{ "background-color": "darkolivegreen" }} id="activityDropdown">
+                                <option selected>Activities</option>
 
-                                </select>
-                            </div>
+                            </select>
                         </div>
-
                     </div>
+
+                </div>
                     
-                    <ul>
-                        {parkSort.map((park) => (
-                            <li key={park.id}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    {park.images[0] && (
-                                        <img className="rounded-circle" height={48} width={48} src={park.images[0].url} alt={park.fullName} />
-                                    )}
-
-
-                                    <h2><a href={`/#/details?name=${encodeURIComponent(park.name)}`} className="list-group-item details-link result-title " >{park.fullName}</a></h2>
-                                </div>
+                <ul className = "list-group">
+                    {parkSort.length == 0 && 
+                    <div className = "brown-4 m-2">
+                        Sorry, no park results found. Please try a different search term!
+                    </div>}
+                    {parkSort.map((park) => (
+                        <li className = "list-group-item subPane p-0 addPadding" key={park.id}>
+                            <div style = {park.images[0] && gradientBackground(park.images[0].url)}>
+                                <h2><a href={`/#/details?name=${encodeURIComponent(park.name)}`} className="details-link result-title white ms-1 me-1" >{park.fullName}</a></h2>
+                            </div>
                                 
-                                <p><a href={park.url}>{park.url}</a></p>
+                            <div>
+                                <p><a className = "green1" href={park.url}>{park.url}</a></p>
                                 <p>{park.description}</p>
-                                
-                                
-                            </li>
-                        ))}
-                    </ul>
-                    {/*<MainResults />*/}
-                </div>
-                <div class="mainPane col-3 d-none d-lg-block">
-                    <div className="col-11 position-relative">
-                        <h2>Users</h2>
-                    </div>
-                    <UserResults/>
-                   
-                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+                {/*<MainResults />*/}
             </div>
-            <div class="row d-lg-none">
-                <div class="mainPane col-8">
-                    <div className="col-11 position-relative">
-                        <h2>Users</h2>
-                    </div>
-                    <UserResults />
+            <div className = "d-block d-lg-none">
+                <UserResults/>
             </div>
-
-        </div>
         </>
     )
 }

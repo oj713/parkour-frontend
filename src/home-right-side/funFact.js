@@ -16,7 +16,7 @@ const FunFacts = (
     }
 ) => {
     return (
-        <li className="list-group-item bg-brown1 border rounded mt-2">
+        <div className="subPane mx-0">
             <h4>
                 
                 {post.title}
@@ -26,7 +26,7 @@ const FunFacts = (
                 {post.info}
             </div>
 
-        </li>
+        </div>
     )
 }
 

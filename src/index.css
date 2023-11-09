@@ -66,6 +66,10 @@ a {
     background-color: var(--orange1);
 }
 
+.red-bg {
+    background-color: var(--red);
+}
+
 .round {border-radius: var(--round)}
 
 /* styling for icons and buttons, apply as needed */
@@ -125,6 +129,27 @@ a {
     background-color: var(--green2);
 }
 
+.popup-icon {
+    height: 4em;
+    width: 4em;
+    text-align: center;
+}
+
+.popup {
+    visibility: hidden;
+    max-width: 23em;
+    z-index: 100;
+    border-radius: 1em;
+    position: relative; 
+    bottom: 30;
+}
+
+.popup.show {
+    visibility: visible;
+    -webkit-animation: fadeIn .3s;
+    animation: fadeIn .3s;
+}
+
 /* for navigation-tabs.js, used for navigation tabs. Could easily be moved into its own file 
 if it interferes with other parts of the site, might have application elsewhere though */
 
@@ -153,7 +178,6 @@ if it interferes with other parts of the site, might have application elsewhere 
     padding: 1vw;
     border: 3px solid var(--brown1);
     border-radius: calc(2*var(--round));
-    max-width: 75%;
 }
 
 /* Use for smaller panes -- e.g. Posts, Comments */
@@ -195,4 +219,15 @@ li.list-group-item.subPane {
 
 .addPadding > div {
     padding: .5em;
+}
+
+.navBar .list-group-item {
+    border: none;
+    background: none;
+    color: white;
+    font-weight: bold;
+}
+
+.navBar .active {
+    background-color: var(--orange1);
 }

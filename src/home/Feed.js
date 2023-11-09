@@ -22,9 +22,14 @@ const Feed = () => {
     }, []);
 
     return (
-        <div>
-            {currentUser && currentUser.role === 'hikers' && <PostsList postFunction={() => findPostsByFollowing(currentUser.following)} />}
+        <div className = "w-100">
+            {currentUser && currentUser.role === 'hikers' &&
+            <>
+            <h4 className = "brown-4 m-2 fst-italic">Following</h4>
+            <PostsList postFunction={() => findPostsByFollowing(currentUser.following)} />
+            </>}
             {currentUser && <PostsList postFunction={() => findPostsByUserId(currentUser._id)} />}
+            <h4 className = "brown-4 m-2 fst-italic"> National Park News </h4>
             <ul className="list-group">
                 {newsreleases.map(newsrelease =>
                     <ArticlePreview key={newsrelease.id} article={newsrelease} />

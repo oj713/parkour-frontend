@@ -25,31 +25,26 @@ function Home() {
 
     return (
             <div className="row">
-                <div className="mainPane col-xl-10">
-                    <div className="col-11">
-                        <div className="row">
-                            <div className="position-relative">
-                                <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 translate-middle-y" />
-                                <input
-                                    placeholder="Search Parkour"
-                                    className="form-control rounded-pill ps-5 subPane"
-                                    value={searchInput}
-                                    onChange={(e) => setSearchInput(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            searchEnterHandler();
-                                        }
-                                    }}
-                                />
-                            </div>
+                <div className="col mainPane">
+                    <div className="row pe-3">
+                        <div className="position-relative">
+                            <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 translate-middle-y" />
+                            <input
+                                placeholder="Search Parkour"
+                                className="form-control rounded-pill ps-5 subPane"
+                                value={searchInput}
+                                onChange={(e) => setSearchInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        searchEnterHandler();
+                                    }
+                                }}
+                            />
                         </div>
                     </div>
                     <div className="row">
                         <Feed />
                     </div>
-                </div>
-                <div className="d-none d-xl-block col-xl-2">
-                    <RightSide />
                 </div>
             </div>
     )
