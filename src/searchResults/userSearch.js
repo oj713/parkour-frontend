@@ -61,7 +61,6 @@ const UserResults = () => {
             if (parkUser) {
                 setParkId(parkUser._id);
             }
-            console.log(parkId)
         }
 
         const filterRangers = async () => {
@@ -74,11 +73,9 @@ const UserResults = () => {
         realParkId()
 
         if (parkId) {
-                console.log(parkId)
             fetchRangersForPark();
-            console.log(parkId)
-                filterRangers();
-            }
+            filterRangers();
+        }
         
     }, [queryValue], parkId);
 

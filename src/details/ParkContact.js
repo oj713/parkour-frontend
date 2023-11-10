@@ -6,7 +6,8 @@ function ParkContactInfo({ email, address, phoneNumber, hours }) {
     return (
         <div className="card card-bg">
             <div className="card-body">
-                <h5 className="card-title">Contact Information</h5>
+                <h3 className="card-title green2">Contact Information</h3>
+                <br/>
                 <p className="card-text">
                     <strong>Email:</strong> {email}
                     <br />
@@ -14,7 +15,7 @@ function ParkContactInfo({ email, address, phoneNumber, hours }) {
                     <br />
                     <strong>Phone Number:</strong> {phoneNumber}
                 </p>
-                <h6>Hours of Operation</h6>
+                <h3 className="card-title green2">Hours of Operation</h3>
                 <ul className="list-unstyled">
                     {Object.entries(hours).map(([day, hours]) => (
                         <li key={day}>

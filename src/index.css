@@ -111,6 +111,10 @@ a {
     padding: .3em .7em;
 }
 
+.max-height-2p3 {
+    max-height: 2.3em;
+}
+
 .orange-btn, .orange-btn:visited {
     background-color: var(--orange1);
 }
@@ -251,4 +255,14 @@ input.form-check-input:checked {
     background-color: var(--green1);
     outline: var(--green1);
     border: var(--green1);
+}
+
+.loading {
+    color:var(--brown1);
+    font-size:2em;
+    font-style:italic;
+    position:absolute; 
+    top:5em;
+    left:50%;
+    transform:translateX(-50%);
 }

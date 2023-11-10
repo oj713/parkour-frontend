@@ -5,7 +5,6 @@ import { FaHome, FaCompass, FaBell, FaEnvelope, FaBookmark, FaList, FaUser, FaBa
 import { AiOutlineSearch } from "react-icons/ai";
 import MainResults from "./mainSearch";
 import UserResults from "./userSearch"
-import PostsList from "../postsList";
 import { findUserByUsernameThunk } from "../services/users-thunks";
 import states from "./states";
 import activities from "./activities";
@@ -201,7 +200,7 @@ function Search() {
     // Get a reference to the select element
     filterParks();
     return (
-        <>
+        <div className = "m-0 p-0">
             <div className = "position-fixed bottom-0 start-0 m-4 parkour-btn popup-icon red-bg rounded-circle" 
             onClick = {togglePopup}>
                 <h2>?</h2>
@@ -217,7 +216,7 @@ function Search() {
             </div>
             <div className = "row">
                 <div className = "col">
-                    <div class="mainPane">
+                    <div class="mainPane ms-0">
                         <div className="position-relative pe-3">
                             <div className="position-relative">
                                 <AiOutlineSearch className="fs-3 ms-3 position-absolute top-50 start-1 translate-middle-y" />
@@ -259,10 +258,13 @@ function Search() {
                             <div className = "brown-4 m-2">
                                 Sorry, no park results found. Please try a different search term!
                             </div>}
-                            {parkSort.map((park) => (
+                            {parkSort.slice(0).reverse().map((park) => (
                                 <li className = "list-group-item subPane p-0 addPadding" key={park.id}>
                                     <div style = {park.images[0] && gradientBackground(park.images[0].url)}>
-                                        <h2><a href={`/#/details?name=${encodeURIComponent(park.name)}`} className="details-link result-title white ms-1 me-1" >{park.fullName}</a></h2>
+                                        <h2><a href={`/#/details?name=${encodeURIComponent(park.name)}`} 
+                                        className="details-link result-title white ms-1 me-1" >
+                                            {park.fullName}</a>
+                                        </h2>
                                     </div>
                                         
                                     <div>
@@ -283,7 +285,7 @@ function Search() {
                 </div>
                 <div className = "d-none d-sm-block col-1 d-lg-none"></div>
             </div>
-        </>
+        </div>
     )
 }
 

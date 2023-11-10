@@ -19,9 +19,11 @@ function Details() {
   const [parkDb, setParkDb] = useState();
   const [parkPosts, setParkPosts] = useState([]);
   const [rangers, setRangers] = useState([]);
+  const [hasParkProfile, setHasParkProfile] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
-  const NPS_API = `${process.env.REACT_APP_NPS_API_BASE}/parks?q=${name}&api_key=${process.env.REACT_APP_NPS_API_KEY}`;
+  // doesn't work correctly
+  const NPS_API = `${process.env.REACT_APP_NPS_API_BASE}/parks?q=${name.split(" ")[0]}&api_key=${process.env.REACT_APP_NPS_API_KEY}`;
 
   let currentUser = useSelector(state => state.auth.currentUser)
   let [canPostToBoard, setCanPostToBoard] = useState(false)
@@ -31,12 +33,10 @@ function Details() {
       .then(response => {
         const result = response.data;
         const parks = result.data;
-        console.log(parks)
-        console.log(name);
+        console.log("Stored Names: ", parks.map(park => park.name));
+        console.log("Search Name: ", name);
         const park = parks.filter(park => park.name === name)[0];
-        console.log(park);
         if (park) {
-          console.log('here')
           setParkApi(park);
         } else {
           setError({message: 'Park not found'});
@@ -51,7 +51,15 @@ function Details() {
     if (parkApi) {
       findUsersByDisplayName(parkApi.name)
         .then(response => {
-          setParkDb(response[0]);
+          console.log("RESPONSE ", response);
+          console.log("RESPONSE LENGTH: ", response.length);
+          if (response.length == 0) {
+            setHasParkProfile(false);
+            setLoading(false);
+          } else {
+            setParkDb(response[0]);
+            setHasParkProfile(true);
+          }
         })
         .catch(error => {
           setError(error);
@@ -60,7 +68,7 @@ function Details() {
   }, [parkApi]);
 
   useEffect(() => {
-    if (parkDb) {
+    if (parkDb && hasParkProfile) {
       findPostsByParkId(parkDb._id)
         .then(response => {
           setParkPosts(response);
@@ -84,26 +92,31 @@ function Details() {
 
 
   return (
-    loading ? <p>Loading...</p>
+    loading ? <div className = "loading">Loading...</div>
       :
-      error ? <p>Error: {error.message}</p>
+      error ? <div className = "loading">Error: {error.message} </div>
         :
         <>
           <div className='row'>
-            <div className='col-md-8'>
-              <ParkDetails park={parkApi} username={parkDb.username} />
-              <PostsList postFunction = {async () => {return await findPostsByParkId(parkDb._id)}}
+            <div className='col'>
+              <ParkDetails park={parkApi} username={hasParkProfile ? parkDb.username : null} />
+              {hasParkProfile &&
+              <PostsList postFunction = {async () => {return parkPosts}}
                 createPost = {{render: canPostToBoard, parkInfo: parkDb}}
                 parkInfo={parkDb} />
+              }
             </div>
-            <div className='d-none d-md-block col-md-4 mt-2'>
-              <div className='row subPane bg-brown2 w-75 '>
+            <div className = "d-none d-sm-block col-1 d-lg-none"></div>
+            <div className='d-none d-lg-block col-3 ps-0'>
+              {hasParkProfile &&
+              <div className='mainPane bg-brown2'>
                 <ParkRangers rangers={rangers} />
               </div>
-              <div className='row subPane bg-brown2 w-75'>
+              }
+              <div className='mainPane bg-brown2'>
                 <ParkActivities activities={parkApi.activities} />
               </div>
-              <div className='row subPane bg-brown2 w-75'>
+              <div className='mainPane bg-brown2'>
                 <ParkRelated topics={parkApi.topics} />
               </div>
             </div>

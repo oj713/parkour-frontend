@@ -9,29 +9,23 @@ const ParkDetails = ({ park, username }) => {
     const hours = park.operatingHours[0].standardHours;
 
     return (
-        <div className='container'>
-            <div className='d-flex justify-content-center'>
-                <div className='mainPane'>
-                    <div className='row'>
-                        <div className='col-lg-9 col-md-7 col-sm-6 mb-2'>
-                            <h2>{park.fullName}</h2>
-                        </div>
-                        <div className='col-lg-3 col-md-5 col-sm-6 mb-2'>
-                            <Link to={`/profile/${username}`} className='btn parkour-btn green-btn d-md-block d-lg-inline-block'>Profile</Link>
-                        </div>
-                        <div className='col-12'>
-                            <img className="img-fluid" src={park.images[0].url} alt={park.images[0].altText} />
-                        </div>
-                    </div>
-                    <div className='row p-3'>
-                        <ParkContactInfo email={emailAddress}
-                            address={address}
-                            phoneNumber={phoneNumber}
-                            hours={hours} />
-                    </div>
-                </div>
-            </div>
+    <div className='mainPane'>
+        <div className='d-flex justify-content-between'>
+            <h2 className = "green2">{park.fullName}</h2>
+            {username != null &&
+            <Link to={`/profile/${username}`} className='btn parkour-btn green-btn my-2 max-height-2p3'>Profile</Link>
+            }
         </div>
+        <div className='col-12'>
+            <img className="img-fluid round" src={park.images[0].url} alt={park.images[0].altText} />
+        </div>
+        <div className='row p-3'>
+            <ParkContactInfo email={emailAddress}
+                address={address}
+                phoneNumber={phoneNumber}
+                hours={hours} />
+        </div>
+    </div>
     );
 }
 

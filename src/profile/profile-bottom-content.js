@@ -57,7 +57,6 @@ const ProfileBottomHalf = ({user}) => {
     }
     if (user.role === "hikers") {
       let followingIds = user.following.map(following => following.item)
-      console.log("followingIds: ", followingIds)
       findUsersByIds(followingIds).then(response => {
         setFollowingList(response)
       })

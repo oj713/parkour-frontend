@@ -28,8 +28,8 @@ function Profile({username = null}) {
    }, [username])
 
   return (
-    loading ? <h3>Loading...</h3> : error ? 
-    <div className = "subPane mt-4"> Error: {error} <a href="#/home">Back to Home</a> </div> : 
+    loading ? <div className = "loading">Loading...</div> : error ? 
+    <div className = "subPane mt-4"> Error: {error} <a href="#/">Back to Home</a> </div> : 
     <div className = "row">
       <div className = "mainPane addPadding p-0 overflow-hidden col">
         <ProfileHead user = {user}/>

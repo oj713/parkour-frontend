@@ -54,6 +54,5 @@ export const findUserById = async id => {
 export const findUsersByIds = async userIds => {
     const userPromises = userIds.map(userId => findUserById(userId));
     const users = await Promise.all(userPromises);
-    console.log("USERS", users)
     return users;
 }
