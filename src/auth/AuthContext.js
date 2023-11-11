@@ -12,8 +12,7 @@ function AuthContext ({ children }) {
       setLoading(false);
     };
     load();
-  }, []);
-
+  }, [dispatch]);
 
   if (loading) {
     return (

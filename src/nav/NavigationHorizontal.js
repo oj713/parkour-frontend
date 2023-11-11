@@ -47,7 +47,7 @@ const NavigationHorizontal = () => {
         <div className="position-fixed navBar z-3 d-flex flex-row bg-brown2 p-0">
             <Link
                 key = "home"
-                to = "/"
+                to = ""
                 className = {`green2 p-3 pt-2 pb-0 d-flex align-items-center 
                 ${active == "home" || active == "" ? "active" : ""}`}>
                 <ParkourLogo style = {treeIcon} className = "h5"/>
@@ -57,7 +57,7 @@ const NavigationHorizontal = () => {
             {currentUser ? (
                 <>
                     {linkItem("Profile", "profile", <FaUser className = "me-2"/>, active == "profile" && extra == null)}
-                    {linkItem("Logout", "/", <CgLogOut className = "me-2"/>, active == "logout")}
+                    {linkItem("Logout", "", <CgLogOut className = "me-2"/>, active == "logout")}
                 </>
             ) :
                 <>

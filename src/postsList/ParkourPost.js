@@ -138,6 +138,10 @@ useEffect(() => {
 }, []) 
 
 useEffect(() => {
+    setUser(userInfo)
+}, [userInfo])
+
+useEffect(() => {
     if (park && user) {
         //setIsPark(user.role === "park")
 

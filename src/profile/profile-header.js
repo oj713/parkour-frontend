@@ -6,8 +6,8 @@ import EditProfileScreen from './edit-profile';
 
 
 const ProfileHead = ({user}) => {
-    let currentUser = useSelector(state => state.auth.currentUser)
-    const [isEditing, setIsEditing] = useState(false);
+    let {currentUser} = useSelector(state => state.auth)
+    let [isEditing, setIsEditing] = useState(false);
 
     const toggleEditing = () => {
         // Set the state to indicate that the user is editing
@@ -28,7 +28,7 @@ const ProfileHead = ({user}) => {
         <div className = "p-0">
             <div style = {gradientBackground(isPark ? user.profileImage : user.backgroundImage)}
             className = "display-block position-relative">
-                {user === currentUser && !isEditing && 
+                {currentUser && user.username === currentUser.username && !isEditing && 
                 <div className = "text-end">
                     <button
                         onClick={toggleEditing} // Handle the edit button click
@@ -45,7 +45,7 @@ const ProfileHead = ({user}) => {
             </div>
             <div className = "p-3 d-flex">
                 <div className = "green2 flex-grow-1">{user.profileBio}</div>
-                <button className="parkour-btn green-btn btn text-nowrap"
+                <button className="parkour-btn green-btn btn text-nowrap max-height-2p3"
                     onClick={() => {window.alert("Sorry, this button doesn't work yet. Check back later!")}}>
                     Follow +
                 </button>

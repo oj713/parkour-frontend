@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux'
 import { findUserByUsername } from '../services/users-services';
 
 function Profile({username = null}) {
-  let currentUser = useSelector(state => state.auth.currentUser)
+  let {currentUser} = useSelector(state => state.auth)
 
   let [user, setUser] = useState()
   let [loading, setLoading] = useState(true)
@@ -13,8 +13,8 @@ function Profile({username = null}) {
 
   useEffect(() => {
     if (!username) {
-      if (!currentUser) {setError("No user logged in.")} else {setUser(currentUser)}
-      setUser(currentUser)
+      if (!currentUser) {setError("No user logged in.")} 
+      else {setUser(currentUser)}
       setLoading(false)
       return
     }
@@ -26,6 +26,12 @@ function Profile({username = null}) {
       setLoading(false)
     })
    }, [username])
+
+  useEffect(() => {
+    if (!username && currentUser) {
+      setUser(currentUser)
+    }
+  }, [currentUser])
 
   return (
     loading ? <div className = "loading">Loading...</div> : error ? 

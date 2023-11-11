@@ -21,7 +21,9 @@ const NavTabs = (
         <div>
         <ul className="nav d-flex flex-nowrap overflow-auto nav-pills white">
             {tabs.map(tab => 
-                <Link className={`${active === tab.link ? "active" : ""} btn parkour-btn rounded-pill nav-link`} to={tab.link}>
+                <Link className={`${active === tab.link ? "active" : ""} btn parkour-btn rounded-pill nav-link`} 
+                    to={tab.link}
+                    key = {tab.name}>
                     {tab.name}
                 </Link>
             )}

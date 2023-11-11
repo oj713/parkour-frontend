@@ -22,7 +22,7 @@ function Details() {
   const [hasParkProfile, setHasParkProfile] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
-  // doesn't work correctly
+  // doesn't work correctly, search feature is poor
   const NPS_API = `${process.env.REACT_APP_NPS_API_BASE}/parks?q=${name.split(" ")[0]}&api_key=${process.env.REACT_APP_NPS_API_KEY}`;
 
   let currentUser = useSelector(state => state.auth.currentUser)
@@ -33,8 +33,6 @@ function Details() {
       .then(response => {
         const result = response.data;
         const parks = result.data;
-        console.log("Stored Names: ", parks.map(park => park.name));
-        console.log("Search Name: ", name);
         const park = parks.filter(park => park.name === name)[0];
         if (park) {
           setParkApi(park);
@@ -51,8 +49,6 @@ function Details() {
     if (parkApi) {
       findUsersByDisplayName(parkApi.name)
         .then(response => {
-          console.log("RESPONSE ", response);
-          console.log("RESPONSE LENGTH: ", response.length);
           if (response.length == 0) {
             setHasParkProfile(false);
             setLoading(false);

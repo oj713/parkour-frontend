@@ -13,13 +13,6 @@ const EditProfileScreen = ({finishEditing}) => {
         finishEditing()
         await dispatch(updateUserThunk(profile))
     };
-    useEffect(() => {
-        const loadProfile = async () => {
-            const { payload } = await dispatch(profileThunk());
-            setProfile(payload);
-        };
-        loadProfile();
-    }, []);
     return (
         <div className = "m-2 mt-0 green2">
             <h2 className = "white">Edit Profile</h2>
