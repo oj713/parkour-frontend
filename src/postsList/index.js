@@ -45,10 +45,14 @@ const PostsList = ({postFunction = findPosts,
         {createPost.render && <CreatePostComponent parkInfo = {createPost.parkInfo}
             onCreate = {handlePostCreate}/> }
         <ul className = "list-group">
-            {posts.slice(0).reverse().map(post => 
+            {posts.length > 0 ? 
+            posts.slice(0).reverse().map(post => 
             <ParkourPost key = {post._id} postInfo={post} parkInfo = {parkInfo} 
                 userInfo = {userInfo} showParkHeaders = {showParkHeaders}
-                onDelete = {handlePostDelete}/>)}
+                onDelete = {handlePostDelete}/>)
+            : 
+            <div class="brown-4 m-3"><h3>Nothing yet!</h3></div>
+            }
         </ul>
         </>
     )

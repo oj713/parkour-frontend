@@ -114,7 +114,7 @@ const [canDelete, setCanDelete] = useState()
 useEffect(() => {
     if (!park) {
         findParkById(post.parkId)
-        .then ( response => {
+        .then (response => {
             setPark(response)
         })
         .catch(error => {
@@ -138,7 +138,7 @@ useEffect(() => {
 }, []) 
 
 useEffect(() => {
-    setUser(userInfo)
+    if(userInfo) {setUser(userInfo)}
 }, [userInfo])
 
 useEffect(() => {
@@ -171,6 +171,7 @@ isLoading ? <></> : error ? <p> Error: {error} </p> :
         <a href = {`#/profile/${park.username}`}><h3 className = "white ms-1 me-1">{park.displayName} National Park</h3></a>
     </div>
     }
+    {/* false bc we stopped supporting park posts */}
     <div style = {false ? gradientBackground(user.profileImage) : {"paddingBottom":"0"}}>
         {canDelete &&
         <div className = "float-end">
