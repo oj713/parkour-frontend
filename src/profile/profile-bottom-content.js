@@ -86,19 +86,19 @@ const ProfileBottomHalf = ({user}) => {
             createPost = {{render: false, parkInfo: null}} showParkHeaders = {true}/>
           } />
           <Route path="/rangers" element={
-            <ul class = "list-group">
+            <ul className = "list-group">
               {rangersList.map(ranger => 
                 <SearchResult key={ranger._id} post={ranger}/>)}
             </ul>
           } />
           <Route path="/following" element={
-            <ul class = "list-group">
+            <ul className = "list-group">
               {followingList.map(following =>
                 <SearchResult key={following._id} post={following}/>)}
             </ul>
           } />
           <Route path="/followers" element={
-            <ul class = "list-group">
+            <ul className = "list-group">
               {followersList.map(follower =>
                 <SearchResult key={follower._id} post={follower}/>)}
             </ul>

@@ -7,11 +7,22 @@ import { findUserByUsername } from '../services/users-services';
 function Profile({username = null}) {
   let {currentUser} = useSelector(state => state.auth)
 
-  let [user, setUser] = useState()
+  let [user, setUser] = useState(null)
   let [loading, setLoading] = useState(true)
   let [error, setError] = useState()
 
+  console.log("CURRENT USER: ", currentUser ? currentUser.username : "none");
+  console.log("username", username)
+  console.log("USER: ", user ? user.username : "none")
+
   useEffect(() => {
+    if (!username && currentUser) {
+      setUser(currentUser)
+    }
+  }, [currentUser])
+  useEffect(() => {
+    setUser(null)
+    setLoading(true)
     if (!username) {
       if (!currentUser) {setError("No user logged in.")} 
       else {setUser(currentUser)}
@@ -26,12 +37,6 @@ function Profile({username = null}) {
       setLoading(false)
     })
    }, [username])
-
-  useEffect(() => {
-    if (!username && currentUser) {
-      setUser(currentUser)
-    }
-  }, [currentUser])
 
   return (
     loading ? <div className = "loading">Loading...</div> : error ? 

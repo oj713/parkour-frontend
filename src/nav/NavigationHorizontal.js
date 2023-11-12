@@ -39,7 +39,7 @@ const NavigationHorizontal = () => {
     const treeIcon = {
         "position": "relative",
         "top": ".1em",
-        "font-size":"1.5em"
+        "fontSize":"1.5em"
     }
 
     return (
@@ -51,7 +51,7 @@ const NavigationHorizontal = () => {
                 className = {`green2 p-3 pt-2 pb-0 d-flex align-items-center 
                 ${active == "home" || active == "" ? "active" : ""}`}>
                 <ParkourLogo style = {treeIcon} className = "h5"/>
-                <h3 style={{"font-size":"1.3em"}}>Parkour</h3>
+                <h3 style={{"fontSize":"1.3em"}}>Parkour</h3>
             </Link>
             <div className = "flex-grow-1 display-block"></div>
             {currentUser ? (

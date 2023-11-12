@@ -23,6 +23,7 @@ const ProfileHead = ({user}) => {
     }
 
     let isPark = user.role === "parks"
+    console.log("IS PARK: ", isPark ? "yes" : "no")
 
     return (
         <div className = "p-0">
