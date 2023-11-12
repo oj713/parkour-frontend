@@ -1,7 +1,7 @@
 # Parkour: Social Media Site
 _Omi Johnson_
 
-Parkour is a social media site for hikers to post about their adventures and connect with parks and hikers they care about! This piece was originally a final project for CS5610: Web Development and was created in a 5-person team. I have since taken the project and added additional fixes and improvments. 
+Parkour is a social media site for hikers to post about their adventures and connect with parks and hikers they care about! This piece was originally a final project for CS5610: Web Development and was created in a 4-person team. I have since taken the project and added additional fixes and improvments. 
 
 [parkour-social-media-site.netlify.app](https://parkour-social-media-site.netlify.app/)
 
