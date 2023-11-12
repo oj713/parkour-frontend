@@ -119,7 +119,7 @@ a {
     background-color: var(--orange1);
 }
 
-.orange-btn:active, .orange-btn:hover {
+.orange-btn:active, .orange-btn:focus, .orange-btn:hover {
     color:white;
     background-color: var(--orange2);
 }
@@ -128,7 +128,7 @@ a {
     background-color: var(--green1);
 }
 
-.green-btn:active, .green-btn:hover {
+.green-btn:active, .green-btn:focus, .green-btn:hover {
     color:white;
     background-color: var(--green2);
 }

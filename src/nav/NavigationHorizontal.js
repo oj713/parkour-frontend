@@ -57,7 +57,14 @@ const NavigationHorizontal = () => {
             {currentUser ? (
                 <>
                     {linkItem("Profile", "profile", <FaUser className = "me-2"/>, active == "profile" && extra == null)}
-                    {linkItem("Logout", "", <CgLogOut className = "me-2"/>, active == "logout")}
+                    <Link
+                        key="logout"
+                        to={`/`}
+                        className = {`white p-3 align-items-center`}
+                        onClick={logoutHandler}>
+                        <CgLogOut className = "me-2"/>
+                        <span> <b>Logout</b> </span>
+                    </Link>
                 </>
             ) :
                 <>

@@ -2,16 +2,35 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../services/auth-thunks";
+import {findUserByUsername} from "../services/users-services";
 function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [displayName, setDisplayName] = useState("");
     const [role, setRole] = useState("");
+    const [parkUsername, setParkUsername] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleRegister = async () => {
+        let newUser = {username, password, displayName, role};
+        if (role === "rangers") {
+            let dbPark = null
+            try {
+                dbPark = await findUserByUsername(parkUsername)
+                if (dbPark.role === "parks") {
+                    newUser = {...newUser, parkId: dbPark._id}
+                }
+            } catch (e) {
+                alert("Error: Invalid park username")
+                setParkUsername("")
+                return
+            }
+        }
+        if (Object.values(newUser).includes("")) {
+            alert("Error: Incomplete or invalid fields")
+            return
+        }
         try {
-            const newUser = { username, password, displayName, role };
             await dispatch(registerThunk(newUser));
             navigate("/profile");
         } catch (e) {
@@ -58,7 +77,14 @@ function Register() {
                             </label>
                     </div>
                 </div>
-                <button className="btn btn-primary parkour-btn orange1-bg ms-0 mt-2"
+                {role === "rangers" && 
+                <div className ="mt-2">
+                    <label>Home Park Username</label>
+                    <input className="form-control" type="text" value={parkUsername} 
+                    onChange={(event) => setParkUsername(event.target.value)}/>
+                </div>
+                }
+                <button className="btn btn-primary parkour-btn orange-btn ms-0 mt-2"
                     onClick={handleRegister}>
                     <p className = "p-0 m-0 h6 fw-bold">Register</p>
                 </button>

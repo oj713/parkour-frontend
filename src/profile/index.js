@@ -11,10 +11,6 @@ function Profile({username = null}) {
   let [loading, setLoading] = useState(true)
   let [error, setError] = useState()
 
-  console.log("CURRENT USER: ", currentUser ? currentUser.username : "none");
-  console.log("username", username)
-  console.log("USER: ", user ? user.username : "none")
-
   useEffect(() => {
     if (!username && currentUser) {
       setUser(currentUser)
