@@ -16,8 +16,11 @@ function AuthContext ({ children }) {
 
   if (loading) {
     return (
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
+      <div className = "w-100 text-center position-absolute mt-5 brown-2">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <h3 className = "d-block m-2">Loading...</h3>
       </div>
     );
   } else {
