@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+# Parkour: Social Media Site
+_Omi Johnson_
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Parkour is a social media site for hikers to post about their adventures and connect with parks and hikers they care about! This piece was originally a final project for CS5610: Web Development and was created in a 5-person team. I have since taken the project and added additional fixes and improvments. 
 
-## Available Scripts
+[parkour-social-media-site.netlify.app](https://parkour-social-media-site.netlify.app/)
 
-In the project directory, you can run:
+## Concept
 
-### `npm start`
+The social media site is designed to give hikers a space to post about the parks they love! National parks each have an account hosting a "board." Hiker accounts can post to boards, like other posts, and follow users. There are also "Rangers", which are official moderators for their National Park and have special authorities for making and deleting posts. By using the "Search" feature, hikers can explore other parks and find additional information about the places they love. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Users can register, log in, and log out
+* Create, read, like, and delete posts
+* Navigate to other user profiles
+* Highlight content from followed users and latest park news
+* Search parks to find additional information about contact info and open hours
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Implementation
 
-### `npm test`
+This project is a React.js app coded with HTML, CSS, Bootstrap, and Javascript. The frontend is implemented as a Single-Page-Application using Routes for each relevant page of the application. User authentication is managed using Redux.js. The application makes calls to [parkour-backend](https://github.com/oj713/parkour-backend), a Node.js API, to retrieve user and post information. The application also calls to the [National Park Service API](https://www.nps.gov/subjects/developer/api-documentation.htm) for news and search result information. The application utilizes responsive design and functions on a laptop, tablet, and phone. This site is hosted using [Netlify](https://www.netlify.com/). 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## To-do
 
-### `npm run build`
+This application is a work in progress. The initial time for execution was short and there are many features I would like to improve or add!
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Security: Authentication encryption, password verification, Ranger verification by Parks. 
+* UI Redesign to add additional complexity, better navigation, etc.
+* Additional permissions for Ranger and Park profiles, such as blocked terms for posts to their board, blocked users, and statistics. 
+* Improve search logic (currently non-scalable, faulty)
+* Improve performance and scalability (batch loading, size enforcement)
+* Support additional post types such as polls and ratings 
