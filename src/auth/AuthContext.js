@@ -20,7 +20,7 @@ function AuthContext ({ children }) {
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
-        <h3 className = "d-block m-2">Loading...</h3>
+        <h3 className = "d-block m-2">Parkour is hosted on a free server. Please allow 30 seconds to spin up...</h3>
       </div>
     );
   } else {
